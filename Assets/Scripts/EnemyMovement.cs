@@ -23,7 +23,6 @@ public class EnemyMovement : MonoBehaviour
 
     void Start()
     {
-        transform.position = LevelManager.instance.startPoint.position;
         target = LevelManager.instance.paths[pathIndex];
     }
 
