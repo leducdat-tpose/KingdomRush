@@ -13,7 +13,7 @@ public class EnemyMovement : MonoBehaviour
     float moveSpeed = 10f;
 
     int pathIndex = 0;
-    Transform target;
+    Vector3 target;
 
     private void Reset()
     {
@@ -23,26 +23,25 @@ public class EnemyMovement : MonoBehaviour
 
     void Start()
     {
-        target = LevelManager.instance.paths[pathIndex];
+        target = LevelManager.instance.GetStartingPoint();
+        transform.position = target;
     }
 
     void Update()
     {
-        if(Vector2.Distance(target.position, transform.position) < 0.1f)
+        if (Vector2.Distance(target, transform.position) > 0.1f) return;
+        pathIndex++;
+        if (pathIndex == LevelManager.instance.GetWaypointsLength())
         {
-            pathIndex++;
-            if(pathIndex == LevelManager.instance.paths.Length)
-            {
-                EnemySpawner.onEnemyDestroy.Invoke();
-                this.gameObject.SetActive(false);
-                return;
-            }
-            target = LevelManager.instance.paths[pathIndex];
+            EnemySpawner.onEnemyDestroy.Invoke();
+            this.gameObject.SetActive(false);
+            return;
         }
+        target = LevelManager.instance.GetPoint(pathIndex);
     }
     private void FixedUpdate()
     {
-        Vector2 direction = (target.position - transform.position).normalized;
+        Vector2 direction = (target - transform.position).normalized;
         rigid.velocity = direction * moveSpeed;
     }
 }
