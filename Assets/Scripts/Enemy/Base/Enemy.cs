@@ -96,5 +96,8 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     {
         StateMachine.CurrentEnemyState.AnimationTriggerEvent(triggerType);
     }
+    public virtual void TestingFunction()
+    {
 
+    }
 }
