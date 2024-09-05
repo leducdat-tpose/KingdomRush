@@ -13,6 +13,34 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     public Vector3 TargetPosition {  get; set; }
     public int PathIndex { get; set; } = 0;
 
+    #region Animation Trigger
+
+    public enum AnimationTriggerType
+    {
+        Attack,
+        Walk,
+        Death
+    }
+    #endregion
+
+    #region State Machine Variables
+    public EnemyStateMachine StateMachine { get; set; }
+    public EnemyIdleState IdleState { get; set; }
+    public EnemyAttackState AttackState { get; set; }
+    public EnemyDeathState DeathState { get; set; }
+    public EnemyWalkState WalkState { get; set; }
+    #endregion
+
+    private void Awake()
+    {
+        StateMachine = new EnemyStateMachine();
+
+        IdleState = new EnemyIdleState(this, StateMachine);
+        AttackState = new EnemyAttackState(this, StateMachine);
+        WalkState = new EnemyWalkState(this, StateMachine);
+        DeathState = new EnemyDeathState(this, StateMachine);
+    }
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -20,16 +48,17 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
         CurrentHealth = MaxHealth;
         TargetPosition = LevelManager.instance.GetStartingPoint();
         transform.position = TargetPosition;
+        StateMachine.Initialize(WalkState);
     }
 
     private void Update()
     {
-        UpdateTargetPosition();
+        StateMachine.CurrentEnemyState.FrameUpdate();
     }
 
     private void FixedUpdate()
     {
-        MoveEnemy();
+        StateMachine.CurrentEnemyState.PhysicsUpdate();
     }
 
     public void Damage(float damageAmount)
@@ -62,4 +91,10 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
         }
         TargetPosition = LevelManager.instance.GetPoint(PathIndex);
     }
+
+    private void AnimationTriggerEvent(AnimationTriggerType triggerType)
+    {
+        StateMachine.CurrentEnemyState.AnimationTriggerEvent(triggerType);
+    }
+
 }
