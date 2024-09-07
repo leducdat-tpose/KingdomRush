@@ -4,15 +4,12 @@ using UnityEngine.Networking;
 
 namespace ProjectTiles.Base
 {
-    [RequireComponent(typeof(Collider2D),typeof(Rigidbody2D))]
     public class ProjectTiles: MonoBehaviour
     {
-        [Header("References")] [SerializeField]
-        private Collider2D _collider;
-        [SerializeField]
-        private Rigidbody2D _rigid;
+        public static Action<Enemy, float> OnEnemyHit;
+        public Tower Tower{get; set;}
 
-        private Enemy _currentEnemy;
+        private Enemy _enemyTarget;
         [Header("Attributes")]
         [SerializeField]
         private float _damageCause;
@@ -20,42 +17,41 @@ namespace ProjectTiles.Base
         [SerializeField]
         private float _speed;
 
+        [SerializeField] private float minDistanceToDealDamage = 0.1f;
         private void Reset()
         {
-            _collider = GetComponent<Collider2D>();
-            _rigid = GetComponent<Rigidbody2D>();
         }
 
         private void Start()
         {
-            _currentEnemy = null;
+            _enemyTarget = null;
         }
 
         private void Update()
         {
-            if (!_currentEnemy) return;
+            if (!_enemyTarget) return;
+            MoveProjectTiles();
+            RotateProjectTiles();
         }
-
-        private void FixedUpdate()
-        {
-            if (!_currentEnemy) return;
-            ChasingEnemy();
-        }
-
         public void SetCurrentEnemy(Enemy thisEnemy)
         {
-            _currentEnemy = thisEnemy;
+            _enemyTarget = thisEnemy;
         }
 
-        private void ChasingEnemy()
+        private void MoveProjectTiles()
         {
-            var directionToEnemy = transform.position - _currentEnemy.transform.position;
-            var resultDirect = Vector3.RotateTowards(transform.forward, directionToEnemy, _speed * Time.deltaTime, 1);
-            _rigid.velocity = resultDirect.normalized * _speed;
-            if (Vector2.Distance(_currentEnemy.transform.position, transform.position) > 0.1f) return;
-            _currentEnemy.Damage(_damageCause);
-            //Build bool object later
-            this.gameObject.SetActive(false);
+            transform.position = Vector2.MoveTowards(transform.position, _enemyTarget.gameObject.transform.position, _speed * Time.deltaTime);
+            float distanceToTarget = (_enemyTarget.gameObject.transform.position - transform.position).magnitude;
+            if (distanceToTarget > minDistanceToDealDamage) return;
+            _enemyTarget.Damage(_damageCause);
+            
         }
+        private void RotateProjectTiles()
+        {
+            var enemyPos = _enemyTarget.transform.position - transform.position;
+            float angle = Vector3.SignedAngle(transform.up, enemyPos, transform.forward);
+            transform.Rotate(0f, 0f, angle);
+        }
+        
     }
 }
