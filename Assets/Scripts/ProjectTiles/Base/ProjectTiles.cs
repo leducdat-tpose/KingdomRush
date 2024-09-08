@@ -18,9 +18,6 @@ namespace ProjectTiles.Base
         private float _speed;
 
         [SerializeField] private float minDistanceToDealDamage = 0.1f;
-        private void Reset()
-        {
-        }
 
         private void Start()
         {
