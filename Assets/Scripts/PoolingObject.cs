@@ -6,37 +6,57 @@ using UnityEngine;
 public class PoolingObject : MonoBehaviour
 {
     public static PoolingObject Instance;
-    private Dictionary<string, Queue<GameObject>> pools = new Dictionary<string, Queue<GameObject>>();
+    private Dictionary<string, Queue<GameObject>> _pools = new Dictionary<string, Queue<GameObject>>();
     [SerializeField] private GameObject[] _prefabs;
-    [SerializeField] private int _poolSize = 6;
+    [SerializeField] private int _poolSize = 15;
     private void Awake()
     {
         if(Instance == null)
             Instance = this;
     }
-
     private void Start()
     {
-        for (int i = 0; i < _prefabs.Length; i++)
+        foreach (var _prefab in _prefabs)
         {
             GameObject contain = new GameObject();
-            contain.name = "Contain_" +_prefabs[i].name;
+            contain.name = "Contain_" +_prefab.name;
             contain.transform.SetParent(this.transform);
             Queue<GameObject> queue = new Queue<GameObject>();
             for (int j = 0; j < _poolSize; j++)
             {
-                GameObject prefab = CreateNewObject(_prefabs[i]);
-                prefab.transform.SetParent(contain.transform);
-                prefab.SetActive(false);
-                queue.Enqueue(prefab);
+                GameObject newGameObject = Instantiate(_prefab, contain.transform);
+                newGameObject.name = _prefab.name;
+                newGameObject.SetActive(false);
+                queue.Enqueue(newGameObject);
             }
-            pools.Add(_prefabs[i].name, queue);
+            _pools.Add(_prefab.name, queue);
         }
     }
 
+    public GameObject GetObject(GameObject gameObject)
+    {
+        if (_pools.TryGetValue(gameObject.name, out Queue<GameObject> queue))
+        {
+            if (queue.Count == 0) return CreateNewObject(gameObject);
+            else
+            {
+                GameObject newObject = queue.Dequeue();
+                newObject.SetActive(true);
+                return newObject;
+            }
+        }
+        else return CreateNewObject(gameObject);
+    }
+
+    public void ReturnObject(GameObject gameObject)
+    {
+        if (_pools.TryGetValue(gameObject.name, out Queue<GameObject> queue)) 
+            queue.Enqueue(gameObject);
+    }
     private GameObject CreateNewObject(GameObject prefab)
     {
-        GameObject newObject = Instantiate(prefab);
+        Transform contain = this.transform.Find("Contain_"+gameObject.name);
+        GameObject newObject = Instantiate(prefab, contain);
         newObject.name = prefab.name;
         return newObject;
     }

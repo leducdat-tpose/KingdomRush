@@ -78,10 +78,10 @@ public class EnemySpawner : MonoBehaviour
         return Mathf.RoundToInt(baseEnemies * Mathf.Pow(currentWave, diffScalingFactor));
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     void SpawnEnemy()
     {
-        GameObject enemy = enemyPrefabs[0];
-        Instantiate(enemy, LevelManager.instance.GetStartingPoint(), Quaternion.identity);
+        PoolingObject.Instance.GetObject(enemyPrefabs[0]);
         enemiesAlive++;
     }
 

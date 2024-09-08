@@ -87,6 +87,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
         if(PathIndex == LevelManager.instance.GetWaypointsLength())
         {
             this.gameObject.SetActive(false);
+            PoolingObject.Instance.ReturnObject(this.gameObject);
             return;
         }
         TargetPosition = LevelManager.instance.GetPoint(PathIndex);
