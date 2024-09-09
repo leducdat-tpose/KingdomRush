@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
 {
     public Rigidbody2D rb { get; set; }
+    [SerializeField]
+    private Animator animator;
     [field: SerializeField] public float MaxHealth { get; set; } = 100f;
     public float CurrentHealth {  get; set; }
     [field: SerializeField] public float MoveSpeed { get; set; } = 5f;
     public Vector3 TargetPosition {  get; set; }
     public int PathIndex { get; set; } = 0;
+    private string _currentAnimation = "";
 
     #region Animation Trigger
 
@@ -43,6 +46,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         rb.isKinematic = true;
         CurrentHealth = MaxHealth;
@@ -88,6 +92,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
         {
             this.gameObject.SetActive(false);
             PoolingObject.Instance.ReturnObject(this.gameObject);
+            EnemySpawner.onEnemyDestroy?.Invoke();
             return;
         }
         TargetPosition = LevelManager.instance.GetPoint(PathIndex);
@@ -97,8 +102,11 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     {
         StateMachine.CurrentEnemyState.AnimationTriggerEvent(triggerType);
     }
-    public virtual void TestingFunction()
-    {
 
+    public void ChangeAnimation(string nextAnimation)
+    {
+        if(_currentAnimation == nextAnimation) return;
+        animator.Play(nextAnimation);
+        _currentAnimation = nextAnimation;
     }
 }

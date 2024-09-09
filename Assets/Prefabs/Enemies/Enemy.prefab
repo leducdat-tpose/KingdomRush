@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4823975608452205924}
   - component: {fileID: 571832716864984426}
   - component: {fileID: 387454418152820493}
-  - component: {fileID: 718710215761248446}
   - component: {fileID: 2603844854639799067}
   - component: {fileID: 247797512}
   m_Layer: 0
@@ -134,25 +133,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!111 &718710215761248446
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 55734201109154817}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 8b86e174d74965e4e8a06e4bd4584ae2, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 732fa28a35be42547894a6bf49101249, type: 2}
-  - {fileID: 7400000, guid: 8fe80141c74070343b72c2d4bbd00760, type: 2}
-  - {fileID: 7400000, guid: 8b86e174d74965e4e8a06e4bd4584ae2, type: 2}
-  - {fileID: 7400000, guid: 92155fe1bd31f1e49b79370f0b0908ba, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!114 &2603844854639799067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,6 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ff3fca84a0a59f4f8d98ed28edfa1fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   <MaxHealth>k__BackingField: 100
   <MoveSpeed>k__BackingField: 2
 --- !u!95 &247797512
