@@ -1,9 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.Networking;
-
-namespace ProjectTiles.Base
-{
     public class ProjectTiles: MonoBehaviour
     {
         public static Action<Enemy, float> OnEnemyHit;
@@ -51,4 +48,3 @@ namespace ProjectTiles.Base
         }
         
     }
-}

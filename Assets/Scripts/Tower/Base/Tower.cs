@@ -12,6 +12,7 @@ public class Tower : MonoBehaviour, IShootable
     private List<Enemy> _enemies;
     [SerializeField]
     private Enemy _currentTarget = null;
+    public Enemy CurrentTarget => _currentTarget;
     
     public Collider2D Collider { get; set; }
     private void Reset()
