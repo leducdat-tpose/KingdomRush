@@ -45,6 +45,9 @@ TagManager:
   - name: Tower
     uniqueID: 3540242917
     locked: 0
+  - name: Creature
+    uniqueID: 173009083
+    locked: 0
   - name: ProjectTile
     uniqueID: 364884137
     locked: 0

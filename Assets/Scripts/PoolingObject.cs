@@ -33,6 +33,7 @@ public class PoolingObject : MonoBehaviour
         }
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     public GameObject GetObject(GameObject gameObject)
     {
         if (_pools.TryGetValue(gameObject.name, out Queue<GameObject> queue))
@@ -47,7 +48,7 @@ public class PoolingObject : MonoBehaviour
         }
         else return CreateNewObject(gameObject);
     }
-
+    
     public void ReturnObject(GameObject gameObject)
     {
         if (_pools.TryGetValue(gameObject.name, out Queue<GameObject> queue)) 
