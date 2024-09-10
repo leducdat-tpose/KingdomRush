@@ -16,6 +16,7 @@ public class EnemyDeathState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
+        enemy.ChangeAnimation("Death");
     }
 
     public override void ExitState()

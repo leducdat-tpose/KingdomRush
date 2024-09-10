@@ -68,14 +68,14 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     public void Damage(float damageAmount)
     {
         CurrentHealth -= damageAmount;
-        if(CurrentHealth <= 0 ) {
-            Die();
-        }
+        if (CurrentHealth > 0) return;
+        Die();
     }
 
     public void Die()
     {
-        Destroy(gameObject);
+        StateMachine.ChangeState(DeathState);
+        StartCoroutine(nameof(ReturnPool));
     }
 
     public void MoveEnemy()
@@ -108,5 +108,11 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
         if(_currentAnimation == nextAnimation) return;
         animator.Play(nextAnimation);
         _currentAnimation = nextAnimation;
+    }
+
+    IEnumerator ReturnPool()
+    {
+        yield return new WaitForSeconds(2.0f);
+        PoolingObject.Instance.ReturnObject(this.gameObject);
     }
 }

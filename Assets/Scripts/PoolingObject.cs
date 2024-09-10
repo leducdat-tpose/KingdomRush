@@ -51,8 +51,11 @@ public class PoolingObject : MonoBehaviour
     
     public void ReturnObject(GameObject gameObject)
     {
-        if (_pools.TryGetValue(gameObject.name, out Queue<GameObject> queue)) 
+        if (_pools.TryGetValue(gameObject.name, out Queue<GameObject> queue))
+        {
+            gameObject.SetActive(false);
             queue.Enqueue(gameObject);
+        }
     }
     private GameObject CreateNewObject(GameObject prefab)
     {
