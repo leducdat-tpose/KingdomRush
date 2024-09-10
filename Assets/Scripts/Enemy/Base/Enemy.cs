@@ -1,20 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
 {
-    public Rigidbody2D rb { get; set; }
+    #region References
+    [Header("References")]
+    [SerializeField]
+    private Rigidbody2D rb;
     [SerializeField]
     private Animator animator;
-    [field: SerializeField] public float MaxHealth { get; set; } = 100f;
-    public float CurrentHealth {  get; set; }
+    #endregion
+    
+    #region Variables
+    [field: SerializeField] public float MaxHealth { get; set; }
+    [field: SerializeField] public float CurrentHealth { get; set; }
     [field: SerializeField] public float MoveSpeed { get; set; } = 5f;
     public Vector3 TargetPosition {  get; set; }
     public int PathIndex { get; set; } = 0;
     private string _currentAnimation = "";
+    #endregion
 
     #region Animation Trigger
 
@@ -37,7 +45,6 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     private void Awake()
     {
         StateMachine = new EnemyStateMachine();
-
         IdleState = new EnemyIdleState(this, StateMachine);
         AttackState = new EnemyAttackState(this, StateMachine);
         WalkState = new EnemyWalkState(this, StateMachine);
@@ -64,18 +71,17 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     {
         StateMachine.CurrentEnemyState.PhysicsUpdate();
     }
-
     public void Damage(float damageAmount)
     {
         CurrentHealth -= damageAmount;
-        if (CurrentHealth > 0) return;
+        if (!(CurrentHealth <= 0)) return;
+        CurrentHealth = 0;
         Die();
     }
 
     public void Die()
     {
-        StateMachine.ChangeState(DeathState);
-        StartCoroutine(nameof(ReturnPool));
+        PoolingObject.Instance.ReturnObject(this.gameObject);
     }
 
     public void MoveEnemy()

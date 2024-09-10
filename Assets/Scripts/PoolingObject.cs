@@ -54,6 +54,7 @@ public class PoolingObject : MonoBehaviour
         if (_pools.TryGetValue(gameObject.name, out Queue<GameObject> queue))
         {
             gameObject.SetActive(false);
+            gameObject.transform.position = Vector3.zero;
             queue.Enqueue(gameObject);
         }
     }

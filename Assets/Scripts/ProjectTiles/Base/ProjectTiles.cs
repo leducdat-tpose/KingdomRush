@@ -5,7 +5,6 @@ using UnityEngine.Serialization;
 
 public class ProjectTiles: MonoBehaviour
     {
-        public static Action<Enemy, float> OnEnemyHit;
         public Tower Tower{get; set;}
         [FormerlySerializedAs("EnemyTarget")] [SerializeField]
         private Enemy _enemyTarget;
@@ -39,7 +38,7 @@ public class ProjectTiles: MonoBehaviour
         {
             transform.position = Vector2.MoveTowards(transform.position, _enemyTarget.gameObject.transform.position, _speed * Time.deltaTime);
             float distanceToTarget = (_enemyTarget.gameObject.transform.position - transform.position).magnitude;
-            if (distanceToTarget > minDistanceToDealDamage) return;
+            if (!(distanceToTarget < minDistanceToDealDamage)) return;
             _enemyTarget.Damage(_damageCause);
             PoolingObject.Instance.ReturnObject(gameObject);
         }
