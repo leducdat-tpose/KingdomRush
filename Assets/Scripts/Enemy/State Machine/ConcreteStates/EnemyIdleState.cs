@@ -52,4 +52,9 @@ public class EnemyIdleState : EnemyState
     {
         base.PhysicsUpdate();
     }
+
+    public override void TestingDebug()
+    {
+        Debug.Log("Idle State");
+    }
 }

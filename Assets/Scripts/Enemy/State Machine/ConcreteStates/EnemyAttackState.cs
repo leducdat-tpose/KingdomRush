@@ -52,4 +52,9 @@ public class EnemyAttackState : EnemyState
     {
         base.PhysicsUpdate();
     }
+
+    public override void TestingDebug()
+    {
+        Debug.Log("Attack State");
+    }
 }

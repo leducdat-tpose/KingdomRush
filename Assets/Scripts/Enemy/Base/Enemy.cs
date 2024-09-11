@@ -21,6 +21,8 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     [field: SerializeField] public float MoveSpeed { get; set; } = 5f;
     public Vector3 TargetPosition {  get; set; }
     public int PathIndex { get; set; } = 0;
+    protected bool IsAttacking = false;
+    protected bool IsDead = false;
     private string _currentAnimation = "";
     #endregion
 
@@ -62,9 +64,10 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
         StateMachine.Initialize(WalkState);
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         StateMachine.CurrentEnemyState.FrameUpdate();
+        StateMachine.CurrentEnemyState.TestingDebug();
     }
 
     private void FixedUpdate()
@@ -76,11 +79,13 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
         CurrentHealth -= damageAmount;
         if (!(CurrentHealth <= 0)) return;
         CurrentHealth = 0;
-        Die();
+        IsDead = true;
+        StateMachine.ChangeState(DeathState);
     }
 
     public void Die()
     {
+        ResetValue();
         PoolingObject.Instance.ReturnObject(this.gameObject);
     }
 
@@ -92,7 +97,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
 
     public void UpdateTargetPosition()
     {
-        if (Vector2.Distance(TargetPosition, transform.position) > 0.1f || !this.gameObject.activeSelf) return;
+        if (Vector2.Distance(TargetPosition, transform.position) > 0.1f || !this.gameObject.activeSelf || IsDead) return;
         PathIndex++;
         if(PathIndex == LevelManager.instance.GetWaypointsLength())
         {
@@ -112,13 +117,20 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     public void ChangeAnimation(string nextAnimation)
     {
         if(_currentAnimation == nextAnimation) return;
-        animator.Play(nextAnimation);
+        animator.CrossFade(nextAnimation, 0.2f);
         _currentAnimation = nextAnimation;
     }
 
-    IEnumerator ReturnPool()
+    protected virtual void Render()
     {
-        yield return new WaitForSeconds(2.0f);
-        PoolingObject.Instance.ReturnObject(this.gameObject);
+    }
+
+    protected virtual void ResetValue()
+    {
+        CurrentHealth = MaxHealth;
+        IsAttacking = false;
+        IsDead = false;
+        transform.position = Vector3.zero;
+        _currentAnimation = "";
     }
 }

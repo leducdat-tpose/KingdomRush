@@ -8,6 +8,7 @@ public class ProjectTiles: MonoBehaviour
         public Tower Tower{get; set;}
         [FormerlySerializedAs("EnemyTarget")] [SerializeField]
         private Enemy _enemyTarget;
+        private Vector3 _targetPosition = Vector3.zero;
         [Header("Attributes")]
         [SerializeField]
         private float _damageCause;
@@ -23,7 +24,7 @@ public class ProjectTiles: MonoBehaviour
         
         private void Update()
         {
-            if (!_enemyTarget) return;
+            if(_enemyTarget) _targetPosition = _enemyTarget.gameObject.transform.position;
             MoveProjectTiles();
             RotateProjectTiles();
         }
@@ -36,17 +37,25 @@ public class ProjectTiles: MonoBehaviour
         
         private void MoveProjectTiles()
         {
-            transform.position = Vector2.MoveTowards(transform.position, _enemyTarget.gameObject.transform.position, _speed * Time.deltaTime);
-            float distanceToTarget = (_enemyTarget.gameObject.transform.position - transform.position).magnitude;
+            transform.position = Vector2.MoveTowards(transform.position, _targetPosition, _speed * Time.deltaTime);
+            float distanceToTarget = (_targetPosition - transform.position).magnitude;
             if (!(distanceToTarget < minDistanceToDealDamage)) return;
-            _enemyTarget.Damage(_damageCause);
+            if(_enemyTarget) _enemyTarget.Damage(_damageCause);
             PoolingObject.Instance.ReturnObject(gameObject);
+            ResetValues();
         }
         private void RotateProjectTiles()
         {
-            var enemyPos = _enemyTarget.transform.position - transform.position;
+            var enemyPos = _targetPosition - transform.position;
             float angle = Vector3.SignedAngle(transform.up, enemyPos, transform.forward);
             transform.Rotate(0f, 0f, angle);
+        }
+
+        private void ResetValues()
+        {
+            Tower = null;
+            _enemyTarget = null;
+            _targetPosition = Vector3.zero;
         }
         
     }

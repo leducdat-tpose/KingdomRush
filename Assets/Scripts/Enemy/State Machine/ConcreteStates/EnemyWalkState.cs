@@ -54,4 +54,8 @@ public class EnemyWalkState : EnemyState
         base.PhysicsUpdate();
         enemy.MoveEnemy();
     }
+    public override void TestingDebug()
+    {
+        Debug.Log("Move State");
+    }
 }

@@ -16,7 +16,6 @@ public class EnemyDeathState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
-        enemy.ChangeAnimation("Death");
     }
 
     public override void ExitState()
@@ -52,5 +51,9 @@ public class EnemyDeathState : EnemyState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+    }
+    public override void TestingDebug()
+    {
+        Debug.Log("Death State");
     }
 }
