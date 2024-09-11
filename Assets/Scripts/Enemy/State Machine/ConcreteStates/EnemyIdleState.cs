@@ -16,6 +16,7 @@ public class EnemyIdleState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
+        enemy.StopMoving();
     }
 
     public override void ExitState()

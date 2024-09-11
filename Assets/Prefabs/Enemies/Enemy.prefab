@@ -147,6 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
   animator: {fileID: 247797512}
+  spriteRenderer: {fileID: 4823975608452205924}
   <MaxHealth>k__BackingField: 25
   <CurrentHealth>k__BackingField: 0
   <MoveSpeed>k__BackingField: 2

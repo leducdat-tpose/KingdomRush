@@ -32,8 +32,8 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     [field: SerializeField] public float MoveSpeed { get; set; } = 5f;
     public Vector3 TargetPosition {  get; set; }
     public int PathIndex { get; set; } = 0;
-    protected bool IsAttacking = false;
-    protected bool IsDead = false;
+    private bool _isAttacking = false;
+    private bool _isDead = false;
     private int _currentAnimation = Idle;
     #endregion
 
@@ -78,6 +78,10 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
 
     protected virtual void Update()
     {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            StartAttacking();
+        }
         StateMachine.CurrentEnemyState.FrameUpdate();
         Render();
     }
@@ -88,30 +92,31 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     }
     public void Damage(float damageAmount)
     {
-        if (IsDead) return;
+        if (_isDead) return;
         CurrentHealth -= damageAmount;
         if (!(CurrentHealth <= 0)) return;
         CurrentHealth = 0;
-        IsDead = true;
+        _isDead = true;
         StateMachine.ChangeState(DeathState);
         rb.velocity = Vector2.zero;
     }
 
     public void Die()
     {
-        ResetValue();
         PoolingObject.Instance.ReturnObject(this.gameObject);
+        ResetValue();
     }
 
     public void MoveEnemy()
     {
+        if (StateMachine.CurrentEnemyState != WalkState) return;
         Vector2 direction = (TargetPosition - transform.position).normalized;
         rb.velocity = direction * MoveSpeed;
     }
 
     public void UpdateTargetPosition()
     {
-        if (Vector2.Distance(TargetPosition, transform.position) > 0.1f || !this.gameObject.activeSelf || IsDead) return;
+        if (Vector2.Distance(TargetPosition, transform.position) > 0.1f || !this.gameObject.activeSelf || _isDead) return;
         PathIndex++;
         if(PathIndex == LevelManager.instance.GetWaypointsLength())
         {
@@ -131,8 +136,8 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     protected virtual void Render()
     {
         var nextAnimation = Idle;
-        if (IsAttacking) nextAnimation = Attack;
-        else if (IsDead) nextAnimation = Death;
+        if (_isAttacking) nextAnimation = Attack;
+        else if (_isDead) nextAnimation = Death;
         else if (rb.velocity != Vector2.zero)
         {
             Vector2 direction = rb.velocity / MoveSpeed;
@@ -151,9 +156,27 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     protected virtual void ResetValue()
     {
         CurrentHealth = MaxHealth;
-        IsAttacking = false;
-        IsDead = false;
+        _isAttacking = false;
+        _isDead = false;
         transform.position = Vector3.zero;
         _currentAnimation = Idle;
+    }
+    public bool GetIsDead(){return _isDead;}
+
+    public void StartAttacking()
+    {
+        _isAttacking = true;
+        StateMachine.ChangeState(AttackState);
+    }
+
+    public void StopAttacking()
+    {
+        _isAttacking = false;
+        StateMachine.ChangeState(WalkState);
+    }
+
+    public void StopMoving()
+    {
+        rb.velocity = Vector2.zero;
     }
 }
