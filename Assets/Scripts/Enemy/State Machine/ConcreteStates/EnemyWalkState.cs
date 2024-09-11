@@ -16,11 +16,13 @@ public class EnemyWalkState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
+        Debug.Log("EnterState Walk");
     }
 
     public override void ExitState()
     {
         base.ExitState();
+        Debug.Log("ExitState Walk");
     }
 
     public override void FrameUpdate()

@@ -2016,11 +2016,11 @@ MonoBehaviour:
   enemyPrefabs:
   - {fileID: 55734201109154817, guid: b5a5f1dd862c18b4397d4a71e268fafe, type: 3}
   timeBetweenWaves: 5
-  enemiesPerSec: 2
-  baseEnemies: 3
-  diffScalingFactor: 0.75
+  enemiesPerSec: 1
+  baseEnemies: 1
+  diffScalingFactor: 1
   isSpawning: 0
-  maxNumsWave: 3
+  maxNumsWave: 1
   currentWave: 1
   enemiesAlive: 0
   enemiesLeftToSpawn: 0
@@ -4468,7 +4468,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &887930467
 Transform:
   m_ObjectHideFlags: 0

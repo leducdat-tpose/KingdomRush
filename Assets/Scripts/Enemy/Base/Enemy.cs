@@ -7,12 +7,23 @@ using static UnityEngine.GraphicsBuffer;
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
 {
+    #region ID_Animations
+    protected static readonly int Idle = Animator.StringToHash("Idle");
+    protected static readonly int WalkUp = Animator.StringToHash("WalkUp");
+    protected static readonly int WalkDown = Animator.StringToHash("WalkDown");
+    protected static readonly int WalkSide = Animator.StringToHash("WalkSide");
+    protected static readonly int Death = Animator.StringToHash("Death");
+    protected static readonly int Attack = Animator.StringToHash("Attack");
+    #endregion
+    
     #region References
     [Header("References")]
     [SerializeField]
     private Rigidbody2D rb;
     [SerializeField]
     private Animator animator;
+    [SerializeField]
+    private SpriteRenderer spriteRenderer;
     #endregion
     
     #region Variables
@@ -23,7 +34,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     public int PathIndex { get; set; } = 0;
     protected bool IsAttacking = false;
     protected bool IsDead = false;
-    private string _currentAnimation = "";
+    private int _currentAnimation = Idle;
     #endregion
 
     #region Animation Trigger
@@ -55,6 +66,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
 
     private void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         rb.isKinematic = true;
@@ -67,7 +79,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     protected virtual void Update()
     {
         StateMachine.CurrentEnemyState.FrameUpdate();
-        StateMachine.CurrentEnemyState.TestingDebug();
+        Render();
     }
 
     private void FixedUpdate()
@@ -76,11 +88,13 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     }
     public void Damage(float damageAmount)
     {
+        if (IsDead) return;
         CurrentHealth -= damageAmount;
         if (!(CurrentHealth <= 0)) return;
         CurrentHealth = 0;
         IsDead = true;
         StateMachine.ChangeState(DeathState);
+        rb.velocity = Vector2.zero;
     }
 
     public void Die()
@@ -114,15 +128,24 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
         StateMachine.CurrentEnemyState.AnimationTriggerEvent(triggerType);
     }
 
-    public void ChangeAnimation(string nextAnimation)
-    {
-        if(_currentAnimation == nextAnimation) return;
-        animator.CrossFade(nextAnimation, 0.2f);
-        _currentAnimation = nextAnimation;
-    }
-
     protected virtual void Render()
     {
+        var nextAnimation = Idle;
+        if (IsAttacking) nextAnimation = Attack;
+        else if (IsDead) nextAnimation = Death;
+        else if (rb.velocity != Vector2.zero)
+        {
+            Vector2 direction = rb.velocity / MoveSpeed;
+            if (Mathf.Abs(direction.x) < Mathf.Abs(direction.y)) nextAnimation = direction.y < 0 ? WalkDown : WalkUp;
+            else
+            {
+                nextAnimation = WalkSide;
+                spriteRenderer.flipX = direction.x < 0;
+            }
+        }
+        if(nextAnimation == _currentAnimation || gameObject.activeSelf == false) return;
+        animator.CrossFade(nextAnimation, 0.1f, 0);
+        _currentAnimation = nextAnimation;
     }
 
     protected virtual void ResetValue()
@@ -131,6 +154,6 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
         IsAttacking = false;
         IsDead = false;
         transform.position = Vector3.zero;
-        _currentAnimation = "";
+        _currentAnimation = Idle;
     }
 }

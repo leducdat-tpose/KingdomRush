@@ -145,8 +145,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ff3fca84a0a59f4f8d98ed28edfa1fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
   animator: {fileID: 247797512}
-  <MaxHealth>k__BackingField: 100
+  <MaxHealth>k__BackingField: 25
+  <CurrentHealth>k__BackingField: 0
   <MoveSpeed>k__BackingField: 2
 --- !u!95 &247797512
 Animator:
