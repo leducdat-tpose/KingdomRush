@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Serialization;
 
-public class ProjectTiles: MonoBehaviour
+public class ProjectTiles: MonoBehaviour, IPoolObject
     {
         public Tower Tower{get; set;}
         [FormerlySerializedAs("EnemyTarget")] [SerializeField]
@@ -40,9 +40,8 @@ public class ProjectTiles: MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, _targetPosition, _speed * Time.deltaTime);
             float distanceToTarget = (_targetPosition - transform.position).magnitude;
             if (!(distanceToTarget < minDistanceToDealDamage)) return;
-            if(_enemyTarget) _enemyTarget.Damage(_damageCause);
-            PoolingObject.Instance.ReturnObject(gameObject);
-            ResetValues();
+            if(_enemyTarget) _enemyTarget.TakenDamage(_damageCause);
+            ReturnToPool();
         }
         private void RotateProjectTiles()
         {
@@ -51,11 +50,16 @@ public class ProjectTiles: MonoBehaviour
             transform.Rotate(0f, 0f, angle);
         }
 
-        private void ResetValues()
+        public void ReturnToPool()
+        {
+            ResetValue();
+            PoolingObject.Instance.ReturnObject(this.gameObject);
+        }
+
+        public void ResetValue()
         {
             Tower = null;
             _enemyTarget = null;
             _targetPosition = Vector3.zero;
         }
-        
     }

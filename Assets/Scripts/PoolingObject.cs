@@ -56,6 +56,7 @@ public class PoolingObject : MonoBehaviour
         gameObject.transform.position = Vector3.zero;
         queue.Enqueue(gameObject);
     }
+    
     private GameObject CreateNewObject(GameObject prefab)
     {
         Transform contain = this.transform.Find("Contain_"+gameObject.name);

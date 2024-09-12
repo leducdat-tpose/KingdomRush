@@ -90,7 +90,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     {
         StateMachine.CurrentEnemyState.PhysicsUpdate();
     }
-    public void Damage(float damageAmount)
+    public void TakenDamage(float damageAmount)
     {
         if (_isDead) return;
         CurrentHealth -= damageAmount;
