@@ -62,4 +62,9 @@ public class ProjectTiles: MonoBehaviour
             _enemyTarget = null;
             _targetPosition = Vector3.zero;
         }
+
+        public void SetDamageCause(float damage)
+        {
+            _damageCause = damage;
+        }
     }

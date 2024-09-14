@@ -4,16 +4,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using UnityEngine;
+
 [RequireComponent(typeof(Collider2D))]
 public class Tower : MonoBehaviour, IShootable
 {
+    public event Action<int> UpgradeAction;
     [field: SerializeField] public float AttackRange { get; set; } = 5f;
     [SerializeField]
     private List<Enemy> _enemies;
     [SerializeField]
     private Enemy _currentTarget = null;
+    [SerializeField]
+    private SpriteRenderer _spriteRenderer;
+    [SerializeField]
+    private List<Sprite> _spritesTowerUpgrade;
     public Enemy CurrentTarget => _currentTarget;
-    
+    [SerializeField]
+    private int _towerLevel = 1;
     public Collider2D Collider { get; set; }
     private void Reset()
     {
@@ -24,11 +31,16 @@ public class Tower : MonoBehaviour, IShootable
 
     private void Start()
     {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
     {
         UpdateCurrentTarget();
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            UpgradeTower();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -64,5 +76,13 @@ public class Tower : MonoBehaviour, IShootable
             minDistance = realDistance;
             _currentTarget = enemy;
         }
+    }
+
+    private void UpgradeTower()
+    {
+        if (_towerLevel == _spritesTowerUpgrade.Count) return; 
+        _towerLevel++;
+        _spriteRenderer.sprite = _spritesTowerUpgrade[_towerLevel - 1];
+        UpgradeAction?.Invoke(_towerLevel);
     }
 }

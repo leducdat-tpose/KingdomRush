@@ -70,8 +70,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -754724379
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 22cd24d3220c65448baf1ecc66d69a74, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -115,6 +115,12 @@ MonoBehaviour:
   <AttackRange>k__BackingField: 5
   _enemies: []
   _currentTarget: {fileID: 0}
+  _spriteRenderer: {fileID: 8858592989618146326}
+  _spritesTowerUpgrade:
+  - {fileID: 21300000, guid: 22cd24d3220c65448baf1ecc66d69a74, type: 3}
+  - {fileID: 21300000, guid: 864658f69c131bd468b5a26af0edf831, type: 3}
+  - {fileID: 21300000, guid: fb3a7ea97d71e8b45b0bacdcb09c7386, type: 3}
+  _towerLevel: 1
 --- !u!1 &8858592990584423653
 GameObject:
   m_ObjectHideFlags: 0
