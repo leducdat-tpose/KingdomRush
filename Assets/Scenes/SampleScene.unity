@@ -2820,6 +2820,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefabs:
   - {fileID: 55734201109154817, guid: b5a5f1dd862c18b4397d4a71e268fafe, type: 3}
+  - {fileID: 5661872374317603713, guid: 5af432891b42340468f5fc191b888254, type: 3}
   _poolSize: 15
 --- !u!4 &529905167
 Transform:
