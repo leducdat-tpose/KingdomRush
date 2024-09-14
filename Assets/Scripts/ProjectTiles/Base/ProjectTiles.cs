@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Serialization;
 
-public class ProjectTiles: MonoBehaviour, IPoolObject
+public class ProjectTiles: MonoBehaviour
     {
         public Tower Tower{get; set;}
         [FormerlySerializedAs("EnemyTarget")] [SerializeField]
