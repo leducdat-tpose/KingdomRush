@@ -33,8 +33,7 @@ public class Solider : MonoBehaviour, IMoveable, IDamageable
     private float _nextAttackTime;
     protected virtual void Start()
     {
-        tower = gameObject.transform.parent.gameObject.transform.parent.gameObject;
-        _tower = tower.GetComponentInChildren<Tower>();
+        GetTower();
         _tower.UpgradeAction += UpgradeSolider;
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -44,7 +43,12 @@ public class Solider : MonoBehaviour, IMoveable, IDamageable
         _damageCause = _baseDamage;
         _currentTarget = null;
     }
-    
+
+    protected virtual void GetTower()
+    {
+        tower = gameObject.transform.parent.gameObject.transform.parent.gameObject;
+        _tower = tower.GetComponentInChildren<Tower>();
+    }
     protected virtual void Update()
     {
         Render();

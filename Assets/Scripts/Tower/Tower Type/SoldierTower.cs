@@ -5,6 +5,33 @@ using UnityEngine;
 public class SoldierTower : Tower
 {
     
+    [Header("References")]
+    [SerializeField]
+    private GameObject soldierPrefab;
+    [SerializeField]
+    private List<Soldier> soldiers;
+    [Header("Attributes")]
+    [SerializeField]
+    private int _soldiersCapacity = 4;
+
+    [SerializeField] private Vector2 _markPosition ;
+    [SerializeField]
+    private int _soldiersCount;
+    protected override void Start()
+    {
+        base.Start();
+        _markPosition = transform.position + new Vector3(0, -2.5f);
+        for (int i = 0; i < _soldiersCapacity; i++)
+        {
+            Soldier newSoldier = PoolingObject.Instance.GetObject(soldierPrefab).GetComponent<Soldier>();
+            newSoldier.transform.position = transform.position + new Vector3(Random.Range(-1.5f, 3), Random.Range(-2.5f,3));
+            newSoldier.transform.SetParent(transform);
+            soldiers.Add(newSoldier);
+            newSoldier.gameObject.SetActive(true);
+        }
+        _soldiersCount = soldiers.Count;
+    }
+
     protected override void UpdateCurrentTarget()
     {
     }

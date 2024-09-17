@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(CircleCollider2D))]
 public class Soldier : Solider
 {
-    [SerializeField] private float _attackRange = 0.5f;
+    [SerializeField] private float _attackRange = 2f;
     [SerializeField] private CircleCollider2D _collider2D;
     [SerializeField] List<Enemy> _enemies;
 
@@ -13,6 +13,7 @@ public class Soldier : Solider
     {
         _collider2D = GetComponent<CircleCollider2D>();
         _collider2D.radius = _attackRange;
+        _collider2D.isTrigger = true;
     }
 
     protected override void Start()
@@ -60,7 +61,7 @@ public class Soldier : Solider
             _currentTarget = enemy;
         }
     }
-    
+
     protected override void LoadingProjectile()
     {
     }

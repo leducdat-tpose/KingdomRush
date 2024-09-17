@@ -42,7 +42,6 @@ public class PoolingObject : MonoBehaviour
             else
             {
                 GameObject newObject = queue.Dequeue();
-                newObject.SetActive(true);
                 return newObject;
             }
         }

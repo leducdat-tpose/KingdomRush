@@ -29,7 +29,7 @@ public class Tower : MonoBehaviour, IShootable
         Collider.GetComponent<CircleCollider2D>().radius = AttackRange;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }

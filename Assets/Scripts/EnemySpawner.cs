@@ -81,7 +81,8 @@ public class EnemySpawner : MonoBehaviour
     // ReSharper disable Unity.PerformanceAnalysis
     void SpawnEnemy()
     {
-        PoolingObject.Instance.GetObject(enemyPrefabs[0]);
+        var newEnemy = PoolingObject.Instance.GetObject(enemyPrefabs[0]);
+        newEnemy.SetActive(true);
         enemiesAlive++;
     }
 
