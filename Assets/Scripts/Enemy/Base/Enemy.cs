@@ -35,6 +35,8 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     private bool _isAttacking = false;
     private bool _isDead = false;
     private int _currentAnimation = Idle;
+    [SerializeField]
+    private bool _beingProvoke = false;
     #endregion
 
     #region Animation Trigger
@@ -178,5 +180,15 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     public void StopMoving()
     {
         rb.velocity = Vector2.zero;
+    }
+
+    public bool GetBeingProvoked()
+    {
+        return _beingProvoke;
+    }
+
+    public void SetBeingProvoke(bool value)
+    {
+        _beingProvoke = value;
     }
 }

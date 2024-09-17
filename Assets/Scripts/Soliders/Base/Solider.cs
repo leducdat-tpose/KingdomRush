@@ -15,7 +15,7 @@ public class Solider : MonoBehaviour, IMoveable, IDamageable
     public Vector3 Position { get; set; }
     public float MaxHealth { get; set; }
     public float CurrentHealth { get; set; }
-    [SerializeField] private GameObject tower;
+    private GameObject tower;
     [SerializeField] private Tower _tower;
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _spriteRenderer;
@@ -27,6 +27,7 @@ public class Solider : MonoBehaviour, IMoveable, IDamageable
     [SerializeField] private float _upgradeDamageIndex;
     [SerializeField] private float _damageCause;
     [SerializeField] protected float coolDownAttack;
+    [SerializeField] protected Enemy _currentTarget;
     private bool _isAttacking;
     private int _currentAnimation;
     private float _nextAttackTime;
@@ -41,6 +42,7 @@ public class Solider : MonoBehaviour, IMoveable, IDamageable
         _currentProjectTiles = null;
         _isAttacking = false;
         _damageCause = _baseDamage;
+        _currentTarget = null;
     }
     
     protected virtual void Update()
@@ -71,29 +73,24 @@ public class Solider : MonoBehaviour, IMoveable, IDamageable
         _currentAnimation = newAnimation;
     }
 
-    void LoadingProjectile()
+    protected virtual void LoadingProjectile()
     {
         GameObject newObject = PoolingObject.Instance.GetObject(_prefabProjectile);
         _currentProjectTiles = newObject.GetComponent<ProjectTiles>();
         _currentProjectTiles.transform.position = transform.position;
         _currentProjectTiles.gameObject.SetActive(false);
+        _currentProjectTiles.SetCurrentEnemy(_tower.CurrentTarget);
     }
     protected virtual void StartAttacking()
     {
         _currentProjectTiles.gameObject.SetActive(true);
-        _currentProjectTiles.SetCurrentEnemy(_tower.CurrentTarget);
         _currentProjectTiles.SetDamageCause(_damageCause);
         _isAttacking = false;
     }
-    public void TakenDamage(float damageAmount)
+    public virtual void TakenDamage(float damageAmount)
     {
         
     }
-    public void Die()
-    {
-        
-    }
-
     private void UpgradeSolider(int towerLevel)
     {
         if (_level == _spritesSoliderUpgrade.Count) return;

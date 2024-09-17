@@ -43,14 +43,14 @@ public class Tower : MonoBehaviour, IShootable
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    protected virtual void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Enemy")) return;
         Enemy newEnemy = other.GetComponent<Enemy>();
         _enemies.Add(newEnemy);
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    protected virtual void OnTriggerExit2D(Collider2D other)
     {
         if (!other.CompareTag("Enemy")) return;
         Enemy existEnemy = other.GetComponent<Enemy>();
@@ -61,7 +61,7 @@ public class Tower : MonoBehaviour, IShootable
     {
     }
 
-    private void UpdateCurrentTarget()
+    protected virtual void UpdateCurrentTarget()
     {
         if (_enemies.Count == 0)
         {
@@ -80,7 +80,7 @@ public class Tower : MonoBehaviour, IShootable
 
     private void UpgradeTower()
     {
-        if (_towerLevel == _spritesTowerUpgrade.Count) return; 
+        if (_towerLevel == _spritesTowerUpgrade.Count) return;
         _towerLevel++;
         _spriteRenderer.sprite = _spritesTowerUpgrade[_towerLevel - 1];
         UpgradeAction?.Invoke(_towerLevel);
