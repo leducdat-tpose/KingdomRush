@@ -31,6 +31,11 @@ public class Soldier : Solider
 
     protected override void Update()
     {
+        Render();
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            SetIsAttacking(true);
+        }
         if (_isMovingToStandingPosition)
         {
             Vector2 direction = (StandingPosition - transform.position).normalized;
@@ -43,11 +48,6 @@ public class Soldier : Solider
         }
         UpdateCurrentTarget();
     }
-
-    protected override void Render()
-    {
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Enemy")) return;
@@ -91,6 +91,11 @@ public class Soldier : Solider
 
     protected override void StartAttacking()
     {
+    }
+
+    private void StopAttacking()
+    {
+        SetIsAttacking(false);
     }
     
 }

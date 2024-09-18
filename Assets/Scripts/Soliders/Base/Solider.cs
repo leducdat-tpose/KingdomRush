@@ -5,19 +5,19 @@ using UnityEngine.Serialization;
 
 public class Solider : MonoBehaviour, IMoveable, IDamageable
 {
-    private static int Idle = Animator.StringToHash("Idle Level_1");
-    private static int Walk = Animator.StringToHash("Walk Level_1");
-    private static int IdleUp = Animator.StringToHash("Idle_Up Level_1");
-    private static int AttackUp = Animator.StringToHash("Attack_Up Level_1");
-    private static int Attack = Animator.StringToHash("Attack Level_1");
-    private static int Death = Animator.StringToHash("Death Level_1");
+    private int Idle = Animator.StringToHash("Idle Level_1");
+    private int Walk = Animator.StringToHash("Walk Level_1");
+    private int IdleUp = Animator.StringToHash("Idle_Up Level_1");
+    private int AttackUp = Animator.StringToHash("Attack_Up Level_1");
+    private int Attack = Animator.StringToHash("Attack Level_1");
+    private int Death = Animator.StringToHash("Death Level_1");
     [field:SerializeField]public float Speed { get; set; }
     public Vector3 StandingPosition { get; set; }
     public float MaxHealth { get; set; }
     public float CurrentHealth { get; set; }
     private GameObject tower;
     [SerializeField] private Tower _tower;
-    public Tower OwnerTower => _tower;
+    protected Tower OwnerTower => _tower;
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private List<Sprite> _spritesSoliderUpgrade;
@@ -30,6 +30,8 @@ public class Solider : MonoBehaviour, IMoveable, IDamageable
     [SerializeField] protected float coolDownAttack;
     [SerializeField] protected Enemy _currentTarget;
     private bool _isAttacking;
+    private bool _isMoving;
+    private bool _isDead;
     private int _currentAnimation;
     private float _nextAttackTime;
     protected virtual void Start()
@@ -41,6 +43,8 @@ public class Solider : MonoBehaviour, IMoveable, IDamageable
         _level = 1;
         _currentProjectTiles = null;
         _isAttacking = false;
+        _isMoving = false;
+        _isDead = false;
         _damageCause = _baseDamage;
         _currentTarget = null;
     }
@@ -63,6 +67,8 @@ public class Solider : MonoBehaviour, IMoveable, IDamageable
     {
         var newAnimation = Idle;
         if (_isAttacking) newAnimation = Attack;
+        else if(_isMoving) newAnimation = Walk;
+        else if (_isDead) newAnimation = Death;
         if (_tower.CurrentTarget)
         {
             Vector2 direction = _tower.CurrentTarget.transform.position - tower.transform.position;
@@ -109,5 +115,10 @@ public class Solider : MonoBehaviour, IMoveable, IDamageable
         Death = Animator.StringToHash("Death" + stringLevel);
         IdleUp = Animator.StringToHash("Idle_Up" + stringLevel);
         AttackUp = Animator.StringToHash("Attack_Up" + stringLevel);
+    }
+
+    public void SetIsAttacking(bool _isAttacking)
+    {
+        this._isAttacking = _isAttacking;
     }
 }
