@@ -22,7 +22,7 @@ public class EnemyWalkState : EnemyState
     public override void ExitState()
     {
         base.ExitState();
-        Debug.Log("ExitState Walk");
+        enemy.StopMoving();
     }
 
     public override void FrameUpdate()

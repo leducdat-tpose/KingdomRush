@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyAttackState : EnemyState
 {
+    private float _nextAttackTime;
     public EnemyAttackState(Enemy enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
     {
     }
@@ -16,7 +17,6 @@ public class EnemyAttackState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
-        enemy.StopMoving();
     }
 
     public override void ExitState()
@@ -27,6 +27,9 @@ public class EnemyAttackState : EnemyState
     public override void FrameUpdate()
     {
         base.FrameUpdate();
+        if (Time.time < _nextAttackTime) return;
+        enemy.StartAttacking();
+        _nextAttackTime = Time.time + enemy.CoolDownAttack;
     }
 
     public override void GetNextState()

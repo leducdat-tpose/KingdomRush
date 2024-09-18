@@ -122,7 +122,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 2
+  m_Radius: 1
 --- !u!50 &5060813594814885771
 Rigidbody2D:
   serializedVersion: 4
@@ -157,6 +157,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Speed>k__BackingField: 2
+  <MaxHealth>k__BackingField: 25
+  <CurrentHealth>k__BackingField: 0
   _tower: {fileID: 0}
   _animator: {fileID: 0}
   _spriteRenderer: {fileID: 0}
@@ -168,7 +170,7 @@ MonoBehaviour:
   _damageCause: 0
   coolDownAttack: 1
   _currentTarget: {fileID: 0}
-  _attackRange: 2
+  _attackRange: 1
   _collider2D: {fileID: 2438626205993660161}
   _enemies: []
   _rigidbody2D: {fileID: 5060813594814885771}

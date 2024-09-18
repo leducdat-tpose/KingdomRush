@@ -32,20 +32,7 @@ public class Soldier : Solider
     protected override void Update()
     {
         Render();
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            SetIsAttacking(true);
-        }
-        if (_isMovingToStandingPosition)
-        {
-            Vector2 direction = (StandingPosition - transform.position).normalized;
-            _rigidbody2D.velocity = direction * Speed;
-            if (Vector2.Distance(transform.position, StandingPosition) < 0.1f)
-            {
-                _isMovingToStandingPosition = false;
-                _rigidbody2D.velocity = Vector2.zero;
-            }
-        }
+        MovingToStandingPosition();
         UpdateCurrentTarget();
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -70,18 +57,18 @@ public class Soldier : Solider
     }
     private void UpdateCurrentTarget()
     {
+        if (_currentTarget) return;
         if (_enemies.Count == 0)
         {
             _currentTarget = null;
             return;
         }
-        float minDistance = Mathf.Infinity;
         foreach (var enemy in _enemies)
         {
-            float realDistance = Vector2.Distance(transform.position, enemy.transform.position);
-            if(minDistance <= realDistance) continue;
-            minDistance = realDistance;
+            if(enemy.GetBeingProvoked()) continue;
             _currentTarget = enemy;
+            enemy.SetBeingProvoke(true, this);
+            return;
         }
     }
 
@@ -97,5 +84,21 @@ public class Soldier : Solider
     {
         SetIsAttacking(false);
     }
-    
+
+    private void MovingToTargetPosition(Vector3 targetPosition)
+    {
+        Vector2 direction = (targetPosition - transform.position).normalized;
+        _rigidbody2D.velocity = direction * Speed;
+    }
+
+    private void MovingToStandingPosition()
+    {
+        if (!_isMovingToStandingPosition) return;
+        MovingToTargetPosition(StandingPosition);
+        if (Vector2.Distance(transform.position, StandingPosition) < 0.1f)
+        {
+            _isMovingToStandingPosition = false;
+            _rigidbody2D.velocity = Vector2.zero;
+        }
+    }
 }

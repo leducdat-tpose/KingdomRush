@@ -24,6 +24,8 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     private Animator animator;
     [SerializeField]
     private SpriteRenderer spriteRenderer;
+    [SerializeField]
+    private Solider _currentTargetSolider;
     #endregion
     
     #region Variables
@@ -34,7 +36,10 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     public int PathIndex { get; set; } = 0;
     private bool _isAttacking = false;
     private bool _isDead = false;
-    private int _currentAnimation = Idle;
+    private int _currentAnimation;
+    [SerializeField]
+    private float coolDownAttack;
+    public float CoolDownAttack => coolDownAttack;
     [SerializeField]
     private bool _beingProvoke = false;
     #endregion
@@ -74,15 +79,17 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
         rb.isKinematic = true;
         CurrentHealth = MaxHealth;
         TargetPosition = LevelManager.instance.GetStartingPoint();
+        _currentTargetSolider = null;
+        _currentAnimation = Idle;
         transform.position = TargetPosition;
         StateMachine.Initialize(WalkState);
     }
 
     protected virtual void Update()
     {
-        if (Input.GetKeyDown(KeyCode.J))
+        if (_currentTargetSolider)
         {
-            StartAttacking();
+            StateMachine.ChangeState(AttackState);
         }
         StateMachine.CurrentEnemyState.FrameUpdate();
         Render();
@@ -168,12 +175,19 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     public void StartAttacking()
     {
         _isAttacking = true;
-        StateMachine.ChangeState(AttackState);
     }
+
+    protected virtual void CauseDamage()
+    {
+        if(_isDead || !_currentTargetSolider) return;
+        _currentTargetSolider.TakenDamage(2);
+    }
+        
 
     public void StopAttacking()
     {
         _isAttacking = false;
+        if (_beingProvoke) return;
         StateMachine.ChangeState(WalkState);
     }
 
@@ -187,8 +201,17 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
         return _beingProvoke;
     }
 
-    public void SetBeingProvoke(bool value)
+    public void SetBeingProvoke(bool value, Solider sourceSolider)
     {
         _beingProvoke = value;
+        _currentTargetSolider = sourceSolider;
+        if(value) StateMachine.ChangeState(AttackState);
+    }
+
+    public void StopBeingProvoked()
+    {
+        _beingProvoke = false;
+        _currentTargetSolider = null;
+        StateMachine.ChangeState(WalkState);
     }
 }

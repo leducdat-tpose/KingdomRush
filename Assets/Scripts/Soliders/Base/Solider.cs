@@ -13,8 +13,8 @@ public class Solider : MonoBehaviour, IMoveable, IDamageable
     private int Death = Animator.StringToHash("Death Level_1");
     [field:SerializeField]public float Speed { get; set; }
     public Vector3 StandingPosition { get; set; }
-    public float MaxHealth { get; set; }
-    public float CurrentHealth { get; set; }
+    [field:SerializeField]public float MaxHealth { get; set; }
+    [field:SerializeField]public float CurrentHealth { get; set; }
     private GameObject tower;
     [SerializeField] private Tower _tower;
     protected Tower OwnerTower => _tower;
@@ -47,6 +47,7 @@ public class Solider : MonoBehaviour, IMoveable, IDamageable
         _isDead = false;
         _damageCause = _baseDamage;
         _currentTarget = null;
+        CurrentHealth = MaxHealth;
     }
 
     protected virtual void GetTower()
@@ -100,7 +101,10 @@ public class Solider : MonoBehaviour, IMoveable, IDamageable
     }
     public virtual void TakenDamage(float damageAmount)
     {
-        
+        CurrentHealth -= damageAmount;
+        if (CurrentHealth > 0) return;
+        _isDead = true;
+        _currentTarget.StopBeingProvoked();
     }
     private void UpgradeSolider(int towerLevel)
     {
@@ -116,9 +120,15 @@ public class Solider : MonoBehaviour, IMoveable, IDamageable
         IdleUp = Animator.StringToHash("Idle_Up" + stringLevel);
         AttackUp = Animator.StringToHash("Attack_Up" + stringLevel);
     }
-
-    public void SetIsAttacking(bool _isAttacking)
+    protected void SetIsAttacking(bool _isAttacking)
     {
         this._isAttacking = _isAttacking;
+    }
+
+    private void ReturnToTower()
+    {
+        _currentTarget = null;
+        gameObject.SetActive(false);
+        transform.position = _tower.transform.position;
     }
 }
