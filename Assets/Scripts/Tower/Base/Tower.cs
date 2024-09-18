@@ -9,6 +9,7 @@ using UnityEngine;
 public class Tower : MonoBehaviour, IShootable
 {
     public event Action<int> UpgradeAction;
+    public event Action<Vector3> ChangeStandingPosition;
     [field: SerializeField] public float AttackRange { get; set; } = 5f;
     [SerializeField]
     private List<Enemy> _enemies;
@@ -34,7 +35,7 @@ public class Tower : MonoBehaviour, IShootable
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         UpdateCurrentTarget();
         if (Input.GetKeyDown(KeyCode.U))
@@ -84,5 +85,10 @@ public class Tower : MonoBehaviour, IShootable
         _towerLevel++;
         _spriteRenderer.sprite = _spritesTowerUpgrade[_towerLevel - 1];
         UpgradeAction?.Invoke(_towerLevel);
+    }
+
+    public void ChangeStandPosition(Vector3 position)
+    {
+        ChangeStandingPosition?.Invoke(position);
     }
 }

@@ -11,12 +11,13 @@ public class Solider : MonoBehaviour, IMoveable, IDamageable
     private static int AttackUp = Animator.StringToHash("Attack_Up Level_1");
     private static int Attack = Animator.StringToHash("Attack Level_1");
     private static int Death = Animator.StringToHash("Death Level_1");
-    public float Speed { get; set; }
-    public Vector3 Position { get; set; }
+    [field:SerializeField]public float Speed { get; set; }
+    public Vector3 StandingPosition { get; set; }
     public float MaxHealth { get; set; }
     public float CurrentHealth { get; set; }
     private GameObject tower;
     [SerializeField] private Tower _tower;
+    public Tower OwnerTower => _tower;
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private List<Sprite> _spritesSoliderUpgrade;

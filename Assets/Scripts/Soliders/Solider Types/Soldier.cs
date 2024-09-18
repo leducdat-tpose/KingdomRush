@@ -2,27 +2,45 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[RequireComponent(typeof(CircleCollider2D))]
+using Random = UnityEngine.Random;
+
+[RequireComponent(typeof(CircleCollider2D), typeof(Rigidbody2D))]
 public class Soldier : Solider
 {
     [SerializeField] private float _attackRange = 2f;
     [SerializeField] private CircleCollider2D _collider2D;
     [SerializeField] List<Enemy> _enemies;
-
+    [SerializeField] Rigidbody2D _rigidbody2D;
+    [SerializeField] private bool _isMovingToStandingPosition;
     private void Reset()
     {
         _collider2D = GetComponent<CircleCollider2D>();
         _collider2D.radius = _attackRange;
         _collider2D.isTrigger = true;
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+        _rigidbody2D.isKinematic = true;
     }
 
     protected override void Start()
     {
         base.Start();
+        _isMovingToStandingPosition = false;
+        StandingPosition = transform.position;
+        OwnerTower.ChangeStandingPosition += MoveToStandingPosition;
     }
 
     protected override void Update()
     {
+        if (_isMovingToStandingPosition)
+        {
+            Vector2 direction = (StandingPosition - transform.position).normalized;
+            _rigidbody2D.velocity = direction * Speed;
+            if (Vector2.Distance(transform.position, StandingPosition) < 0.1f)
+            {
+                _isMovingToStandingPosition = false;
+                _rigidbody2D.velocity = Vector2.zero;
+            }
+        }
         UpdateCurrentTarget();
     }
 
@@ -45,6 +63,11 @@ public class Soldier : Solider
         _enemies.Remove(existEnemy);
     }
 
+    private void MoveToStandingPosition(Vector3 standingPosition)
+    {
+        StandingPosition = standingPosition + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
+        _isMovingToStandingPosition = true;
+    }
     private void UpdateCurrentTarget()
     {
         if (_enemies.Count == 0)
@@ -69,4 +92,5 @@ public class Soldier : Solider
     protected override void StartAttacking()
     {
     }
+    
 }
