@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class Solider : MonoBehaviour, IMoveable, IDamageable
+public class Warrior : MonoBehaviour, IMoveable, IDamageable
 {
     private int Idle = Animator.StringToHash("Idle Level_1");
     private int Walk = Animator.StringToHash("Walk Level_1");
@@ -30,10 +30,19 @@ public class Solider : MonoBehaviour, IMoveable, IDamageable
     [SerializeField] protected float coolDownAttack;
     [SerializeField] protected Enemy _currentTarget;
     private bool _isAttacking;
-    private bool _isMoving;
+    protected bool isMoving;
     private bool _isDead;
     private int _currentAnimation;
     private float _nextAttackTime;
+
+    #region State Machine Variables
+    protected StateManager<Warrior> StateManager { get; private set; }
+    protected SoldierIdleState IdleState { get; set; }
+    protected SoldierWalkState WalkState { get; set; }
+    protected SoldierAttackState AttackState { get; set; }
+    protected SoldierDeathState DeathState { get; set; }
+
+    #endregion
     protected virtual void Start()
     {
         GetTower();
@@ -43,11 +52,12 @@ public class Solider : MonoBehaviour, IMoveable, IDamageable
         _level = 1;
         _currentProjectTiles = null;
         _isAttacking = false;
-        _isMoving = false;
+        isMoving = false;
         _isDead = false;
         _damageCause = _baseDamage;
         _currentTarget = null;
         CurrentHealth = MaxHealth;
+        StateManager = new StateManager<Warrior>();
     }
 
     protected virtual void GetTower()
@@ -64,11 +74,14 @@ public class Solider : MonoBehaviour, IMoveable, IDamageable
         _nextAttackTime = Time.time + coolDownAttack;
     }
 
+    protected virtual void FixedUpdate()
+    {
+    }
     protected virtual void Render()
     {
         var newAnimation = Idle;
         if (_isAttacking) newAnimation = Attack;
-        else if(_isMoving) newAnimation = Walk;
+        else if(isMoving) newAnimation = Walk;
         else if (_isDead) newAnimation = Death;
         if (_tower.CurrentTarget)
         {
@@ -130,5 +143,10 @@ public class Solider : MonoBehaviour, IMoveable, IDamageable
         _currentTarget = null;
         gameObject.SetActive(false);
         transform.position = _tower.transform.position;
+    }
+
+    public BaseState<Warrior> GetCurrentState()
+    {
+        return StateManager.CurrentState;
     }
 }

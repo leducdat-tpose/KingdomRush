@@ -2,21 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyIdleState : EnemyState
+public class EnemyIdleState : BaseState<Enemy>
 {
-    public EnemyIdleState(Enemy enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
+    public EnemyIdleState(Enemy enemy, StateManager<Enemy> enemyStateMachine) : base(enemy, enemyStateMachine)
     {
     }
-
-    public override void AnimationTriggerEvent(Enemy.AnimationTriggerType type)
-    {
-        base.AnimationTriggerEvent(type);
-    }
-
     public override void EnterState()
     {
         base.EnterState();
-        enemy.StopMoving();
+        Object.StopMoving();
     }
 
     public override void ExitState()
@@ -54,8 +48,4 @@ public class EnemyIdleState : EnemyState
         base.PhysicsUpdate();
     }
 
-    public override void TestingDebug()
-    {
-        Debug.Log("Idle State");
-    }
 }

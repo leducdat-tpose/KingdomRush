@@ -2,16 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAttackState : EnemyState
+public class EnemyAttackState : BaseState<Enemy>
 {
     private float _nextAttackTime;
-    public EnemyAttackState(Enemy enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
+    public EnemyAttackState(Enemy enemy, StateManager<Enemy> enemyStateMachine) : base(enemy, enemyStateMachine)
     {
-    }
-
-    public override void AnimationTriggerEvent(Enemy.AnimationTriggerType type)
-    {
-        base.AnimationTriggerEvent(type);
     }
 
     public override void EnterState()
@@ -28,8 +23,8 @@ public class EnemyAttackState : EnemyState
     {
         base.FrameUpdate();
         if (Time.time < _nextAttackTime) return;
-        enemy.StartAttacking();
-        _nextAttackTime = Time.time + enemy.CoolDownAttack;
+        Object.StartAttacking();
+        _nextAttackTime = Time.time + Object.CoolDownAttack;
     }
 
     public override void GetNextState()
@@ -55,10 +50,5 @@ public class EnemyAttackState : EnemyState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-    }
-
-    public override void TestingDebug()
-    {
-        Debug.Log("Attack State");
     }
 }

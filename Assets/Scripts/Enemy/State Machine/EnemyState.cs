@@ -46,8 +46,4 @@ public class EnemyState
     {
     }
 
-    public virtual void TestingDebug()
-    {
-        Debug.Log("Unknown state");
-    }
 }

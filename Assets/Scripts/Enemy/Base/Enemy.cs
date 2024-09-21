@@ -24,8 +24,8 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     private Animator animator;
     [SerializeField]
     private SpriteRenderer spriteRenderer;
-    [SerializeField]
-    private Solider _currentTargetSolider;
+    [FormerlySerializedAs("_currentTargetSolider")] [SerializeField]
+    private Warrior currentTargetWarrior;
     #endregion
     
     #region Variables
@@ -55,7 +55,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     #endregion
 
     #region State Machine Variables
-    public EnemyStateMachine StateMachine { get; set; }
+    public StateManager<Enemy> StateManager { get; set; }
     public EnemyIdleState IdleState { get; set; }
     public EnemyAttackState AttackState { get; set; }
     public EnemyDeathState DeathState { get; set; }
@@ -64,11 +64,12 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
 
     private void Awake()
     {
-        StateMachine = new EnemyStateMachine();
-        IdleState = new EnemyIdleState(this, StateMachine);
-        AttackState = new EnemyAttackState(this, StateMachine);
-        WalkState = new EnemyWalkState(this, StateMachine);
-        DeathState = new EnemyDeathState(this, StateMachine);
+        StateManager = new StateManager<Enemy>();
+        IdleState = new EnemyIdleState(this, StateManager);
+        AttackState = new EnemyAttackState(this, StateManager);
+        WalkState = new EnemyWalkState(this, StateManager);
+        DeathState = new EnemyDeathState(this, StateManager);
+        
     }
 
     private void Start()
@@ -79,25 +80,25 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
         rb.isKinematic = true;
         CurrentHealth = MaxHealth;
         TargetPosition = LevelManager.instance.GetStartingPoint();
-        _currentTargetSolider = null;
+        currentTargetWarrior = null;
         _currentAnimation = Idle;
         transform.position = TargetPosition;
-        StateMachine.Initialize(WalkState);
+        StateManager.Initialize(WalkState);
     }
 
     protected virtual void Update()
     {
-        if (_currentTargetSolider)
+        if (currentTargetWarrior)
         {
-            StateMachine.ChangeState(AttackState);
+            StateManager.ChangeState(AttackState);
         }
-        StateMachine.CurrentEnemyState.FrameUpdate();
+        StateManager.CurrentState.FrameUpdate();
         Render();
     }
 
     private void FixedUpdate()
     {
-        StateMachine.CurrentEnemyState.PhysicsUpdate();
+        StateManager.CurrentState.PhysicsUpdate();
     }
     public void TakenDamage(float damageAmount)
     {
@@ -106,7 +107,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
         if (!(CurrentHealth <= 0)) return;
         CurrentHealth = 0;
         _isDead = true;
-        StateMachine.ChangeState(DeathState);
+        StateManager.ChangeState(DeathState);
         rb.velocity = Vector2.zero;
     }
 
@@ -118,7 +119,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
 
     public void MoveEnemy()
     {
-        if (StateMachine.CurrentEnemyState != WalkState) return;
+        if (StateManager.CurrentState != WalkState) return;
         Vector2 direction = (TargetPosition - transform.position).normalized;
         rb.velocity = direction * MoveSpeed;
     }
@@ -136,12 +137,6 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
         }
         TargetPosition = LevelManager.instance.GetPoint(PathIndex);
     }
-
-    private void AnimationTriggerEvent(AnimationTriggerType triggerType)
-    {
-        StateMachine.CurrentEnemyState.AnimationTriggerEvent(triggerType);
-    }
-
     protected virtual void Render()
     {
         var nextAnimation = Idle;
@@ -179,8 +174,8 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
 
     protected virtual void CauseDamage()
     {
-        if(_isDead || !_currentTargetSolider) return;
-        _currentTargetSolider.TakenDamage(2);
+        if(_isDead || !currentTargetWarrior) return;
+        currentTargetWarrior.TakenDamage(2);
     }
         
 
@@ -188,7 +183,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     {
         _isAttacking = false;
         if (_beingProvoke) return;
-        StateMachine.ChangeState(WalkState);
+        StateManager.ChangeState(WalkState);
     }
 
     public void StopMoving()
@@ -201,17 +196,17 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
         return _beingProvoke;
     }
 
-    public void SetBeingProvoke(bool value, Solider sourceSolider)
+    public void SetBeingProvoke(bool value, Warrior sourceWarrior)
     {
         _beingProvoke = value;
-        _currentTargetSolider = sourceSolider;
-        if(value) StateMachine.ChangeState(AttackState);
+        currentTargetWarrior = sourceWarrior;
+        if(value) StateManager.ChangeState(AttackState);
     }
 
     public void StopBeingProvoked()
     {
         _beingProvoke = false;
-        _currentTargetSolider = null;
-        StateMachine.ChangeState(WalkState);
+        currentTargetWarrior = null;
+        StateManager.ChangeState(WalkState);
     }
 }

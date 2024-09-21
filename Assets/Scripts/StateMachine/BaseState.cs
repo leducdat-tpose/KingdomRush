@@ -1,10 +1,16 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseState
+public class BaseState<T>
 {
+    protected readonly T Object;
+    protected StateManager<T> ObjectStateManager;
+
+    protected BaseState(T obj, StateManager<T> objectStateManager)
+    {
+        Object = obj;
+        ObjectStateManager = objectStateManager;
+    }
+    
     public virtual void EnterState() { }
     public virtual void ExitState() { }
     public virtual void FrameUpdate() { }

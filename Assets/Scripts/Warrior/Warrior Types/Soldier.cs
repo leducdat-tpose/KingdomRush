@@ -5,13 +5,12 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(CircleCollider2D), typeof(Rigidbody2D))]
-public class Soldier : Solider
+public class Soldier : Warrior
 {
     [SerializeField] private float _attackRange = 2f;
     [SerializeField] private CircleCollider2D _collider2D;
     [SerializeField] List<Enemy> _enemies;
     [SerializeField] Rigidbody2D _rigidbody2D;
-    [SerializeField] private bool _isMovingToStandingPosition;
     private void Reset()
     {
         _collider2D = GetComponent<CircleCollider2D>();
@@ -24,9 +23,12 @@ public class Soldier : Solider
     protected override void Start()
     {
         base.Start();
-        _isMovingToStandingPosition = false;
         StandingPosition = transform.position;
         OwnerTower.ChangeStandingPosition += MoveToStandingPosition;
+        IdleState = new SoldierIdleState(this, StateManager);
+        WalkState = new SoldierWalkState(this, StateManager);
+        AttackState = new SoldierAttackState(this, StateManager);
+        DeathState = new SoldierDeathState(this, StateManager);
     }
 
     protected override void Update()
@@ -53,7 +55,7 @@ public class Soldier : Solider
     private void MoveToStandingPosition(Vector3 standingPosition)
     {
         StandingPosition = standingPosition + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
-        _isMovingToStandingPosition = true;
+        isMoving = true;
     }
     private void UpdateCurrentTarget()
     {
@@ -93,12 +95,11 @@ public class Soldier : Solider
 
     private void MovingToStandingPosition()
     {
-        if (!_isMovingToStandingPosition) return;
+        if (!isMoving) return;
         MovingToTargetPosition(StandingPosition);
-        if (Vector2.Distance(transform.position, StandingPosition) < 0.1f)
-        {
-            _isMovingToStandingPosition = false;
-            _rigidbody2D.velocity = Vector2.zero;
-        }
+        isMoving = true;
+        if (!(Vector2.Distance(transform.position, StandingPosition) < 0.1f)) return;
+        isMoving = false;
+        _rigidbody2D.velocity = Vector2.zero;
     }
 }

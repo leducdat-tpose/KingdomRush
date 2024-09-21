@@ -2,15 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDeathState : EnemyState
+public class EnemyDeathState : BaseState<Enemy>
 {
-    public EnemyDeathState(Enemy enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
+    public EnemyDeathState(Enemy enemy, StateManager<Enemy> enemyStateMachine) : base(enemy, enemyStateMachine)
     {
-    }
-
-    public override void AnimationTriggerEvent(Enemy.AnimationTriggerType type)
-    {
-        base.AnimationTriggerEvent(type);
     }
 
     public override void EnterState()
@@ -51,9 +46,5 @@ public class EnemyDeathState : EnemyState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-    }
-    public override void TestingDebug()
-    {
-        Debug.Log("Death State");
     }
 }

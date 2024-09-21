@@ -2,33 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyWalkState : EnemyState
+public class EnemyWalkState : BaseState<Enemy>
 {
-    public EnemyWalkState(Enemy enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
+    public EnemyWalkState(Enemy enemy, StateManager<Enemy> enemyStateMachine) : base(enemy, enemyStateMachine)
     {
     }
-
-    public override void AnimationTriggerEvent(Enemy.AnimationTriggerType type)
-    {
-        base.AnimationTriggerEvent(type);
-    }
-
     public override void EnterState()
     {
         base.EnterState();
-        Debug.Log("EnterState Walk");
     }
 
     public override void ExitState()
     {
         base.ExitState();
-        enemy.StopMoving();
+        Object.StopMoving();
     }
 
     public override void FrameUpdate()
     {
         base.FrameUpdate();
-        enemy.UpdateTargetPosition();
+        Object.UpdateTargetPosition();
     }
 
     public override void GetNextState()
@@ -54,10 +47,6 @@ public class EnemyWalkState : EnemyState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        enemy.MoveEnemy();
-    }
-    public override void TestingDebug()
-    {
-        Debug.Log("Move State");
+        Object.MoveEnemy();
     }
 }
