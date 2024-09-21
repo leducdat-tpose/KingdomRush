@@ -104,14 +104,14 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     {
         if (_isDead) return;
         CurrentHealth -= damageAmount;
-        if (!(CurrentHealth <= 0)) return;
+        if (CurrentHealth > 0) return;
         CurrentHealth = 0;
         _isDead = true;
         StateManager.ChangeState(DeathState);
         rb.velocity = Vector2.zero;
     }
 
-    public void Die()
+    public void ReturnPoolObject()
     {
         PoolingObject.Instance.ReturnObject(this.gameObject);
         ResetValue();
@@ -164,6 +164,8 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
         _isDead = false;
         transform.position = Vector3.zero;
         _currentAnimation = Idle;
+        _beingProvoke = false;
+        currentTargetWarrior = null;
     }
     public bool GetIsDead(){return _isDead;}
 

@@ -28,6 +28,7 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable
     [SerializeField] private float _upgradeDamageIndex;
     [SerializeField] private float _damageCause;
     [SerializeField] protected float coolDownAttack;
+    public float CoolDownAttack => coolDownAttack;
     [SerializeField] protected Enemy _currentTarget;
     private bool _isAttacking;
     protected bool isMoving;
@@ -35,14 +36,6 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable
     private int _currentAnimation;
     private float _nextAttackTime;
 
-    #region State Machine Variables
-    protected StateManager<Warrior> StateManager { get; private set; }
-    protected SoldierIdleState IdleState { get; set; }
-    protected SoldierWalkState WalkState { get; set; }
-    protected SoldierAttackState AttackState { get; set; }
-    protected SoldierDeathState DeathState { get; set; }
-
-    #endregion
     protected virtual void Start()
     {
         GetTower();
@@ -57,7 +50,6 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable
         _damageCause = _baseDamage;
         _currentTarget = null;
         CurrentHealth = MaxHealth;
-        StateManager = new StateManager<Warrior>();
     }
 
     protected virtual void GetTower()
@@ -76,12 +68,18 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable
 
     protected virtual void FixedUpdate()
     {
+        
     }
     protected virtual void Render()
     {
         var newAnimation = Idle;
         if (_isAttacking) newAnimation = Attack;
-        else if(isMoving) newAnimation = Walk;
+        else if(isMoving)
+        {
+            newAnimation = Walk;
+            Vector2 direction = StandingPosition - transform.position;
+            _spriteRenderer.flipX = direction.x < -0.1f;
+        }
         else if (_isDead) newAnimation = Death;
         if (_tower.CurrentTarget)
         {
@@ -106,7 +104,7 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable
         _currentProjectTiles.gameObject.SetActive(false);
         _currentProjectTiles.SetCurrentEnemy(_tower.CurrentTarget);
     }
-    protected virtual void StartAttacking()
+    public virtual void StartAttacking()
     {
         _currentProjectTiles.gameObject.SetActive(true);
         _currentProjectTiles.SetDamageCause(_damageCause);
@@ -138,6 +136,12 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable
         this._isAttacking = _isAttacking;
     }
 
+    protected virtual void DealDamage()
+    {
+        if (!_currentTarget) return;
+        _currentTarget.TakenDamage(_damageCause);
+        if(_currentTarget.GetIsDead()) _currentTarget = null;
+    }
     private void ReturnToTower()
     {
         _currentTarget = null;
@@ -145,8 +149,8 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable
         transform.position = _tower.transform.position;
     }
 
-    public BaseState<Warrior> GetCurrentState()
+    public Enemy GetCurrentTarget()
     {
-        return StateManager.CurrentState;
+        return _currentTarget;
     }
 }

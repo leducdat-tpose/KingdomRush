@@ -1,7 +1,7 @@
 using UnityEngine;
-public class SoldierDeathState: BaseState<Warrior>
+public class SoldierDeathState: BaseState<Soldier>
 {
-    public SoldierDeathState(Soldier obj, StateManager<Warrior> objectStateManager) : base(obj, objectStateManager)
+    public SoldierDeathState(Soldier obj, StateManager<Soldier> objectStateManager) : base(obj, objectStateManager)
     {
     }
 }
