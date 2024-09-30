@@ -4,4 +4,9 @@ using UnityEngine;
 
 public class Archer : Warrior
 {
+    protected override void Update()
+    {
+        Render();
+        ShootingProjectTile();
+    }
 }

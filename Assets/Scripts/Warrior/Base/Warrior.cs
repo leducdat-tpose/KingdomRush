@@ -60,6 +60,10 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable
     protected virtual void Update()
     {
         Render();
+    }
+
+    protected virtual void ShootingProjectTile()
+    {
         if (!_tower.CurrentTarget || _tower.CurrentTarget.GetIsDead() || Time.time < _nextAttackTime) return;
         LoadingProjectile();
         _isAttacking = true;
@@ -98,7 +102,7 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable
 
     protected virtual void LoadingProjectile()
     {
-        GameObject newObject = PoolingObject.Instance.GetObject(_prefabProjectile);
+        var newObject = PoolingObject.Instance.GetObject(_prefabProjectile);
         _currentProjectTiles = newObject.GetComponent<ProjectTiles>();
         _currentProjectTiles.transform.position = transform.position;
         _currentProjectTiles.gameObject.SetActive(false);

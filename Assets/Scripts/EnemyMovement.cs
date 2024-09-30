@@ -33,7 +33,7 @@ public class EnemyMovement : MonoBehaviour
         pathIndex++;
         if (pathIndex == LevelManager.instance.GetWaypointsLength())
         {
-            EnemySpawner.onEnemyDestroy.Invoke();
+            EnemySpawner.OnEnemyDestroy.Invoke();
             this.gameObject.SetActive(false);
             return;
         }

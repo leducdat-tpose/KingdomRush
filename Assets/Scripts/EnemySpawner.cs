@@ -6,10 +6,11 @@ using UnityEngine.Events;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField]
-    GameObject[] enemyPrefabs;
+    [Header("References")] 
+    [SerializeField] private SpawnEnemiesInfo _enemiesSceneInfo;
     [Header("Attributes")]
+    [SerializeField]
+    private int[] _countEnemies;
     [SerializeField]
     float timeBetweenWaves = 5.0f;
     [SerializeField]
@@ -32,15 +33,17 @@ public class EnemySpawner : MonoBehaviour
     int enemiesLeftToSpawn = 0;
 
     [Header("Events")]
-    public static UnityEvent onEnemyDestroy = new UnityEvent();
+    public static UnityEvent OnEnemyDestroy = new UnityEvent();
 
     private void Awake()
     {
-        onEnemyDestroy.AddListener(EnemyBeingDestroy);
+        
     }
 
     void Start()
     {
+        OnEnemyDestroy.AddListener(EnemyBeingDestroy);
+        
         StartWave();
     }
 
@@ -56,7 +59,7 @@ public class EnemySpawner : MonoBehaviour
             if(enemiesLeftToSpawn == 0)
             {
                 isSpawning = false;
-                StartCoroutine("WaitBetweenWaves");
+                StartCoroutine(nameof(WaitBetweenWaves));
             }
         }
     }
@@ -81,7 +84,7 @@ public class EnemySpawner : MonoBehaviour
     // ReSharper disable Unity.PerformanceAnalysis
     void SpawnEnemy()
     {
-        var newEnemy = PoolingObject.Instance.GetObject(enemyPrefabs[0]);
+        var newEnemy = PoolingObject.Instance.GetObject(_enemiesSceneInfo.Enemies[1]);
         newEnemy.SetActive(true);
         enemiesAlive++;
     }
@@ -91,7 +94,7 @@ public class EnemySpawner : MonoBehaviour
         enemiesAlive--;
     }
 
-    IEnumerator WaitBetweenWaves()
+    private IEnumerator WaitBetweenWaves()
     {
         yield return new WaitForSeconds(timeBetweenWaves);
         currentWave++;

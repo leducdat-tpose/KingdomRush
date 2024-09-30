@@ -4,16 +4,16 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using static UnityEngine.GraphicsBuffer;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(Collider2D))]
 public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
 {
     #region ID_Animations
-    protected static readonly int Idle = Animator.StringToHash("Idle");
-    protected static readonly int WalkUp = Animator.StringToHash("WalkUp");
-    protected static readonly int WalkDown = Animator.StringToHash("WalkDown");
-    protected static readonly int WalkSide = Animator.StringToHash("WalkSide");
-    protected static readonly int Death = Animator.StringToHash("Death");
-    protected static readonly int Attack = Animator.StringToHash("Attack");
+    private static readonly int Idle = Animator.StringToHash("Idle");
+    private static readonly int WalkUp = Animator.StringToHash("WalkUp");
+    private static readonly int WalkDown = Animator.StringToHash("WalkDown");
+    private static readonly int WalkSide = Animator.StringToHash("WalkSide");
+    private static readonly int Death = Animator.StringToHash("Death");
+    private static readonly int Attack = Animator.StringToHash("Attack");
     #endregion
     
     #region References
@@ -64,12 +64,12 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
 
     private void Awake()
     {
+        this.tag = "Enemy";
         StateManager = new StateManager<Enemy>();
         IdleState = new EnemyIdleState(this, StateManager);
         AttackState = new EnemyAttackState(this, StateManager);
         WalkState = new EnemyWalkState(this, StateManager);
         DeathState = new EnemyDeathState(this, StateManager);
-        
     }
 
     private void Start()
@@ -132,7 +132,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
         {
             this.gameObject.SetActive(false);
             PoolingObject.Instance.ReturnObject(this.gameObject);
-            EnemySpawner.onEnemyDestroy?.Invoke();
+            EnemySpawner.OnEnemyDestroy?.Invoke();
             return;
         }
         TargetPosition = LevelManager.instance.GetPoint(PathIndex);
