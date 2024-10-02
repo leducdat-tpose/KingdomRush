@@ -10,8 +10,6 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private SpawnEnemiesInfo _enemiesSceneInfo;
     [Header("Attributes")]
     [SerializeField]
-    private int[] _countEnemies;
-    [SerializeField]
     float timeBetweenWaves = 5.0f;
     [SerializeField]
     float enemiesPerSec = 2f;
@@ -49,6 +47,10 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Debug.Log("Current prefab:", _enemiesSceneInfo.waves[0].enemiesInfo[0].prefab);
+        }
         if (!isSpawning) return;
         timeSinceLastWave += Time.deltaTime;
         if (timeSinceLastWave >= (1f/ enemiesPerSec))
@@ -84,7 +86,7 @@ public class EnemySpawner : MonoBehaviour
     // ReSharper disable Unity.PerformanceAnalysis
     void SpawnEnemy()
     {
-        var newEnemy = PoolingObject.Instance.GetObject(_enemiesSceneInfo.Enemies[1]);
+        var newEnemy = PoolingObject.Instance.GetObject(_enemiesSceneInfo.waves[0].enemiesInfo[0].prefab);
         newEnemy.SetActive(true);
         enemiesAlive++;
     }

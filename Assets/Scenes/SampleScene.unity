@@ -2019,7 +2019,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemiesSceneInfo: {fileID: 11400000, guid: 24587feab6ced4246b5dc67e60d0c58d, type: 2}
-  _countEnemies: 0500000001000000
   timeBetweenWaves: 5
   enemiesPerSec: 2
   baseEnemies: 3
