@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+[RequireComponent(typeof(Animator),typeof(SpriteRenderer),
+    typeof(Animator))]
 public class Warrior : MonoBehaviour, IMoveable, IDamageable
 {
     private int Idle = Animator.StringToHash("Idle Level_1");
@@ -121,7 +123,7 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable
         _isDead = true;
         _currentTarget.StopBeingProvoked();
     }
-    private void UpgradeSolider(int towerLevel)
+    protected virtual void UpgradeSolider(int towerLevel)
     {
         if (_level == _spritesSoliderUpgrade.Count) return;
         _level = towerLevel;
