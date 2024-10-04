@@ -8,6 +8,9 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Tower : MonoBehaviour, IShootable
 {
+    protected int StartingProgress = Animator.StringToHash("StartProgress Lvl_1");
+    protected int Idle = Animator.StringToHash("Idle Lvl_1");
+    protected bool HaveAnimation = false;
     public event Action<int> UpgradeAction;
     public event Action<Vector3> ChangeStandingPosition;
     [field: SerializeField] public float AttackRange { get; set; } = 5f;
@@ -22,6 +25,9 @@ public class Tower : MonoBehaviour, IShootable
     public Enemy CurrentTarget => _currentTarget;
     [SerializeField]
     private int _towerLevel = 1;
+
+    protected bool InProgress;
+    protected int _currentAnimation;
     public Collider2D Collider { get; set; }
     private void Reset()
     {
@@ -33,17 +39,18 @@ public class Tower : MonoBehaviour, IShootable
     protected virtual void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _currentAnimation = Idle;
+        InProgress = false;
     }
 
     protected virtual void Update()
     {
         UpdateCurrentTarget();
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            UpgradeTower();
-        }
     }
 
+    protected virtual void Render()
+    {
+    }
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Enemy")) return;
@@ -86,7 +93,16 @@ public class Tower : MonoBehaviour, IShootable
         _spriteRenderer.sprite = _spritesTowerUpgrade[_towerLevel - 1];
         UpgradeAction?.Invoke(_towerLevel);
     }
-
+    public void StartProgress()
+    {
+        if (HaveAnimation == false) return;
+        InProgress = true;
+    }
+    public void StopProgress()
+    {
+        InProgress = false;
+    }
+    
     public void ChangeStandPosition(Vector3 position)
     {
         ChangeStandingPosition?.Invoke(position);

@@ -69,6 +69,7 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable
         if (!_tower.CurrentTarget || _tower.CurrentTarget.GetIsDead() || Time.time < _nextAttackTime) return;
         LoadingProjectile();
         _isAttacking = true;
+        _tower.StartProgress();
         _nextAttackTime = Time.time + coolDownAttack;
     }
 

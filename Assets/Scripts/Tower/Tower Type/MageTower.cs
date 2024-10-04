@@ -12,5 +12,21 @@ public class MageTower : Tower
     {
         base.Start();
         _animator = GetComponent<Animator>();
+        HaveAnimation = true;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        Render();
+    }
+
+    protected override void Render()
+    {
+        var newAnimation = Idle;
+        if(InProgress) newAnimation = StartingProgress;
+        if (newAnimation == _currentAnimation) return;
+        _animator.CrossFade(newAnimation, 0.2f);
+        _currentAnimation = newAnimation;
     }
 }
