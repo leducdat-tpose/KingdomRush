@@ -7,7 +7,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mage_tower_lvl_2_in_process
+  m_Name: StartProgress Lvl_2
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -37,22 +37,22 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -2568382913248660932}
-    m_Position: {x: 200, y: 0, z: 0}
+    m_Position: {x: 280, y: -10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 9058264321528400918}
-    m_Position: {x: 235, y: 65, z: 0}
+    m_Position: {x: 280, y: 40, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5520706004324919308}
-    m_Position: {x: 270, y: 130, z: 0}
+    m_Position: {x: 280, y: 90, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5422759134513272787}
-    m_Position: {x: 305, y: 195, z: 0}
+    m_Position: {x: 280, y: 140, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7361366354170160425}
-    m_Position: {x: 340, y: 260, z: 0}
+    m_Position: {x: 280, y: 190, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6331789661106621748}
-    m_Position: {x: 375, y: 325, z: 0}
+    m_Position: {x: 280, y: 240, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -70,7 +70,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mage_tower_lvl_1_idle
+  m_Name: Idle Lvl_1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -118,7 +118,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mage_tower_lvl_2_idle
+  m_Name: Idle Lvl_2
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -144,7 +144,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mage_tower_lvl_3_in_process
+  m_Name: StartProgress Lvl_3
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -170,7 +170,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mage_tower_lvl_3_idle
+  m_Name: Idle Lvl_3
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -196,7 +196,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mage_tower_lvl_1_in_process
+  m_Name: StartProgress Lvl_1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
