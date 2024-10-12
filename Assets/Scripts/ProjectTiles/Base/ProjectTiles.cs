@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Serialization;
@@ -8,23 +9,24 @@ public class ProjectTiles: MonoBehaviour
         public Tower Tower{get; set;}
         [FormerlySerializedAs("EnemyTarget")] [SerializeField]
         private Enemy _enemyTarget;
-        private Vector3 _targetPosition = Vector3.zero;
+        protected Vector3 targetPosition = Vector3.zero;
         [Header("Attributes")]
         [SerializeField]
         private float _damageCause;
         public float DamageCause => _damageCause;
         [SerializeField]
         private float _speed;
+        public float Speed => _speed;
 
         [SerializeField] private float minDistanceToDealDamage = 0.1f;
 
-        private void Start()
+        protected virtual void Start()
         {
         }
         
-        private void Update()
+        protected virtual void Update()
         {
-            if(_enemyTarget) _targetPosition = _enemyTarget.gameObject.transform.position;
+            if(_enemyTarget) targetPosition = _enemyTarget.gameObject.transform.position;
             MoveProjectTiles();
             RotateProjectTiles();
         }
@@ -35,17 +37,17 @@ public class ProjectTiles: MonoBehaviour
         
         
         
-        private void MoveProjectTiles()
+        protected virtual void MoveProjectTiles()
         {
-            transform.position = Vector2.MoveTowards(transform.position, _targetPosition, _speed * Time.deltaTime);
-            float distanceToTarget = (_targetPosition - transform.position).magnitude;
+            transform.position = Vector2.MoveTowards(transform.position, targetPosition, _speed * Time.deltaTime);
+            float distanceToTarget = (targetPosition - transform.position).magnitude;
             if (!(distanceToTarget < minDistanceToDealDamage)) return;
             if(_enemyTarget) _enemyTarget.TakenDamage(_damageCause);
             ReturnToPool();
         }
-        private void RotateProjectTiles()
+        protected virtual void RotateProjectTiles()
         {
-            var enemyPos = _targetPosition - transform.position;
+            var enemyPos = targetPosition - transform.position;
             float angle = Vector3.SignedAngle(transform.up, enemyPos, transform.forward);
             transform.Rotate(0f, 0f, angle);
         }
@@ -60,11 +62,25 @@ public class ProjectTiles: MonoBehaviour
         {
             Tower = null;
             _enemyTarget = null;
-            _targetPosition = Vector3.zero;
+            targetPosition = Vector3.zero;
         }
 
         public void SetDamageCause(float damage)
         {
             _damageCause = damage;
+        }
+        protected virtual IEnumerator CurvePath(Vector2 start, Vector2 target, float duration, float heightY, AnimationCurve curve)
+        {
+            float timePassed = 0f;
+            Vector2 end = target;
+            while (timePassed <= duration)
+            {
+                timePassed += Time.deltaTime;
+                float linearT = timePassed / duration;
+                float heightT = curve.Evaluate(linearT);
+                float height = Mathf.Lerp(0, heightY, heightT);
+                transform.position = Vector2.Lerp(start, end, linearT) + Vector2.up * height;
+                yield return null;
+            }
         }
     }

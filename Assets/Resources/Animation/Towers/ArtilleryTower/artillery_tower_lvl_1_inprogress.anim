@@ -242,6 +242,8 @@ AnimationClip:
       value: {fileID: 21300000, guid: c618c4713e27f2b4c9df0242545e4fe4, type: 3}
     - time: 0.5833333
       value: {fileID: 21300000, guid: 3fa35c7a72029f04fbc887e56cdcbc93, type: 3}
+    - time: 0.65
+      value: {fileID: 21300000, guid: ac13900d3da0ef14f973ec4ce47635ac, type: 3}
     attribute: m_Sprite
     path: BodyTower
     classID: 212
@@ -350,6 +352,7 @@ AnimationClip:
     - {fileID: 21300000, guid: ac13900d3da0ef14f973ec4ce47635ac, type: 3}
     - {fileID: 21300000, guid: c618c4713e27f2b4c9df0242545e4fe4, type: 3}
     - {fileID: 21300000, guid: 3fa35c7a72029f04fbc887e56cdcbc93, type: 3}
+    - {fileID: 21300000, guid: ac13900d3da0ef14f973ec4ce47635ac, type: 3}
     - {fileID: 21300000, guid: 8ea3e7d18f552164a9f4561ed7223d41, type: 3}
     - {fileID: 21300000, guid: aa2e8fa8e1f67be438f9c3fd32335cd7, type: 3}
     - {fileID: 21300000, guid: 7df8385d9eb763549bdf48cec5d3e898, type: 3}
