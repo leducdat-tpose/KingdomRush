@@ -65,7 +65,7 @@ public class Tower : MonoBehaviour, IShootable
         if(!_enemies.Contains(existEnemy)) return;
         _enemies.Remove(existEnemy);
     }
-    public void Shoot()
+    protected virtual void Shoot()
     {
     }
 

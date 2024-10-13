@@ -17,8 +17,8 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable
     public Vector3 StandingPosition { get; set; }
     [field:SerializeField]public float MaxHealth { get; set; }
     [field:SerializeField]public float CurrentHealth { get; set; }
-    private GameObject tower;
-    [SerializeField] private Tower _tower;
+    protected GameObject tower;
+    [SerializeField] protected Tower _tower;
     protected Tower OwnerTower => _tower;
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _spriteRenderer;
@@ -37,10 +37,12 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable
     private bool _isDead;
     private int _currentAnimation;
     private float _nextAttackTime;
+    protected Vector3 LoadingProjectilePosition;
 
     protected virtual void Start()
     {
         GetTower();
+        LoadingProjectilePosition = transform.position;
         _tower.UpgradeAction += UpgradeSolider;
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -69,7 +71,6 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable
         if (!_tower.CurrentTarget || _tower.CurrentTarget.GetIsDead() || Time.time < _nextAttackTime) return;
         LoadingProjectile();
         _isAttacking = true;
-        _tower.StartProgress();
         _nextAttackTime = Time.time + coolDownAttack;
     }
 
@@ -77,7 +78,7 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable
     {
         
     }
-    protected virtual void Render()
+    protected virtual void Render(bool canTurnUp = true)
     {
         var newAnimation = Idle;
         if (_isAttacking) newAnimation = Attack;
@@ -88,7 +89,7 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable
             _spriteRenderer.flipX = direction.x < -0.1f;
         }
         else if (_isDead) newAnimation = Death;
-        if (_tower.CurrentTarget)
+        if (_tower.CurrentTarget && canTurnUp)
         {
             Vector2 direction = _tower.CurrentTarget.transform.position - tower.transform.position;
             _spriteRenderer.flipX = direction.x < -0.8f;
@@ -107,7 +108,7 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable
     {
         var newObject = PoolingObject.Instance.GetObject(_prefabProjectile);
         _currentProjectTiles = newObject.GetComponent<ProjectTiles>();
-        _currentProjectTiles.transform.position = transform.position;
+        _currentProjectTiles.transform.position = LoadingProjectilePosition;
         _currentProjectTiles.gameObject.SetActive(false);
         _currentProjectTiles.SetCurrentEnemy(_tower.CurrentTarget);
     }
@@ -116,6 +117,7 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable
         _currentProjectTiles.gameObject.SetActive(true);
         _currentProjectTiles.SetDamageCause(_damageCause);
         _isAttacking = false;
+        _tower.StartProgress();
     }
     public virtual void TakenDamage(float damageAmount)
     {

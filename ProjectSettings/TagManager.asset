@@ -48,6 +48,9 @@ TagManager:
   - name: Creature
     uniqueID: 173009083
     locked: 0
+  - name: Effect
+    uniqueID: 1215809673
+    locked: 0
   - name: ProjectTile
     uniqueID: 364884137
     locked: 0

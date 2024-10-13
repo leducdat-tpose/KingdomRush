@@ -25,6 +25,11 @@ public class Waypoint : MonoBehaviour
 
     public Vector3 GetWaypointPosition(int index)
     {
+        if(index < 0 || index >= points.Length)
+        {
+            Debug.LogError("Index out of range in Waypoint.cs");
+            return Vector3.zero;
+        }
         return currentPosition + points[index];
     }
 
