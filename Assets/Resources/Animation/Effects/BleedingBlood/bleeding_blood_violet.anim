@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: magebolt_hit
+  m_Name: bleeding_blood_violet
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,13 +20,17 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: 10c733032b16a3c46bf2e4dfdaa5ec7e, type: 3}
+      value: {fileID: 21300000, guid: 0c70610b3eae83a4ca48aab08ff9a69f, type: 3}
+    - time: 0.05
+      value: {fileID: 21300000, guid: f64a02015783d2249a46fc18118510d9, type: 3}
+    - time: 0.1
+      value: {fileID: 21300000, guid: 034f0e638d385844684d2988543a34ca, type: 3}
     - time: 0.15
-      value: {fileID: 21300000, guid: ad156e9ef8c1a4a4fa9a3aae774a38d6, type: 3}
-    - time: 0.23333333
-      value: {fileID: 21300000, guid: 52dffe640a72b5c4c93e2176808c6a90, type: 3}
-    - time: 0.38333333
-      value: {fileID: 21300000, guid: 6783eb991b17176499bd6c8bbfde5ed5, type: 3}
+      value: {fileID: 21300000, guid: b4edceddd191d0046be504137380aba3, type: 3}
+    - time: 0.2
+      value: {fileID: 21300000, guid: 13a36630d7086154cacf1bb83536d22c, type: 3}
+    - time: 0.25
+      value: {fileID: 21300000, guid: 95e7688165effbf42b273aa6b56a74b8, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -46,16 +50,18 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 10c733032b16a3c46bf2e4dfdaa5ec7e, type: 3}
-    - {fileID: 21300000, guid: ad156e9ef8c1a4a4fa9a3aae774a38d6, type: 3}
-    - {fileID: 21300000, guid: 52dffe640a72b5c4c93e2176808c6a90, type: 3}
-    - {fileID: 21300000, guid: 6783eb991b17176499bd6c8bbfde5ed5, type: 3}
+    - {fileID: 21300000, guid: 0c70610b3eae83a4ca48aab08ff9a69f, type: 3}
+    - {fileID: 21300000, guid: f64a02015783d2249a46fc18118510d9, type: 3}
+    - {fileID: 21300000, guid: 034f0e638d385844684d2988543a34ca, type: 3}
+    - {fileID: 21300000, guid: b4edceddd191d0046be504137380aba3, type: 3}
+    - {fileID: 21300000, guid: 13a36630d7086154cacf1bb83536d22c, type: 3}
+    - {fileID: 21300000, guid: 95e7688165effbf42b273aa6b56a74b8, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.4
+    m_StopTime: 0.26666668
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -74,11 +80,4 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events:
-  - time: 0.4
-    functionName: ReturnToPool
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
+  m_Events: []

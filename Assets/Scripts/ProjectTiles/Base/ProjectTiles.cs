@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 public class ProjectTiles: MonoBehaviour
     {
-        private int Idle = Animator.StringToHash("Idle");
+        private int Move = Animator.StringToHash("Move");
         private int EndEffect = Animator.StringToHash("EndEffect");
         public Tower Tower{get; set;}
         [FormerlySerializedAs("EnemyTarget")] [SerializeField]
@@ -41,7 +41,16 @@ public class ProjectTiles: MonoBehaviour
             _enemyTarget = enemy;
         }
         
-        
+        protected virtual void StartEndEffect()
+        {
+            if(_animator) _animator.CrossFade(EndEffect, 0.1f, 0);
+            else
+            {
+                Debug.LogError("Animator is null");
+                ReturnToPool();
+            }
+            return;
+        }
         
         protected virtual void MoveProjectTiles()
         {
@@ -49,7 +58,7 @@ public class ProjectTiles: MonoBehaviour
             float distanceToTarget = (targetPosition - transform.position).magnitude;
             if (!(distanceToTarget < minDistanceToDealDamage)) return;
             if(_enemyTarget) _enemyTarget.TakenDamage(_damageCause);
-            ReturnToPool();
+            StartEndEffect();
         }
         protected virtual void RotateProjectTiles()
         {
