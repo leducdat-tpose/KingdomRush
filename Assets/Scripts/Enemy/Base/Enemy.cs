@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using static UnityEngine.GraphicsBuffer;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(Collider2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
 {
     #region ID_Animations
