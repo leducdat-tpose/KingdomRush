@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 9212516021993376675}
   - component: {fileID: 9212516021993376674}
   - component: {fileID: 9212516021993376672}
+  - component: {fileID: 4958162463623519577}
   m_Layer: 0
-  m_Name: BleedingBloodEffect
+  m_Name: EffectPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,3 +105,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4958162463623519577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9212516021993376677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3407b8d15697648a56eb9db9f62dea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriterender: {fileID: 9212516021993376674}
+  _animator: {fileID: 9212516021993376672}

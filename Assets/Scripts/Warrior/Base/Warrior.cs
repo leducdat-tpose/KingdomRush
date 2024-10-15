@@ -7,37 +7,43 @@ using UnityEngine.Serialization;
     typeof(Animator))]
 public class Warrior : MonoBehaviour, IMoveable, IDamageable
 {
+    #region ID_Animations
     private int Idle = Animator.StringToHash("Idle Level_1");
     private int Walk = Animator.StringToHash("Walk Level_1");
     private int IdleUp = Animator.StringToHash("Idle_Up Level_1");
     private int AttackUp = Animator.StringToHash("Attack_Up Level_1");
     private int Attack = Animator.StringToHash("Attack Level_1");
     private int Death = Animator.StringToHash("Death Level_1");
-    [field:SerializeField]public float Speed { get; set; }
-    public Vector3 StandingPosition { get; set; }
-    [field:SerializeField]public float MaxHealth { get; set; }
-    [field:SerializeField]public float CurrentHealth { get; set; }
-    protected GameObject tower;
-    [SerializeField] protected Tower _tower;
+    #endregion
+    [Header("References")]
+    [SerializeField]protected GameObject tower;
+    protected Tower _tower;
     protected Tower OwnerTower => _tower;
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _spriteRenderer;
-    [SerializeField] private List<Sprite> _spritesSoliderUpgrade;
-    [SerializeField] private int _level;
     [SerializeField] private GameObject _prefabProjectile;
     ProjectTiles _currentProjectTiles;
+    [SerializeField] protected Enemy _currentTarget;
+    [SerializeField] private List<Sprite> _spritesSoliderUpgrade;
+
+
+    [Header("Attributes")]
+    [SerializeField] private int _level;
     [SerializeField] private float _baseDamage;
     [SerializeField] private float _upgradeDamageIndex;
     [SerializeField] private float _damageCause;
     [SerializeField] protected float coolDownAttack;
+    [field:SerializeField]public float Speed { get; set; }
+    public Vector3 StandingPosition { get; set; }
+    [field:SerializeField]public float MaxHealth { get; set; }
+    [field:SerializeField]public float CurrentHealth { get; set; }
     public float CoolDownAttack => coolDownAttack;
-    [SerializeField] protected Enemy _currentTarget;
     private bool _isAttacking;
     protected bool isMoving;
     private bool _isDead;
-    private int _currentAnimation;
     private float _nextAttackTime;
     protected Vector3 LoadingProjectilePosition;
+    private int _currentAnimation;
 
     protected virtual void Start()
     {
