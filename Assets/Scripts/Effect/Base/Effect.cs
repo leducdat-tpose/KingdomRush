@@ -22,7 +22,7 @@ public class Effect : MonoBehaviour
 
     [Header("Attributes")]
     [SerializeField]protected EffectType effectType = EffectType.None;
-    protected int currentAnimation = -1;
+    protected int currentAnimation = 0;
 
     protected virtual void Start() {
         _spriteRender = GetComponent<SpriteRenderer>();
@@ -45,6 +45,7 @@ public class Effect : MonoBehaviour
 
     protected virtual void ReturnToPool()
     {
+        effectType = EffectType.None;
         PoolingObject.Instance.ReturnObject(this.gameObject);
     }
 

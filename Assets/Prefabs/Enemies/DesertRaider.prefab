@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5111393800753556424}
   - component: {fileID: 5111393800753556425}
   - component: {fileID: 5111393800753556022}
+  - component: {fileID: 7762637412051809667}
   - component: {fileID: 5111393800753556021}
   - component: {fileID: 5111393800753556023}
   m_Layer: 0
@@ -106,6 +107,32 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!61 &7762637412051809667
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5111393800753556426}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.875, y: 1}
+    newSize: {x: 0.875, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.875, y: 1}
+  m_EdgeRadius: 0
 --- !u!50 &5111393800753556021
 Rigidbody2D:
   serializedVersion: 4
@@ -139,11 +166,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceb4c5ea4dc15224daaf1d6d9dee902c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  animator: {fileID: 0}
-  spriteRenderer: {fileID: 0}
+  rb: {fileID: 5111393800753556021}
+  animator: {fileID: 5111393800753556022}
+  spriteRenderer: {fileID: 5111393800753556425}
   currentTargetWarrior: {fileID: 0}
-  <MaxHealth>k__BackingField: 40
+  <MaxHealth>k__BackingField: 6
   <CurrentHealth>k__BackingField: 0
   <MoveSpeed>k__BackingField: 2
   coolDownAttack: 1

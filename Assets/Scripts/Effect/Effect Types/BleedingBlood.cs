@@ -1,39 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class BleedingBlood : Effect
 {
-    private int GreenBig = Animator.StringToHash("Bleeding_Big_Green");
-    private int RedBig = Animator.StringToHash("Bleeding_Big_Red");
-    private int VioletBig = Animator.StringToHash("Bleeding_Big_Violet");
-    private int GreenSmall = Animator.StringToHash("Bleeding_Small_Green");
-    private int RedSmall = Animator.StringToHash("Bleeding_Small_Red");
-    private int VioletSmall = Animator.StringToHash("Bleeding_Small_Violet");
+    public static string Name = "BleedingBlood";
+    private readonly int _greenBig = Animator.StringToHash("Bleeding_Green_Big");
+    private  readonly int _redBig = Animator.StringToHash("Bleeding_Red_Big");
+    private  readonly int _violetBig = Animator.StringToHash("Bleeding_Violet_Big");
+    private  readonly int _greenSmall = Animator.StringToHash("Bleeding_Green_Small");
+    private  readonly int _redSmall = Animator.StringToHash("Bleeding_Red_Small");
+    private  readonly int _violetSmall = Animator.StringToHash("Bleeding_Violet_Small");
     protected override void Render()
     {
         base.Render();
-        var idAnimation = RedSmall;
+        var idAnimation = _redSmall;
         switch(effectType)
         {
             case EffectType.BleedingSmallGreen:
-                idAnimation = GreenSmall;
+                idAnimation = _greenSmall;
                 break;
             case EffectType.BleeingSmallViolet:
-                idAnimation = VioletSmall;
+                idAnimation = _violetSmall;
                 break;
             case EffectType.BleedingBigRed:
-                idAnimation = RedBig;
+                idAnimation = _redBig;
                 break;
             case EffectType.BleedingBigGreen:
-                idAnimation = GreenBig;
+                idAnimation = _greenBig;
                 break;
             case EffectType.BleedingBigViolet:
-                idAnimation = VioletBig;
+                idAnimation = _violetBig;
                 break;
         }
         if(currentAnimation == idAnimation) return;
-        animator.CrossFade(idAnimation, 0);
+        animator.CrossFade(idAnimation, 0, 0);
         currentAnimation = idAnimation;
     }
 }

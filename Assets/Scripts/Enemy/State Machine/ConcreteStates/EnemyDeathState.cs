@@ -11,6 +11,9 @@ public class EnemyDeathState : BaseState<Enemy>
     public override void EnterState()
     {
         base.EnterState();
+        GameObject effect = PoolingObject.Instance.GetEffectObject("BleedingBlood", EffectType.BleedingSmallRed);
+        effect.transform.position = Object.transform.position;
+        effect.SetActive(true);
     }
 
     public override void ExitState()

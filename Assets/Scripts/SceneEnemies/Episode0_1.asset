@@ -22,11 +22,7 @@ MonoBehaviour:
       amount: 2
     - prefab: {fileID: 55734201109154817, guid: b5a5f1dd862c18b4397d4a71e268fafe, type: 3}
       amount: 1
-    - prefab: {fileID: 2788922623559565164, guid: ad8f86d43c6d2ab49b5c941586b4a455, type: 3}
-      amount: 2
   - enemiesInfo:
-    - prefab: {fileID: 2788922623559565164, guid: ad8f86d43c6d2ab49b5c941586b4a455, type: 3}
-      amount: 2
     - prefab: {fileID: 55734201109154817, guid: b5a5f1dd862c18b4397d4a71e268fafe, type: 3}
       amount: 1
     - prefab: {fileID: 5111393800753556426, guid: a582ef5596a964647931ba8749e3e19b, type: 3}

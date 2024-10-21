@@ -33,7 +33,6 @@ public class PoolingObject : MonoBehaviour
         }
     }
 
-    // ReSharper disable Unity.PerformanceAnalysis
     public GameObject GetObject(GameObject gameObject)
     {
         if (_pools.TryGetValue(gameObject.name, out Queue<GameObject> queue))
@@ -48,6 +47,30 @@ public class PoolingObject : MonoBehaviour
         else return CreateNewObject(gameObject);
     }
     
+    public GameObject GetEffectObject(string effectName, EffectType effectType)
+    {
+        if (_pools.TryGetValue(effectName, out Queue<GameObject> queue))
+        {
+            if (queue.Count == 0) {
+                GameObject newObject = CreateNewObject(queue.Peek());
+                newObject.GetComponent<Effect>().SetEffectType(effectType);
+                return newObject;
+                }
+            else
+            {
+                GameObject newObject = queue.Dequeue();
+                newObject.GetComponent<Effect>().SetEffectType(effectType);
+                return newObject;
+            }
+        }
+        else
+        {
+            GameObject newObject = CreateNewObject(queue.Peek());
+            newObject.GetComponent<Effect>().SetEffectType(effectType);
+            return newObject;
+        }
+    }
+
     public void ReturnObject(GameObject gameObject)
     {
         if (!_pools.TryGetValue(gameObject.name, out Queue<GameObject> queue)) return;
