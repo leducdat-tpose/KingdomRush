@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     private SpriteRenderer spriteRenderer;
     [FormerlySerializedAs("_currentTargetSolider")] [SerializeField]
     private Warrior currentTargetWarrior;
+    [SerializeField] private DynamicHPBar _dynamicHpBar;
     #endregion
     
     #region Variables
@@ -105,6 +106,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     {
         if (_isDead) return;
         CurrentHealth -= damageAmount;
+        _dynamicHpBar?.UpdateHealthBar(CurrentHealth, MaxHealth);
         if (CurrentHealth > 0) return;
         CurrentHealth = 0;
         _isDead = true;
