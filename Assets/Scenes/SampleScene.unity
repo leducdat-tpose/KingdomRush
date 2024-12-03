@@ -9566,10 +9566,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArtilleryTower
       objectReference: {fileID: 0}
-    - target: {fileID: 912621976325040237, guid: 9504e80457a91634d82c6c835f18117f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9504e80457a91634d82c6c835f18117f, type: 3}
 --- !u!1001 &3626801996706116769
@@ -9627,6 +9623,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoldierTower
       objectReference: {fileID: 0}
+    - target: {fileID: 3626801995433588755, guid: 3b107821f7d408d47a028cf9d7d6a20d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b107821f7d408d47a028cf9d7d6a20d, type: 3}
 --- !u!1001 &7866993830735889505
@@ -9643,6 +9643,10 @@ PrefabInstance:
     - target: {fileID: 7866993831662674450, guid: 510a14222cdf10d4bb733272ae4539cc, type: 3}
       propertyPath: m_Name
       value: MageTower
+      objectReference: {fileID: 0}
+    - target: {fileID: 7866993831662674450, guid: 510a14222cdf10d4bb733272ae4539cc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7866993831662674453, guid: 510a14222cdf10d4bb733272ae4539cc, type: 3}
       propertyPath: m_RootOrder
@@ -9744,6 +9748,10 @@ PrefabInstance:
     - target: {fileID: 8858592990584423653, guid: 35d1b00b4a0938248ac3ff3fd06bac35, type: 3}
       propertyPath: m_Name
       value: Archer Tower
+      objectReference: {fileID: 0}
+    - target: {fileID: 8858592990584423653, guid: 35d1b00b4a0938248ac3ff3fd06bac35, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35d1b00b4a0938248ac3ff3fd06bac35, type: 3}

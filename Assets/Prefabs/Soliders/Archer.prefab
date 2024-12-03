@@ -118,16 +118,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tower: {fileID: 0}
-  _tower: {fileID: 0}
   _animator: {fileID: 2532736430844326073}
   _spriteRenderer: {fileID: 2532736430844326072}
+  _prefabProjectile: {fileID: 5661872374317603713, guid: 5af432891b42340468f5fc191b888254, type: 3}
+  _currentTarget: {fileID: 0}
   _spritesSoliderUpgrade:
   - {fileID: 21300000, guid: c40cd5f2708d61d4d9bb4f45c12cab9f, type: 3}
   - {fileID: 21300000, guid: d6cdeebdc82a1714f9ac83ff4e1db241, type: 3}
   - {fileID: 21300000, guid: 9acfe10324b0d944f9736747f8edf56c, type: 3}
   _level: 1
-  _prefabProjectile: {fileID: 5661872374317603713, guid: 5af432891b42340468f5fc191b888254, type: 3}
-  _baseDamage: 2
+  _baseDamage: 1
   _upgradeDamageIndex: 1.3
   _damageCause: 0
   coolDownAttack: 1.2
+  <Speed>k__BackingField: 0
+  <MaxHealth>k__BackingField: 0
+  <CurrentHealth>k__BackingField: 0

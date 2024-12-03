@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2750761990892202413
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4105757012177450395}
+  - component: {fileID: 66147298208279737}
+  - component: {fileID: 6387023433127795052}
+  m_Layer: 0
+  m_Name: ExplodeCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &4105757012177450395
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2750761990892202413}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2963063079952062359}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &66147298208279737
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2750761990892202413}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 3
+--- !u!114 &6387023433127795052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2750761990892202413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef7d6d499600b744a5a0930cc70b4d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _circleCollider2D: {fileID: 66147298208279737}
+  _damage: 0
 --- !u!1 &2963063079952062357
 GameObject:
   m_ObjectHideFlags: 0
@@ -29,7 +91,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4105757012177450395}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -118,10 +181,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyTarget: {fileID: 0}
-  _damageCause: 5
-  _speed: 2
-  minDistanceToDealDamage: 0.1
   _animator: {fileID: 0}
+  _damageCause: 1000
+  _speed: 2
+  _remainExistTime: 2
+  minDistanceToDealDamage: 0.1
   _explosionRadius: 0
   _pathCurve:
     serializedVersion: 2
@@ -136,13 +200,13 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.23921621
-      value: 0.80636525
-      inSlope: -0.09083476
-      outSlope: -0.09083476
+      time: 0.50211954
+      value: 0.7981091
+      inSlope: 0.02092234
+      outSlope: 0.02092234
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.101736166
       outWeight: 0.22981142
     - serializedVersion: 3
       time: 1
@@ -157,6 +221,4 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _heightY: 5
-  start: {x: 0, y: 0, z: 0}
-  target: {x: 6, y: 0}
-  _duration: 1
+  _duration: 0.8

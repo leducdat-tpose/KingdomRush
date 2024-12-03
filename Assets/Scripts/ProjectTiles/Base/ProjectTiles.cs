@@ -15,7 +15,6 @@ public class ProjectTiles: MonoBehaviour
         protected Enemy EnemyTarget => _enemyTarget;
         protected Vector3 targetPosition = Vector3.zero;
         [Header("Attributes")]
-        [SerializeField]
         private float _damageCause;
         public float DamageCause => _damageCause;
         [SerializeField]
@@ -98,6 +97,7 @@ public class ProjectTiles: MonoBehaviour
                 yield return null;
             }
             _animator.CrossFade(EndEffect, 0.1f, 0);
+            _enemyTarget.TakenDamage(_damageCause);
             yield return new WaitForSeconds(_remainExistTime);
             ReturnToPool();
         }

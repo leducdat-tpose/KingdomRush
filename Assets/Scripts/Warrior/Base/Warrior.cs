@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Animator),typeof(SpriteRenderer),
     typeof(Animator))]
-public class Warrior : MonoBehaviour, IMoveable, IDamageable
+public class Warrior : MonoBehaviour, IMoveable, IDamageable, ICreature
 {
     #region ID_Animations
     private int Idle = Animator.StringToHash("Idle Level_1");
@@ -28,15 +28,20 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable
 
 
     [Header("Attributes")]
-    [SerializeField] private int _level;
-    [SerializeField] private float _baseDamage;
     [SerializeField] private float _upgradeDamageIndex;
+    [field:SerializeField]public float MaxHealth { get; set; }
+    [field:SerializeField]public float CurrentHealth { get; set; }
+    public float BaseDamage { get; set; }
+    public int Level { get; set; }
+    public float MoveSpeed { get; set;}
+   
+    
+
     [SerializeField] private float _damageCause;
     [SerializeField] protected float coolDownAttack;
     [field:SerializeField]public float Speed { get; set; }
     public Vector3 StandingPosition { get; set; }
-    [field:SerializeField]public float MaxHealth { get; set; }
-    [field:SerializeField]public float CurrentHealth { get; set; }
+    
     public float CoolDownAttack => coolDownAttack;
     private bool _isAttacking;
     protected bool isMoving;
@@ -52,12 +57,12 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable
         _tower.UpgradeAction += UpgradeSolider;
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _level = 1;
+        Level = 1;
         _currentProjectTiles = null;
         _isAttacking = false;
         isMoving = false;
         _isDead = false;
-        _damageCause = _baseDamage;
+        _damageCause = BaseDamage;
         _currentTarget = null;
         CurrentHealth = MaxHealth;
     }
@@ -134,11 +139,11 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable
     }
     protected virtual void UpgradeSolider(int towerLevel)
     {
-        if (_level == _spritesSoliderUpgrade.Count) return;
-        _level = towerLevel;
-        _damageCause = _baseDamage * _upgradeDamageIndex * _level;
-        _spriteRenderer.sprite = _spritesSoliderUpgrade[_level - 1];
-        string stringLevel = " Level_"+_level.ToString();
+        if (Level == _spritesSoliderUpgrade.Count) return;
+        Level = towerLevel;
+        _damageCause = BaseDamage * _upgradeDamageIndex * Level;
+        _spriteRenderer.sprite = _spritesSoliderUpgrade[Level - 1];
+        string stringLevel = " Level_"+Level.ToString();
         Idle = Animator.StringToHash("Idle" + stringLevel);
         Walk = Animator.StringToHash("Walk" + stringLevel);
         Attack = Animator.StringToHash("Attack" + stringLevel);

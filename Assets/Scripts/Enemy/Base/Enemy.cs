@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(BoxCollider2D))]
-public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
+public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ICreature
 {
     #region ID_Animations
     private static readonly int Idle = Animator.StringToHash("Idle");
@@ -33,6 +33,8 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     #region Variables
     [field: SerializeField] public float MaxHealth { get; set; }
     [field: SerializeField] public float CurrentHealth { get; set; }
+    public float BaseDamage { get;set;}
+    public int Level { get;set;}
     [field: SerializeField] public float MoveSpeed { get; set; } = 5f;
     public Vector3 TargetPosition {  get; set; }
     public int PathIndex { get; set; } = 0;
@@ -62,6 +64,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable
     public EnemyAttackState AttackState { get; set; }
     public EnemyDeathState DeathState { get; set; }
     public EnemyWalkState WalkState { get; set; }
+    
     #endregion
 
     private void Awake()

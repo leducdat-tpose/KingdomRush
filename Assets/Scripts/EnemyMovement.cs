@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
-public class EnemyMovement : MonoBehaviour
-{
+
+public class EnemyMovement : MonoBehaviour {
     [Header("References")]
     [SerializeField]
     Rigidbody2D rigid;

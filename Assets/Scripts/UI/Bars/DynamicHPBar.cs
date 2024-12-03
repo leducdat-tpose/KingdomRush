@@ -13,6 +13,7 @@ public class DynamicHPBar : MonoBehaviour
         _slider = GetComponent<Slider>();
         _camera = Camera.main;
         _target = transform.parent.parent.transform;
+        _slider.value = 1;  
     }
 
     public void UpdateHealthBar(float currentHealth, float maxHealth) {

@@ -199,20 +199,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87219b471b31d6d47831df848586dc20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Speed>k__BackingField: 0
-  <MaxHealth>k__BackingField: 100
-  <CurrentHealth>k__BackingField: 0
-  _tower: {fileID: 0}
+  tower: {fileID: 0}
   _animator: {fileID: 0}
   _spriteRenderer: {fileID: 0}
+  _prefabProjectile: {fileID: 2963063079952062357, guid: 2ba1644794bf5db43a4047c9518bff4b, type: 3}
+  _currentTarget: {fileID: 0}
   _spritesSoliderUpgrade: []
   _level: 1
-  _prefabProjectile: {fileID: 2963063079952062357, guid: 2ba1644794bf5db43a4047c9518bff4b, type: 3}
-  _baseDamage: 2
+  _baseDamage: 1000
   _upgradeDamageIndex: 2
   _damageCause: 6
   coolDownAttack: 3
-  _currentTarget: {fileID: 0}
+  <Speed>k__BackingField: 0
+  <MaxHealth>k__BackingField: 100
+  <CurrentHealth>k__BackingField: 0
 --- !u!1 &912621976325040237
 GameObject:
   m_ObjectHideFlags: 0

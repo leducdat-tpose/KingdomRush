@@ -172,7 +172,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 4823975608452205924}
   currentTargetWarrior: {fileID: 0}
   _dynamicHpBar: {fileID: 5602185179987412548}
-  <MaxHealth>k__BackingField: 6
+  <MaxHealth>k__BackingField: 1000
   <CurrentHealth>k__BackingField: 0
   <MoveSpeed>k__BackingField: 2
   coolDownAttack: 2
@@ -276,9 +276,21 @@ PrefabInstance:
       propertyPath: _target
       value: 
       objectReference: {fileID: 195880137541151178}
+    - target: {fileID: 6111944250454338088, guid: bd54f8d9e36468c4ebe57a96ce813bf7, type: 3}
+      propertyPath: _offset.y
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7117118156453177208, guid: bd54f8d9e36468c4ebe57a96ce813bf7, type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7117118156453177208, guid: bd54f8d9e36468c4ebe57a96ce813bf7, type: 3}
       propertyPath: m_TargetGraphic
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421359787849193257, guid: bd54f8d9e36468c4ebe57a96ce813bf7, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8421359787849193257, guid: bd54f8d9e36468c4ebe57a96ce813bf7, type: 3}
       propertyPath: m_AnchorMax.y
