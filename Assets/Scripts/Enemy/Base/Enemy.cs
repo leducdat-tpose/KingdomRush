@@ -48,16 +48,6 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ICreature
     private bool _beingProvoke = false;
     #endregion
 
-    #region Animation Trigger
-
-    public enum AnimationTriggerType
-    {
-        Attack,
-        Walk,
-        Death
-    }
-    #endregion
-
     #region State Machine Variables
     public StateManager<Enemy> StateManager { get; set; }
     public EnemyIdleState IdleState { get; set; }

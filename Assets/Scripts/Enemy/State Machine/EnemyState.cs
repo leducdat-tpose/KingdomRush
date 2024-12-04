@@ -13,10 +13,6 @@ public class EnemyState
         this.enemyStateMachine = enemyStateMachine;
     }
 
-    public virtual void AnimationTriggerEvent(Enemy.AnimationTriggerType type)
-    {
-    }
-
     public virtual void EnterState()
     {
     }
@@ -31,18 +27,6 @@ public class EnemyState
 
     public virtual void PhysicsUpdate() { }
     public virtual void GetNextState()
-    {
-    }
-
-    public virtual void OnTriggerEnter(Collider2D collision)
-    {
-    }
-
-    public virtual void OnTriggerExit(Collider2D collision)
-    {
-    }
-
-    public virtual void OnTriggerStay(Collider2D collision)
     {
     }
 

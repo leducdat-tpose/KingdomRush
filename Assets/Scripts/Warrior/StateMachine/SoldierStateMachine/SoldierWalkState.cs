@@ -20,4 +20,5 @@ public class SoldierWalkState: BaseState<Soldier>
     {
         Object.StopMoving();
     }
+    public void TestingFunction(){}
 }
