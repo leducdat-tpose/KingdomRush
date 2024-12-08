@@ -1,8 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-public class SoldierAttackState: BaseState<Soldier>
+
+public class WarriorDeathState : BaseState<Warrior>
 {
-    private float _nextAttackTime;
-    public SoldierAttackState(Soldier obj, StateManager<Soldier> objectStateManager) : base(obj, objectStateManager)
+    public WarriorDeathState(Warrior obj, StateManager<Warrior> objectStateManager) : base(obj, objectStateManager)
     {
     }
 
@@ -18,6 +20,7 @@ public class SoldierAttackState: BaseState<Soldier>
 
     public override void FrameUpdate()
     {
+        throw new System.NotImplementedException();
     }
 
     public override void PhysicsUpdate()

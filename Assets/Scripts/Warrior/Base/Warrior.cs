@@ -18,10 +18,11 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable, ICreature
     [Header("References")]
     [SerializeField]protected GameObject tower;
     protected Tower _tower;
-    protected Tower OwnerTower => _tower;
+    public Tower OwnerTower => _tower;
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private GameObject _prefabProjectile;
+    public GameObject PrefabProjectTile => _prefabProjectile;
     ProjectTiles _currentProjectTiles;
     [SerializeField] protected Enemy _currentTarget;
     [SerializeField] private List<Sprite> _spritesSoliderUpgrade;
@@ -34,7 +35,7 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable, ICreature
     public float BaseDamage { get; set; }
     public int Level { get; set; }
     public float MoveSpeed { get; set;}
-   
+    private BaseBehaviour<Warrior> _behaviour;
     
 
     [SerializeField] private float _damageCause;
@@ -53,6 +54,7 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable, ICreature
     protected virtual void Start()
     {
         GetTower();
+        _behaviour = new RangerWarriorBehaviour();
         LoadingProjectilePosition = transform.position;
         _tower.UpgradeAction += UpgradeSolider;
         _animator = GetComponent<Animator>();
@@ -72,10 +74,6 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable, ICreature
         tower = gameObject.transform.parent.gameObject.transform.parent.gameObject;
         _tower = tower.GetComponentInChildren<Tower>();
     }
-    protected virtual void Update()
-    {
-        Render();
-    }
 
     protected virtual void ShootingProjectTile()
     {
@@ -83,11 +81,6 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable, ICreature
         LoadingProjectile();
         _isAttacking = true;
         _nextAttackTime = Time.time + coolDownAttack;
-    }
-
-    protected virtual void FixedUpdate()
-    {
-        
     }
     protected virtual void Render(bool canTurnUp = true)
     {
@@ -123,19 +116,8 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable, ICreature
         _currentProjectTiles.gameObject.SetActive(false);
         _currentProjectTiles.SetCurrentEnemy(_tower.CurrentTarget);
     }
-    public virtual void StartAttacking()
-    {
-        _currentProjectTiles.gameObject.SetActive(true);
-        _currentProjectTiles.SetDamageCause(_damageCause);
-        _isAttacking = false;
-        _tower.StartProgress();
-    }
     public virtual void TakenDamage(float damageAmount)
     {
-        // CurrentHealth -= damageAmount;
-        // if (CurrentHealth > 0) return;
-        // _isDead = true;
-        // _currentTarget.StopBeingProvoked();
     }
     protected virtual void UpgradeSolider(int towerLevel)
     {
@@ -154,13 +136,6 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable, ICreature
     protected void SetIsAttacking(bool _isAttacking)
     {
         this._isAttacking = _isAttacking;
-    }
-
-    protected virtual void DealDamage()
-    {
-        if (!_currentTarget) return;
-        _currentTarget.TakenDamage(_damageCause);
-        if(_currentTarget.GetIsDead()) _currentTarget = null;
     }
     private void ReturnToTower()
     {

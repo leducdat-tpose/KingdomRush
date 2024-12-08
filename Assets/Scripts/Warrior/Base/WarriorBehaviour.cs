@@ -2,17 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class WarriorBehaviour<T> : MonoBehaviour
+public class WarriorBehaviour : BaseBehaviour<Warrior>
 {
-    public StateManager<T> StateManager;
-    public BaseState<T> IdleState;
-    public BaseState<T> WalkState;
-    public BaseState<T> AttackState;
-    public BaseState<T> DeathState;
+    private float _nextAttackTime;
+    private Enemy _currentTargetEnemy;
+    public override void Start()
+    {
+        _nextAttackTime = 0;
+        _currentTargetEnemy = null;
+        base.Start();
+        IdleState = new WarriorIdleState(Object, StateManager);
+        WalkState = new WarriorWalkState(Object, StateManager);
+        AttackState = new WarriorAttackState(Object, StateManager);
+        DeathState = new WarriorDeathState(Object, StateManager);
+        StateManager.Initialize(IdleState);
+    }
+    public override void Render()
+    {
+    }
 
-    public abstract void Start();
+    public override void Update()
+    {
+        StateManager.CurrentState.FrameUpdate();
+        Render();
+    }
+    public override void FixedUpdate()
+    {
+        StateManager.CurrentState.PhysicsUpdate();
+    }
 
-    public abstract void Update();
+    public override void CauseDamage()
+    {
+        base.CauseDamage();
+        if(!_currentTargetEnemy) return;
+        _currentTargetEnemy.TakenDamage(Object.BaseDamage);
+    }
 
-    public abstract void FixedUpdate();
 }

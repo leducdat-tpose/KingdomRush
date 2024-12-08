@@ -16,14 +16,6 @@ public abstract class BaseBehaviour<T> : MonoBehaviour
     protected Animator animator;
     public int CurrentAnimation{get; protected set;}
     protected SpriteRenderer spriteRenderer;
-    #region ID_Animations
-    protected readonly int idleAnimation = Animator.StringToHash("Idle");
-    protected readonly int walkUpAnimation = Animator.StringToHash("WalkUp");
-    protected readonly int walkDownAnimation = Animator.StringToHash("WalkDown");
-    protected readonly int walkSideAnimation = Animator.StringToHash("WalkSide");
-    protected readonly int deathAnimation = Animator.StringToHash("Death");
-    protected readonly int attackAnimation = Animator.StringToHash("Attack");
-    #endregion
     protected T Object;
     public StateManager<T> StateManager;
     public BaseState<T> IdleState;
@@ -36,8 +28,6 @@ public abstract class BaseBehaviour<T> : MonoBehaviour
         Object = this.gameObject.GetComponent<T>();
         spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
         animator = this.gameObject.GetComponent<Animator>();
-        CurrentAnimation = idleAnimation;
-
         StateManager = new StateManager<T>();
     }
 

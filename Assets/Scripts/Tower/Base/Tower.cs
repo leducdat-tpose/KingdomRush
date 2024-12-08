@@ -25,7 +25,6 @@ public class Tower : MonoBehaviour, IShootable
     public Enemy CurrentTarget => _currentTarget;
     [SerializeField]
     private int _towerLevel = 1;
-
     protected bool InProgress;
     protected int _currentAnimation;
     public Collider2D Collider { get; set; }
@@ -55,6 +54,7 @@ public class Tower : MonoBehaviour, IShootable
     {
         if (!other.CompareTag("Enemy")) return;
         Enemy newEnemy = other.GetComponent<Enemy>();
+        if(newEnemy.GetIsDead()) return;
         _enemies.Add(newEnemy);
     }
 
@@ -77,10 +77,11 @@ public class Tower : MonoBehaviour, IShootable
             return;
         }
         float minDistance = Mathf.Infinity;
-        foreach (var enemy in _enemies)
+        foreach (Enemy enemy in _enemies)
         {
             float realDistance = Vector2.Distance(transform.position, enemy.transform.position);
             if(minDistance <= realDistance) continue;
+            if(enemy.GetIsDead()) continue;
             minDistance = realDistance;
             _currentTarget = enemy;
         }

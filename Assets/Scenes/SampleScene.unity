@@ -9566,6 +9566,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArtilleryTower
       objectReference: {fileID: 0}
+    - target: {fileID: 912621976325040237, guid: 9504e80457a91634d82c6c835f18117f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9504e80457a91634d82c6c835f18117f, type: 3}
 --- !u!1001 &3626801996706116769
@@ -9748,10 +9752,6 @@ PrefabInstance:
     - target: {fileID: 8858592990584423653, guid: 35d1b00b4a0938248ac3ff3fd06bac35, type: 3}
       propertyPath: m_Name
       value: Archer Tower
-      objectReference: {fileID: 0}
-    - target: {fileID: 8858592990584423653, guid: 35d1b00b4a0938248ac3ff3fd06bac35, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35d1b00b4a0938248ac3ff3fd06bac35, type: 3}

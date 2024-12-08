@@ -14,9 +14,4 @@ public class Artilleryman : Warrior
         tower = gameObject.transform.parent.gameObject.transform.parent.gameObject;
         _tower = tower.GetComponent<Tower>();
     }
-    protected override void Update()
-    {
-        Render(canTurnUp: false);
-        ShootingProjectTile();
-    }
 }

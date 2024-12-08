@@ -43,20 +43,6 @@ public class Soldier : Warrior
         DeathState = new SoldierDeathState(this, StateManager);
         StateManager.Initialize(IdleState);
     }
-
-    protected override void Update()
-    {
-        StateManager.CurrentState.FrameUpdate();
-        Render();
-        UpdateCurrentTarget();
-    }
-
-    protected override void FixedUpdate()
-    {
-        base.FixedUpdate();
-        StateManager.CurrentState.PhysicsUpdate();
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Enemy")) return;
@@ -100,11 +86,6 @@ public class Soldier : Warrior
 
     protected override void LoadingProjectile()
     {
-    }
-
-    public override void StartAttacking()
-    {
-        SetIsAttacking(true);
     }
 
     private void StopAttacking()
