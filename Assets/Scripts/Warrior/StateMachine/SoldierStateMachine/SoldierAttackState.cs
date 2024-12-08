@@ -6,13 +6,26 @@ public class SoldierAttackState: BaseState<Soldier>
     {
     }
 
+    public override void EnterState()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void ExitState()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public override void FrameUpdate()
     {
-        base.FrameUpdate();
         if(!Object.GetCurrentTarget()) Object.StopAttackingState();
         if (Time.time < _nextAttackTime) return;
         Object.StartAttacking();
         _nextAttackTime = Time.time + Object.CoolDownAttack;
     }
-    
+
+    public override void PhysicsUpdate()
+    {
+        throw new System.NotImplementedException();
+    }
 }

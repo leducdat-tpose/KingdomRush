@@ -7,7 +7,6 @@ public interface IEnemyMoveable
     float MoveSpeed {  get; set; }
     int PathIndex { get; set; }
     Vector3 TargetPosition {  get; set; }
-    void MoveEnemy();
     void UpdateTargetPosition();
 
 }

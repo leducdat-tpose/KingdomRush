@@ -132,10 +132,10 @@ public class Warrior : MonoBehaviour, IMoveable, IDamageable, ICreature
     }
     public virtual void TakenDamage(float damageAmount)
     {
-        CurrentHealth -= damageAmount;
-        if (CurrentHealth > 0) return;
-        _isDead = true;
-        _currentTarget.StopBeingProvoked();
+        // CurrentHealth -= damageAmount;
+        // if (CurrentHealth > 0) return;
+        // _isDead = true;
+        // _currentTarget.StopBeingProvoked();
     }
     protected virtual void UpgradeSolider(int towerLevel)
     {

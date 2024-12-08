@@ -4,9 +4,4 @@ using UnityEngine;
 
 public class DesertThug : Enemy
 {
-    protected override void Update()
-    {
-        base.Update();
-    }
-
 }

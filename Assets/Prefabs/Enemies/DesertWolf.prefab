@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2788922623559565167}
   - component: {fileID: 2788922623559565166}
   - component: {fileID: 2788922623559565165}
+  - component: {fileID: 5563979201399257504}
   m_Layer: 0
   m_Name: DesertWolf
   m_TagString: Enemy
@@ -167,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19dc87f8c3f1fd54eb7bba6982a43466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 2788922623559565167}
+  _rigidbody: {fileID: 0}
   animator: {fileID: 2788922623559565166}
   spriteRenderer: {fileID: 2788922623559565160}
   currentTargetWarrior: {fileID: 0}
@@ -177,6 +178,19 @@ MonoBehaviour:
   <MoveSpeed>k__BackingField: 3
   coolDownAttack: 0
   _beingProvoke: 0
+--- !u!114 &5563979201399257504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2788922623559565164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a4266c37e2899e449c3e1474f32f295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentAnimation: 0
 --- !u!1001 &4905826211646732479
 PrefabInstance:
   m_ObjectHideFlags: 0

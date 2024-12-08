@@ -64,14 +64,14 @@ public class Soldier : Warrior
         _enemies.Add(newEnemy);
     }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (!other.CompareTag("Enemy")) return;
-        Enemy existEnemy = other.GetComponent<Enemy>();
-        if(!_enemies.Contains(existEnemy)) return;
-        _enemies.Remove(existEnemy);
-        if(_currentTarget) _currentTarget.StopBeingProvoked();
-    }
+    // private void OnTriggerExit2D(Collider2D other)
+    // {
+    //     if (!other.CompareTag("Enemy")) return;
+    //     Enemy existEnemy = other.GetComponent<Enemy>();
+    //     if(!_enemies.Contains(existEnemy)) return;
+    //     _enemies.Remove(existEnemy);
+    //     if(_currentTarget) _currentTarget.StopBeingProvoked();
+    // }
 
     private void MoveToStandingPosition(Vector3 standingPosition)
     {
@@ -82,20 +82,20 @@ public class Soldier : Warrior
     }
     private void UpdateCurrentTarget()
     {
-        if (_currentTarget) return;
-        if (_enemies.Count == 0)
-        {
-            _currentTarget = null;
-            return;
-        }
-        foreach (var enemy in _enemies)
-        {
-            if(enemy.GetBeingProvoked()) continue;
-            _currentTarget = enemy;
-            enemy.SetBeingProvoke(true, this);
-            StartMoving();
-            return;
-        }
+        // if (_currentTarget) return;
+        // if (_enemies.Count == 0)
+        // {
+        //     _currentTarget = null;
+        //     return;
+        // }
+        // foreach (var enemy in _enemies)
+        // {
+        //     if(enemy.GetBeingProvoked()) continue;
+        //     _currentTarget = enemy;
+        //     enemy.SetBeingProvoke(true, this);
+        //     StartMoving();
+        //     return;
+        // }
     }
 
     protected override void LoadingProjectile()

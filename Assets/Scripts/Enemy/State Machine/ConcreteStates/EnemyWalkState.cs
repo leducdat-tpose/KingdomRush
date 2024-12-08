@@ -9,44 +9,43 @@ public class EnemyWalkState : BaseState<Enemy>
     }
     public override void EnterState()
     {
-        base.EnterState();
     }
 
     public override void ExitState()
     {
-        base.ExitState();
-        Object.StopMoving();
+        StopMoving();
     }
 
     public override void FrameUpdate()
     {
-        base.FrameUpdate();
-        Object.UpdateTargetPosition();
-    }
-
-    public override void GetNextState()
-    {
-        base.GetNextState();
-    }
-
-    public override void OnTriggerEnter(Collider2D collision)
-    {
-        base.OnTriggerEnter(collision);
-    }
-
-    public override void OnTriggerExit(Collider2D collision)
-    {
-        base.OnTriggerExit(collision);
-    }
-
-    public override void OnTriggerStay(Collider2D collision)
-    {
-        base.OnTriggerStay(collision);
+        UpdateTargetPosition();
     }
 
     public override void PhysicsUpdate()
     {
-        base.PhysicsUpdate();
-        Object.MoveEnemy();
+        Moving();
+    }
+    private void Moving()
+    {
+        if(ObjectStateManager.CurrentState != this) return;
+        Vector2 direction = (Object.TargetPosition - Object.transform.position).normalized;
+        Object.Rigidbody.velocity = direction * Object.MoveSpeed;
+    }
+
+    private void UpdateTargetPosition()
+    {
+        if(Vector2.Distance(Object.TargetPosition, Object.transform.position) > 0.1f || !Object.gameObject.activeSelf) return;
+        Object.PathIndex++;
+        if(Object.PathIndex == LevelManager.instance.GetWaypointsLength())
+        {
+            Object.ReturnPoolObject();
+            return;
+        }
+        Object.TargetPosition = LevelManager.instance.GetPoint(Object.PathIndex);
+    }
+
+    private void StopMoving()
+    {
+        Object.Rigidbody.velocity = Vector2.zero;
     }
 }

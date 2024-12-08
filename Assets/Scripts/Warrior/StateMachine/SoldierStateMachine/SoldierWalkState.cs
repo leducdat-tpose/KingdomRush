@@ -21,4 +21,9 @@ public class SoldierWalkState: BaseState<Soldier>
         Object.StopMoving();
     }
     public void TestingFunction(){}
+
+    public override void EnterState()
+    {
+        throw new System.NotImplementedException();
+    }
 }

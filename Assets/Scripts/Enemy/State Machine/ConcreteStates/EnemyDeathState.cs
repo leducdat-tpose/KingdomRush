@@ -10,7 +10,6 @@ public class EnemyDeathState : BaseState<Enemy>
 
     public override void EnterState()
     {
-        base.EnterState();
         GameObject effect = PoolingObject.Instance.GetEffectObject("BleedingBlood", EffectType.BleedingSmallRed);
         effect.transform.position = Object.transform.position;
         effect.SetActive(true);
@@ -18,36 +17,13 @@ public class EnemyDeathState : BaseState<Enemy>
 
     public override void ExitState()
     {
-        base.ExitState();
     }
 
     public override void FrameUpdate()
     {
-        base.FrameUpdate();
-    }
-
-    public override void GetNextState()
-    {
-        base.GetNextState();
-    }
-
-    public override void OnTriggerEnter(Collider2D collision)
-    {
-        base.OnTriggerEnter(collision);
-    }
-
-    public override void OnTriggerExit(Collider2D collision)
-    {
-        base.OnTriggerExit(collision);
-    }
-
-    public override void OnTriggerStay(Collider2D collision)
-    {
-        base.OnTriggerStay(collision);
     }
 
     public override void PhysicsUpdate()
     {
-        base.PhysicsUpdate();
     }
 }

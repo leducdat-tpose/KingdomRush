@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BaseState<T>
+public abstract class BaseState<T>
 {
     protected readonly T Object;
     protected StateManager<T> ObjectStateManager;
@@ -11,10 +11,10 @@ public class BaseState<T>
         ObjectStateManager = objectStateManager;
     }
     
-    public virtual void EnterState() { }
-    public virtual void ExitState() { }
-    public virtual void FrameUpdate() { }
-    public virtual void PhysicsUpdate() { }
+    public abstract void EnterState();
+    public abstract void ExitState();
+    public abstract void FrameUpdate();
+    public abstract void PhysicsUpdate();
     public virtual void AnimationTriggerEvent() { }
     public virtual void GetNextState() { }
     public virtual void OnTriggerEnter(Collider2D collision) { }
