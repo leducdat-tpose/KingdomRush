@@ -4,7 +4,4 @@ using UnityEngine;
 
 public class MageShooter : Warrior
 {
-    protected override void UpgradeSolider(int towerLevel)
-    {
-    }
 }

@@ -4,20 +4,13 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    public static LevelManager instance;
     [Header("Waypoints")]
     public Waypoint Waypoint;
     private Vector3 startingPoint;
     private Vector3 endingPoint;
-
-    private void Awake()
-    {
-        instance = this;
-        Waypoint = GameObject.Find("Waypoints").GetComponent<Waypoint>();
-    }
-
     void Start()
     {
+        Waypoint = GameObject.Find("Waypoints").GetComponent<Waypoint>();
         startingPoint = Waypoint.Points[0];
         endingPoint = Waypoint.Points[Waypoint.Points.Length - 1];
     }

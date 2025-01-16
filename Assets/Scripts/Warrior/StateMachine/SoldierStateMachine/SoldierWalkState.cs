@@ -12,13 +12,10 @@ public class SoldierWalkState: BaseState<Soldier>
 
     public override void PhysicsUpdate()
     {
-        Object.MovingToStandingPosition();
-        Object.MovingToEnemyPosition();
     }
 
     public override void ExitState()
     {
-        Object.StopMoving();
     }
     public void TestingFunction(){}
 

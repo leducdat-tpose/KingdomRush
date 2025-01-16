@@ -23,7 +23,7 @@ public class EnemyMovement : MonoBehaviour {
 
     void Start()
     {
-        target = LevelManager.instance.GetStartingPoint();
+        target = GameController.Instance.LevelManager.GetStartingPoint();
         transform.position = target;
     }
 
@@ -31,13 +31,13 @@ public class EnemyMovement : MonoBehaviour {
     {
         if (Vector2.Distance(target, transform.position) > 0.1f) return;
         pathIndex++;
-        if (pathIndex == LevelManager.instance.GetWaypointsLength())
+        if (pathIndex == GameController.Instance.LevelManager.GetWaypointsLength())
         {
             EnemySpawner.OnEnemyDestroy.Invoke();
             this.gameObject.SetActive(false);
             return;
         }
-        target = LevelManager.instance.GetPoint(pathIndex);
+        target = GameController.Instance.LevelManager.GetPoint(pathIndex);
     }
     private void FixedUpdate()
     {

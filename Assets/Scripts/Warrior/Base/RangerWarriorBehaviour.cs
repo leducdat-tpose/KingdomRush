@@ -96,7 +96,6 @@ public class RangerWarriorBehaviour : BaseBehaviour<Warrior>
     }
 
     public void ShootProjectTile(){
-        Debug.Log("Shoot projectile");
         _currentProjectTile.gameObject.SetActive(true);
     }
     public void StopAttacking()

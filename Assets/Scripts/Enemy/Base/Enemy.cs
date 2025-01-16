@@ -52,7 +52,7 @@ public class Enemy : MonoBehaviour, IDamageable, ICreature
         _behaviour = GetComponent<EnemyBehaviour>();
         _rigidbody.isKinematic = true;
         CurrentHealth = MaxHealth;
-        TargetPosition = LevelManager.instance.GetStartingPoint();
+        TargetPosition = GameController.Instance.LevelManager.GetStartingPoint();
         _currentTargetWarrior = null;
         transform.position = TargetPosition;
     }

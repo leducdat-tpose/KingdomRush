@@ -36,7 +36,6 @@ public class Soldier : Warrior
         base.Start();
         StandingPosition = transform.position;
         StateManager = new StateManager<Soldier>();
-        OwnerTower.ChangeStandingPosition += MoveToStandingPosition;
         IdleState = new SoldierIdleState(this, StateManager);
         WalkState = new SoldierWalkState(this, StateManager);
         AttackState = new SoldierAttackState(this, StateManager);
@@ -58,14 +57,6 @@ public class Soldier : Warrior
     //     _enemies.Remove(existEnemy);
     //     if(_currentTarget) _currentTarget.StopBeingProvoked();
     // }
-
-    private void MoveToStandingPosition(Vector3 standingPosition)
-    {
-        StateManager.ChangeState(WalkState);
-        StandingPosition = standingPosition + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
-        isMoving = true;
-        _goToMarkPosition = true;
-    }
     private void UpdateCurrentTarget()
     {
         // if (_currentTarget) return;
@@ -83,58 +74,4 @@ public class Soldier : Warrior
         //     return;
         // }
     }
-
-    protected override void LoadingProjectile()
-    {
-    }
-
-    private void StopAttacking()
-    {
-        SetIsAttacking(false);
-    }
-
-    public void StopAttackingState()
-    {
-        StateManager.ChangeState(IdleState);
-        SetIsAttacking(false);
-    }
-    
-    private void StartMoving()
-    {
-        isMoving = true;
-        StateManager.ChangeState(WalkState);
-    }
-    public void StopMoving()
-    {
-        isMoving = false;
-        _rigidbody2D.velocity = Vector2.zero;
-    }
-
-    private void MovingToTargetPosition(Vector3 targetPosition)
-    {
-        Vector2 direction = (targetPosition - transform.position).normalized;
-        _rigidbody2D.velocity = direction * Speed;
-    }
-
-    public void MovingToStandingPosition()
-    {
-        if (!isMoving || !_goToMarkPosition) return;
-        MovingToTargetPosition(StandingPosition);
-        isMoving = true;
-        if (!(Vector2.Distance(transform.position, StandingPosition) < 0.1f)) return;
-        StateManager.ChangeState(IdleState);
-        _goToMarkPosition = false;
-    }
-
-    public void MovingToEnemyPosition()
-    {
-        if (!isMoving || !_currentTarget || _goToMarkPosition) return;
-        var enemyPosition = _currentTarget.transform.position;
-        MovingToTargetPosition(enemyPosition);
-        isMoving = true;
-        if (!(Vector2.Distance(transform.position, enemyPosition) < 0.3f)) return;
-        if(!_currentTarget) StateManager.ChangeState(IdleState);
-        else StateManager.ChangeState(AttackState);
-    }
-    
 }

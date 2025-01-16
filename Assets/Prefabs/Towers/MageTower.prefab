@@ -102,8 +102,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -754724379
-  m_SortingLayer: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8fb5e3455f5593d449a9114267d58c03, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -198,7 +198,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7866993831662674450}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.5, y: -1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -217,6 +217,10 @@ PrefabInstance:
     - target: {fileID: 8800593555090116235, guid: 48902548c8e8f2446863274f7b9944b8, type: 3}
       propertyPath: m_Name
       value: MageShooter
+      objectReference: {fileID: 0}
+    - target: {fileID: 8800593555090116235, guid: 48902548c8e8f2446863274f7b9944b8, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8800593555090116244, guid: 48902548c8e8f2446863274f7b9944b8, type: 3}
       propertyPath: m_RootOrder

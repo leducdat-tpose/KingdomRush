@@ -36,12 +36,12 @@ public class EnemyWalkState : BaseState<Enemy>
     {
         if(Vector2.Distance(Object.TargetPosition, Object.transform.position) > 0.1f || !Object.gameObject.activeSelf) return;
         Object.PathIndex++;
-        if(Object.PathIndex == LevelManager.instance.GetWaypointsLength())
+        if(Object.PathIndex == GameController.Instance.LevelManager.GetWaypointsLength())
         {
             Object.ReturnPoolObject();
             return;
         }
-        Object.TargetPosition = LevelManager.instance.GetPoint(Object.PathIndex);
+        Object.TargetPosition = GameController.Instance.LevelManager.GetPoint(Object.PathIndex);
     }
 
     private void StopMoving()
