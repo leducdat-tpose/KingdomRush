@@ -55,11 +55,11 @@ public class EnemyBehaviour : BaseBehaviour<Enemy>
                 nextAnimation = _walkSideAnimation;
                 spriteRenderer.flipX = direction.x < 0;
             }
-            if(nextAnimation == CurrentAnimation
-            || Object.gameObject.activeSelf == false) return;
-            animator.CrossFade(nextAnimation, 0.1f, 0);
-            CurrentAnimation = nextAnimation;
         }
+        if(nextAnimation == CurrentAnimation
+        || Object.gameObject.activeSelf == false) return;
+        animator.CrossFade(nextAnimation, 0.1f, 0);
+        CurrentAnimation = nextAnimation;
     }
     public override void CauseDamage()
     {

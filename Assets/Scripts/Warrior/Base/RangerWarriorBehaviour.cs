@@ -8,8 +8,6 @@ public class RangerWarriorBehaviour : BaseBehaviour<Warrior>
     #region ID_Animations
     private int _idleAnimation = Animator.StringToHash("Idle Level_1");
     private int _idleUpAnimation = Animator.StringToHash("Idle_Up Level_1");
-    // private int _walkUpAnimation = Animator.StringToHash("WalkUp");
-    // private int _walkDownAnimation = Animator.StringToHash("WalkDown");
     private int _walkSideAnimation = Animator.StringToHash("Walk Level_1");
     private int _deathAnimation = Animator.StringToHash("Death Level_1");
     private int _attackAnimation = Animator.StringToHash("Attack Level_1");
@@ -110,13 +108,6 @@ public class RangerWarriorBehaviour : BaseBehaviour<Warrior>
         _currentProjectTile.transform.position = PositionReleaseProjectTile;
         _currentProjectTile.gameObject.SetActive(false);
         _currentProjectTile.SetCurrentEnemy(_currentTargetEnemy);
-    }
-
-    public override void CauseDamage()
-    {
-        base.CauseDamage();
-        if(!_currentTargetEnemy) return;
-        _currentTargetEnemy.TakenDamage(Object.BaseDamage);
     }
     public void UpdateCurrentTargetEnemy()
     {

@@ -12,7 +12,7 @@ TagManager:
   - Map
   - Water
   - UI
-  - Object
+  - 
   - 
   - 
   - 
@@ -42,6 +42,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Map
+    uniqueID: 1346158643
+    locked: 0
   - name: Tower
     uniqueID: 3540242917
     locked: 0
@@ -55,8 +58,5 @@ TagManager:
     uniqueID: 364884137
     locked: 0
   - name: UI
-    uniqueID: 4095641311
-    locked: 0
-  - name: Object
     uniqueID: 273939815
     locked: 0

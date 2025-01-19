@@ -12,7 +12,7 @@ public class Soldier : Warrior
     [SerializeField] private CircleCollider2D _collider2D;
     [SerializeField] Rigidbody2D _rigidbody2D;
     [SerializeField] List<Enemy> _enemies;
-    private bool _goToMarkPosition;
+    // private bool _goToMarkPosition;
     #region State Machine Variables
 
     private StateManager<Soldier> StateManager;
@@ -28,7 +28,7 @@ public class Soldier : Warrior
         _collider2D.isTrigger = true;
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _rigidbody2D.isKinematic = true;
-        _goToMarkPosition = false;
+        // _goToMarkPosition = false;
     }
 
     protected override void Start()

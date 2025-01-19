@@ -42,20 +42,21 @@ public class ProjectTiles: MonoBehaviour
         
         protected virtual void StartEndEffect()
         {
-            if(_animator) _animator.CrossFade(EndEffect, 0.1f, 0);
-            else
-            {
-                Debug.LogError("Animator is null");
-                ReturnToPool();
-            }
-            return;
+            _animator.Play(EndEffect);
+            StartCoroutine("startRemainAndReturnPool");
         }
-        
+        IEnumerator startRemainAndReturnPool()
+        {
+            yield return new WaitForSeconds(_remainExistTime);
+            ReturnToPool();
+        }
+
         protected virtual void MoveProjectTiles()
         {
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, _speed * Time.deltaTime);
             float distanceToTarget = (targetPosition - transform.position).magnitude;
-            if (!(distanceToTarget < minDistanceToDealDamage)) return;
+            if(!(distanceToTarget < minDistanceToDealDamage)) return;
+            //Both enemy and Projectiles not return to pool after cause damage
             if(_enemyTarget) _enemyTarget.TakenDamage(_damageCause);
             StartEndEffect();
         }

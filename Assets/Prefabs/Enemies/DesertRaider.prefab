@@ -74,8 +74,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 173009083
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f9ff932306651e14a8180958620a1edb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -171,13 +171,14 @@ MonoBehaviour:
   _rigidbody: {fileID: 0}
   animator: {fileID: 5111393800753556022}
   spriteRenderer: {fileID: 5111393800753556425}
-  currentTargetWarrior: {fileID: 0}
+  _currentTargetWarrior: {fileID: 0}
   _dynamicHpBar: {fileID: 6115664053762845026}
-  <MaxHealth>k__BackingField: 1000
+  <MaxHealth>k__BackingField: 1
   <CurrentHealth>k__BackingField: 0
   <MoveSpeed>k__BackingField: 2
   coolDownAttack: 1
   _beingProvoke: 0
+  _moneyEarned: 5
 --- !u!114 &-6993917528018998713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,7 +191,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a4266c37e2899e449c3e1474f32f295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentAnimation: 0
 --- !u!1001 &4161547584308042
 PrefabInstance:
   m_ObjectHideFlags: 0

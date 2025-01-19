@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class WarriorBehaviour : BaseBehaviour<Warrior>
 {
-    private float _nextAttackTime;
+    // private float _nextAttackTime;
     private Enemy _currentTargetEnemy;
     public override void Start()
     {
-        _nextAttackTime = 0;
+        // _nextAttackTime = 0;
         _currentTargetEnemy = null;
         base.Start();
         IdleState = new WarriorIdleState(Object, StateManager);

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.iOS;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
@@ -37,6 +38,9 @@ public class Enemy : MonoBehaviour, IDamageable, ICreature
     public float CoolDownAttack => coolDownAttack;
     [SerializeField]
     private bool _beingProvoke = false;
+    [SerializeField]
+    //After killing an enemy, it will give player money to upgrade tower, champs, etc.
+    private int _moneyEarned = 5;
     #endregion
 
     private EnemyBehaviour _behaviour;
@@ -63,11 +67,15 @@ public class Enemy : MonoBehaviour, IDamageable, ICreature
         CurrentHealth -= damageAmount;
         _dynamicHpBar?.UpdateHealthBar(CurrentHealth, MaxHealth);
         if (CurrentHealth > 0) return;
+        ResourceManagement.CollectResource?.Invoke(_moneyEarned);
         CurrentHealth = 0;
         _behaviour.ChangeState(StateType.Death);
         _rigidbody.velocity = Vector2.zero;
     }
-
+    IEnumerator StartRemainDeath(){
+        yield return new WaitForSeconds(3f);
+        ReturnPoolObject();
+    }
     public void ReturnPoolObject()
     {
         this.gameObject.SetActive(false);

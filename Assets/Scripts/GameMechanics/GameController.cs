@@ -9,13 +9,14 @@ public class GameController : MonoBehaviour
     private LevelManager _levelManager;
     public LevelManager LevelManager=>_levelManager;
     [SerializeField]
-    private MoneySystem _moneySystem;
+    private ResourceManagement _resourceManagement;
+    public ResourceManagement ResourceManagement=>_resourceManagement;
     [SerializeField]
     private EnemySpawner _enemySpawner;
     private void Awake() {
         Instance = this;
         _levelManager = GetComponentInChildren<LevelManager>();
-        _moneySystem = GetComponentInChildren<MoneySystem>();
+        _resourceManagement = GetComponentInChildren<ResourceManagement>();
         _enemySpawner = GetComponentInChildren<EnemySpawner>();
     }
 }

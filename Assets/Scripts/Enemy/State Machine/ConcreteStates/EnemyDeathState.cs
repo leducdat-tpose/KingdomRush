@@ -10,9 +10,11 @@ public class EnemyDeathState : BaseState<Enemy>
 
     public override void EnterState()
     {
+
         GameObject effect = PoolingObject.Instance.GetEffectObject("BleedingBlood", EffectType.BleedingSmallRed);
         effect.transform.position = Object.transform.position;
         effect.SetActive(true);
+        Object.StartCoroutine("StartRemainDeath");
     }
 
     public override void ExitState()

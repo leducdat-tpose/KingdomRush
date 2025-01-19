@@ -25,7 +25,7 @@ public class Warrior : MonoBehaviour, IMoveable, ICreature
     [SerializeField] private float _upgradeDamageIndex;
     [field:SerializeField]public float MaxHealth { get; set; }
     [field:SerializeField]public float CurrentHealth { get; set; }
-    public float BaseDamage { get; set; }
+    [field:SerializeField]public float BaseDamage { get; set; }
     public int Level { get; set; }
     public float MoveSpeed { get; set;}
     private BaseBehaviour<Warrior> _behaviour;
@@ -37,7 +37,7 @@ public class Warrior : MonoBehaviour, IMoveable, ICreature
 
     protected virtual void Start()
     {
-        _behaviour = new RangerWarriorBehaviour();
+        // _behaviour = new RangerWarriorBehaviour();
         Level = 1;
         CurrentHealth = MaxHealth;
     }
@@ -57,4 +57,5 @@ public class Warrior : MonoBehaviour, IMoveable, ICreature
     // }
     public void TakenDamage(float damage)
     {}
+    public void UpgradeDamage()=>this.BaseDamage *= _upgradeDamageIndex;
 }
