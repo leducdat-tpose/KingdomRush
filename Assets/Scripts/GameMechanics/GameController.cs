@@ -5,6 +5,10 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     public static GameController Instance;
+    private int _playerHeartRemain;
+    [field:SerializeField]
+    public SpawnEnemiesInfo EnemiesSceneInfo {get; private set;}
+
     [SerializeField]
     private LevelManager _levelManager;
     public LevelManager LevelManager=>_levelManager;
@@ -18,5 +22,9 @@ public class GameController : MonoBehaviour
         _levelManager = GetComponentInChildren<LevelManager>();
         _resourceManagement = GetComponentInChildren<ResourceManagement>();
         _enemySpawner = GetComponentInChildren<EnemySpawner>();
+        _playerHeartRemain = EnemiesSceneInfo.InitialPlayerHeart;
     }
+
+    public void LostPlayerHeart()
+    => _playerHeartRemain -= EnemiesSceneInfo.PlayerHeartLost;
 }

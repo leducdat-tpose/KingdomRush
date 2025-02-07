@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5e854480c346b44792cfa11600055d9, type: 3}
   m_Name: Episode0_1
   m_EditorClassIdentifier: 
+  InitialPlayerHeart: 25
+  PlayerHeartLost: 1
   TimeBetweenWaves: 5
   EnemiesPerSec: 2
   BaseEnemies: 3

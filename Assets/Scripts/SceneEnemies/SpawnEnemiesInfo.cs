@@ -20,8 +20,11 @@ public class Wave
         return enemiesInfo.Sum(t => t.amount);
     }
 }
+[CreateAssetMenu(fileName = "LevelDetail", menuName ="ScriptableObject/LevelDetail")]
 public class SpawnEnemiesInfo : ScriptableObject
 {
+    public int InitialPlayerHeart;
+    public int PlayerHeartLost;
     public float TimeBetweenWaves;
     public float EnemiesPerSec;
     public int BaseEnemies;

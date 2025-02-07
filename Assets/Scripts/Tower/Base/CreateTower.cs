@@ -12,11 +12,18 @@ public enum TowerType{
 }
 public class CreateTower : MonoBehaviour
 {
-    // public UnityEvent<TowerType> CreateTowerEvent;
     [SerializeField]
     private GameObject _containTower;
     [SerializeField]
+    private InteractUI _optionUI;
+    [SerializeField]
     private List<GameObject> _towerPrefabs;
+    
+    private void Start() {
+        _containTower = transform.GetChild(1).gameObject;
+        _optionUI = GetComponentInChildren<InteractUI>(includeInactive:true);
+    }
+
     public void ChooseTower(TowerType type)
     {
         GameObject selectedTower = type switch
@@ -27,8 +34,7 @@ public class CreateTower : MonoBehaviour
             TowerType.Mage => _towerPrefabs[3],
             _ => _towerPrefabs[0],
         };
-        GameObject newTower = Instantiate(selectedTower);
-        newTower.transform.SetParent(_containTower.transform);
+        GameObject newTower = Instantiate(selectedTower, parent: _containTower.transform);
+        _optionUI.transform.parent.gameObject.SetActive(false);
     }
-    public void testFunc(){}
 }

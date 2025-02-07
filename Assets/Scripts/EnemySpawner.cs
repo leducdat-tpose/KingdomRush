@@ -5,8 +5,7 @@ using UnityEngine.Events;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [Header("References")] 
-    [SerializeField] private SpawnEnemiesInfo _enemiesSceneInfo;
+    private SpawnEnemiesInfo _enemiesSceneInfo;
 
     [Header("Attributes")] 
     [SerializeField] private float timeBetweenWaves;
@@ -28,17 +27,17 @@ public class EnemySpawner : MonoBehaviour
 
     private void Awake()
     {
-        if (_enemiesSceneInfo == null)
-        {
-            Debug.LogError("EnemiesSceneInfo is not assigned!");
-            return;
-        }
-
         OnEnemyDestroy.AddListener(EnemyBeingDestroyed);
     }
 
     void Start()
     {
+        _enemiesSceneInfo = GameController.Instance.EnemiesSceneInfo;
+        if(_enemiesSceneInfo == null)
+        {
+            Debug.LogError("Forgot to assign enemies scene info in gamecontroller");
+            return;
+        }
         _totalWaves = _enemiesSceneInfo.waves.Count;
         timeBetweenWaves = _enemiesSceneInfo.TimeBetweenWaves;
         enemiesPerSec = _enemiesSceneInfo.EnemiesPerSec;

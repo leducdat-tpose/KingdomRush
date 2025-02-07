@@ -216,7 +216,7 @@ RectTransform:
   m_Children:
   - {fileID: 261200418}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -406,7 +406,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdb56cd6ad87fe54a8574ad8884b2d21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemiesSceneInfo: {fileID: 11400000, guid: 24587feab6ced4246b5dc67e60d0c58d, type: 2}
   timeBetweenWaves: 5
   enemiesPerSec: 2
   baseEnemies: 3
@@ -769,7 +768,7 @@ Transform:
   - {fileID: 1229104756}
   - {fileID: 811234277}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1079816934
 GameObject:
@@ -848,7 +847,7 @@ Transform:
   - {fileID: 376161489}
   - {fileID: 691271176}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1098231381
 MonoBehaviour:
@@ -862,6 +861,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15914355e0a1e414fa172cef509f4c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <EnemiesSceneInfo>k__BackingField: {fileID: 11400000, guid: 24587feab6ced4246b5dc67e60d0c58d, type: 2}
   _levelManager: {fileID: 1079816935}
   _resourceManagement: {fileID: 691271175}
   _enemySpawner: {fileID: 376161490}
@@ -929,7 +929,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1609021738
 GameObject:
@@ -995,7 +995,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1878413742
 GameObject:
@@ -1077,7 +1077,7 @@ Transform:
   m_LocalScale: {x: 2.14, y: 1.19, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &912621976060418958
 PrefabInstance:
@@ -1210,7 +1210,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8959844762947528484, guid: 671f88642eae57544989279d781556a3, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8959844762947528484, guid: 671f88642eae57544989279d781556a3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1268,6 +1268,10 @@ PrefabInstance:
     - target: {fileID: 7866993831662674450, guid: 510a14222cdf10d4bb733272ae4539cc, type: 3}
       propertyPath: m_Name
       value: MageTower
+      objectReference: {fileID: 0}
+    - target: {fileID: 7866993831662674450, guid: 510a14222cdf10d4bb733272ae4539cc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7866993831662674453, guid: 510a14222cdf10d4bb733272ae4539cc, type: 3}
       propertyPath: m_RootOrder
