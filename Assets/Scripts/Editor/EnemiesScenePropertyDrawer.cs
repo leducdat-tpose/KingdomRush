@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Animations;
 
 namespace Editor
 {
@@ -19,7 +20,6 @@ namespace Editor
             EditorGUI.PropertyField(amountRect, amountProp);
             EditorGUI.EndProperty();
         }
-
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             return EditorGUIUtility.singleLineHeight * 1.2f;

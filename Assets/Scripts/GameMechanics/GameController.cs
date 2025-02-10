@@ -5,7 +5,8 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     public static GameController Instance;
-    private int _playerHeartRemain;
+    public bool isGameOver{get;private set;} = false;
+    public int PlayerHeartRemain{get; private set;}
     [field:SerializeField]
     public SpawnEnemiesInfo EnemiesSceneInfo {get; private set;}
 
@@ -17,14 +18,28 @@ public class GameController : MonoBehaviour
     public ResourceManagement ResourceManagement=>_resourceManagement;
     [SerializeField]
     private EnemySpawner _enemySpawner;
+    public EnemySpawner EnemySpawner => _enemySpawner;
     private void Awake() {
         Instance = this;
         _levelManager = GetComponentInChildren<LevelManager>();
         _resourceManagement = GetComponentInChildren<ResourceManagement>();
         _enemySpawner = GetComponentInChildren<EnemySpawner>();
-        _playerHeartRemain = EnemiesSceneInfo.InitialPlayerHeart;
+        PlayerHeartRemain = EnemiesSceneInfo.InitialPlayerHeart;
+    }
+
+    private void Start() {
+        UIController.Instance.Initialise();
     }
 
     public void LostPlayerHeart()
-    => _playerHeartRemain -= EnemiesSceneInfo.PlayerHeartLost;
+    {
+        if(isGameOver) return;
+        PlayerHeartRemain -= EnemiesSceneInfo.PlayerHeartLost;
+        if(PlayerHeartRemain <= 0)
+        {
+            isGameOver = true;
+            PlayerHeartRemain = 0;
+        }
+        UIController.Instance.UpdateHeartRemain();
+    }
 }

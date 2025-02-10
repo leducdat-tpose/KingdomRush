@@ -6,6 +6,7 @@ public class TowerInfo{
     public int Level;
     public GameObject Prefab;
     public int Cost;
+    public float DamageCause;
 }
 
 

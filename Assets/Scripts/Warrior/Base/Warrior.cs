@@ -58,4 +58,6 @@ public class Warrior : MonoBehaviour, IMoveable, ICreature
     public void TakenDamage(float damage)
     {}
     public void UpgradeDamage()=>this.BaseDamage *= _upgradeDamageIndex;
+
+    public void SetDamageCause(float value) => this.BaseDamage = value;
 }

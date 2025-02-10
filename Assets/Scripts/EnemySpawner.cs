@@ -14,8 +14,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float diffScalingFactor;
     [SerializeField] private bool isSpawning = false;
 
-    private int _totalWaves;
-    [SerializeField] private int currentWave = 1;
+    public int TotalWaves{get; private set;}
+    public int CurrentWave{get; private set;}
     private float timeSinceLastWave = 0;
     [SerializeField] private int enemiesAlive = 0;
     [SerializeField] private int enemyIndex;
@@ -32,13 +32,14 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
+        CurrentWave = 1;
         _enemiesSceneInfo = GameController.Instance.EnemiesSceneInfo;
         if(_enemiesSceneInfo == null)
         {
             Debug.LogError("Forgot to assign enemies scene info in gamecontroller");
             return;
         }
-        _totalWaves = _enemiesSceneInfo.waves.Count;
+        TotalWaves = _enemiesSceneInfo.waves.Count;
         timeBetweenWaves = _enemiesSceneInfo.TimeBetweenWaves;
         enemiesPerSec = _enemiesSceneInfo.EnemiesPerSec;
         baseEnemies = _enemiesSceneInfo.BaseEnemies;
@@ -69,10 +70,10 @@ public class EnemySpawner : MonoBehaviour
 
     void StartWave()
     {
-        if (currentWave > _totalWaves)
+        if (CurrentWave > TotalWaves)
         {
             isSpawning = false;
-            currentWave = _totalWaves;
+            CurrentWave = TotalWaves;
 
             return;
         }
@@ -84,12 +85,12 @@ public class EnemySpawner : MonoBehaviour
 
     private int EnemiesPerWave()
     {
-        return _enemiesSceneInfo.waves[currentWave - 1].GetTotalAmount();
+        return _enemiesSceneInfo.waves[CurrentWave - 1].GetTotalAmount();
     }
 
     private void GetAmountEnemyNeedToSpawn()
     {
-        amountEnemyNeedToSpawn = _enemiesSceneInfo.waves[currentWave - 1].enemiesInfo[enemyIndex].amount;
+        amountEnemyNeedToSpawn = _enemiesSceneInfo.waves[CurrentWave - 1].enemiesInfo[enemyIndex].amount;
     }
 
     private void ResetWave()
@@ -103,7 +104,7 @@ public class EnemySpawner : MonoBehaviour
         amountEnemyNeedToSpawn--;
         if (amountEnemyNeedToSpawn <= 0)
         {
-            if (enemyIndex < _enemiesSceneInfo.waves[currentWave - 1].enemiesInfo.Count - 1)
+            if (enemyIndex < _enemiesSceneInfo.waves[CurrentWave - 1].enemiesInfo.Count - 1)
             {
                 enemyIndex++;
                 GetAmountEnemyNeedToSpawn();
@@ -119,13 +120,13 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
-        if (_enemiesSceneInfo.waves == null || _enemiesSceneInfo.waves.Count < currentWave)
+        if (_enemiesSceneInfo.waves == null || _enemiesSceneInfo.waves.Count < CurrentWave)
         {
             Debug.LogError("Invalid wave configuration or wave index out of bounds");
             return;
         }
 
-        var currentWaveEnemies = _enemiesSceneInfo.waves[currentWave - 1].enemiesInfo;
+        var currentWaveEnemies = _enemiesSceneInfo.waves[CurrentWave - 1].enemiesInfo;
         if (currentWaveEnemies == null || currentWaveEnemies.Count <= enemyIndex)
         {
             Debug.LogError("Invalid enemy index or enemies info is null");
@@ -154,7 +155,8 @@ public class EnemySpawner : MonoBehaviour
     private IEnumerator WaitBetweenWaves()
     {
         yield return new WaitForSeconds(timeBetweenWaves);
-        currentWave++;
+        CurrentWave++;
         StartWave();
+        UIController.Instance.UpdateWave();
     }
 }

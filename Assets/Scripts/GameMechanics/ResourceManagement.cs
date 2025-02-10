@@ -8,8 +8,6 @@ public class ResourceManagement : MonoBehaviour
 {
     [HideInInspector]
     public static UnityEvent<int> CollectResource;
-    [SerializeField]
-    private TextMeshProUGUI _moneyNum;
     public int initialMoney = 400;
     private int _totalMoney=0;
     public int TotalMoney => _totalMoney;
@@ -28,6 +26,6 @@ public class ResourceManagement : MonoBehaviour
     {
         if (_totalMoney < amount) return;
         _totalMoney += amount;
-        _moneyNum.text = _totalMoney.ToString();
+        UIController.Instance.UpdateMoneyAmount();
     }
 }
