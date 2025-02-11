@@ -7,11 +7,22 @@ public class TowerInfo{
     public GameObject Prefab;
     public int Cost;
     public float DamageCause;
+    public int SellMoney;
 }
 
 
 [CreateAssetMenu(fileName ="TowerDetail", menuName ="ScriptableObject/TowerDetail")]
 public class TowerDetail : ScriptableObject
 {
+    public Sprite MainIcon;
+    public Sprite UnableIcon;
     public List<TowerInfo> TowerInfoList;
+    public TowerInfo GetNextTowerInfo(int currentLevel)
+    {
+        if(currentLevel == TowerInfoList.Count)
+            return null;
+        return TowerInfoList[currentLevel];
+    }
+    public TowerInfo GetTowerInfo(int currentLevel) 
+    => TowerInfoList[currentLevel - 1];
 }

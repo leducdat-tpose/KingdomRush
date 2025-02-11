@@ -13,8 +13,6 @@ public class SelectableUI : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
 
     private void Start() {
         _ui = GetComponentInChildren<InteractUI>(includeInactive:true);
-        _selectable = GetComponent<Selectable>();
-        _selectable.transition = Selectable.Transition.None;
     }
     public void OnDeselect(BaseEventData eventData)
     {
@@ -26,7 +24,7 @@ public class SelectableUI : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
     {
         if(eventData.button != PointerEventData.InputButton.Left)
         return;
-        _ui.gameObject.SetActive(true);
+        _ui.SetActive();
     }
 
     public void OnSelect(BaseEventData eventData)

@@ -8,30 +8,40 @@ public class ModifyTowerUI : InteractUI
     [SerializeField]
     private CreateTower _createTower;
     [SerializeField]
-    private Button _selectArcherBtn;
+    private OptionTowerBtn[] _optionBtns = new OptionTowerBtn[4];
     [SerializeField]
-    private Button _selectSoldierBtn;
+    private OptionTowerBtn _upgradeBtn;
     [SerializeField]
-    private Button _selectMageBtn;
-    [SerializeField]
-    private Button _selectArtilleryBtn;
-    [SerializeField]
-    private Button _upgradeBtn;
-    [SerializeField]
-    private Button _sellBtn;
-    private void Awake() {
+    private OptionTowerBtn _sellBtn;
+
+    public override void Initialise()
+    {
         _createTower = transform.root.GetComponent<CreateTower>();
         if(!_createTower)
         {
             Debug.LogError("Can't find CreateTower!");
             return;
         }
-        _selectArcherBtn.onClick.AddListener(delegate{_createTower.ChooseTower(TowerType.Archer);});
-        _selectSoldierBtn.onClick.AddListener(delegate{_createTower.ChooseTower(TowerType.Soldier);});
-        _selectArtilleryBtn.onClick.AddListener(delegate{_createTower.ChooseTower(TowerType.Artillery);});
-        _selectMageBtn.onClick.AddListener(delegate{_createTower.ChooseTower(TowerType.Mage);});
+        for(int i = 0; i < _optionBtns.Length; i++)
+        {
+            _optionBtns[i].SetTowerDetail(_createTower.GetTowerDetail(i));
+            _optionBtns[i].Initialise();
+        }
+        _upgradeBtn.Initialise();
+        _sellBtn.Initialise();
+    }
+    private void OnEnable() {
+        var value = _createTower.TowerLevel == 0;
+        foreach( OptionTowerBtn btn in _optionBtns) btn.gameObject.SetActive(value);
+        _upgradeBtn.gameObject.SetActive(!value);
+        _sellBtn.gameObject.SetActive(!value);
     }
     private void Start() {
         
+    }
+    public override void SetActive()
+    {
+        if(_createTower.IsBusy) return;
+        this.gameObject.SetActive(true);
     }
 }

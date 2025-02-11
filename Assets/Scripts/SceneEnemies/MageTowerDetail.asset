@@ -12,16 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62522603a4c367c488657052fefbb369, type: 3}
   m_Name: MageTowerDetail
   m_EditorClassIdentifier: 
+  MainIcon: {fileID: 21300000, guid: d178b0a20564dd644bd2905038b73d71, type: 3}
+  UnableIcon: {fileID: 21300000, guid: 824ad4e6558c6ac4cb427d85888a429c, type: 3}
   TowerInfoList:
   - Level: 1
     Prefab: {fileID: 7866993831662674450, guid: 510a14222cdf10d4bb733272ae4539cc, type: 3}
     Cost: 100
     DamageCause: 10
+    SellMoney: 70
   - Level: 2
     Prefab: {fileID: 7866993831662674450, guid: 510a14222cdf10d4bb733272ae4539cc, type: 3}
     Cost: 200
     DamageCause: 15
+    SellMoney: 135
   - Level: 3
     Prefab: {fileID: 7866993831662674450, guid: 510a14222cdf10d4bb733272ae4539cc, type: 3}
     Cost: 350
     DamageCause: 21
+    SellMoney: 170
