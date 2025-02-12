@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62522603a4c367c488657052fefbb369, type: 3}
+  m_Name: ArcherTowerDetail
+  m_EditorClassIdentifier: 
+  MainIcon: {fileID: 21300000, guid: 0a0221f0c9e573c49a023fbb5b06822f, type: 3}
+  UnableIcon: {fileID: 21300000, guid: 7f46a6e054e1c4c438c3e5f97e0deb43, type: 3}
+  TowerInfoList:
+  - Level: 1
+    Prefab: {fileID: 8858592990584423653, guid: 35d1b00b4a0938248ac3ff3fd06bac35, type: 3}
+    Cost: 70
+    DamageCause: 6
+    SellMoney: 30
+  - Level: 2
+    Prefab: {fileID: 8858592990584423653, guid: 35d1b00b4a0938248ac3ff3fd06bac35, type: 3}
+    Cost: 100
+    DamageCause: 9
+    SellMoney: 55
+  - Level: 3
+    Prefab: {fileID: 8858592990584423653, guid: 35d1b00b4a0938248ac3ff3fd06bac35, type: 3}
+    Cost: 150
+    DamageCause: 14
+    SellMoney: 70

@@ -397,10 +397,10 @@ MonoBehaviour:
   _towerConstruct: {fileID: 8122143028356326053}
   _optionUI: {fileID: 3364243307933878690}
   _towerDetails:
+  - {fileID: 11400000, guid: efda67e84a9dd0442a6cc5ac4a28b3fc, type: 2}
+  - {fileID: 11400000, guid: 463e38cfcb9ce88478347fe6bfb83cbc, type: 2}
   - {fileID: 11400000, guid: a44394200fac52c4eb10115af03d4ab4, type: 2}
-  - {fileID: 11400000, guid: a44394200fac52c4eb10115af03d4ab4, type: 2}
-  - {fileID: 11400000, guid: a44394200fac52c4eb10115af03d4ab4, type: 2}
-  - {fileID: 11400000, guid: a44394200fac52c4eb10115af03d4ab4, type: 2}
+  - {fileID: 11400000, guid: f64d5663f273c7e439f46f85dfe9b166, type: 2}
 --- !u!114 &5333867544633331610
 MonoBehaviour:
   m_ObjectHideFlags: 0

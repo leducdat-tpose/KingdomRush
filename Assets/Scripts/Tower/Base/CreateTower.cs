@@ -47,8 +47,8 @@ public class CreateTower : MonoBehaviour
         {
             TowerType.Archer => _towerDetails[0],
             TowerType.Soldier => _towerDetails[1],
-            TowerType.Artillery => _towerDetails[2],
-            TowerType.Mage => _towerDetails[3],
+            TowerType.Mage => _towerDetails[2],
+            TowerType.Artillery => _towerDetails[3],
             _ => _towerDetails[0],
         };
         CurrentTowerDetail = selectedTower;

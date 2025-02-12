@@ -14,6 +14,7 @@ public class TowerInfo{
 [CreateAssetMenu(fileName ="TowerDetail", menuName ="ScriptableObject/TowerDetail")]
 public class TowerDetail : ScriptableObject
 {
+    public TowerType Type;
     public Sprite MainIcon;
     public Sprite UnableIcon;
     public List<TowerInfo> TowerInfoList;

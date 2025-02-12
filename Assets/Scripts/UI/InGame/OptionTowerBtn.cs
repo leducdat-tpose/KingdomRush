@@ -58,6 +58,7 @@ public class OptionTowerBtn : MonoBehaviour
         {
             _mainSprite = _towerDetail.MainIcon;
             _unableSprite = _towerDetail.UnableIcon;
+            _type = _towerDetail.Type;
         }
     }
 
