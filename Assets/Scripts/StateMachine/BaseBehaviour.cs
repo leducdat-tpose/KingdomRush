@@ -13,16 +13,27 @@ public enum StateType{
 
 public abstract class BaseBehaviour<T> : MonoBehaviour
 {
+    #region Animator
     protected Animator animator;
+    protected readonly int idleAnimation = Animator.StringToHash("Idle");
+    protected readonly int idleUpAnimation = Animator.StringToHash("IdleUp");
+    protected readonly int walkSideAnimation = Animator.StringToHash("WalkSide");
+    protected readonly int walkUpAnimation = Animator.StringToHash("WalkUp");
+    protected readonly int walkDownAnimation = Animator.StringToHash("WalkDown");
+    protected readonly int deathAnimation = Animator.StringToHash("Death");
+    protected readonly int attackAnimation = Animator.StringToHash("Attack");
+    protected readonly int attackUpAnimation = Animator.StringToHash("AttackUp");
     public int CurrentAnimation{get; protected set;}
+    #endregion
     protected SpriteRenderer spriteRenderer;
     protected T Object;
+    #region State
     public StateManager<T> StateManager;
     public BaseState<T> IdleState;
     public BaseState<T> WalkState;
     public BaseState<T> AttackState;
     public BaseState<T> DeathState;
-
+    #endregion
     public virtual void Start()
     {
         Object = this.gameObject.GetComponent<T>();
@@ -77,4 +88,7 @@ public abstract class BaseBehaviour<T> : MonoBehaviour
     {
         if(StateManager.CurrentState != AttackState) return;
     }
+
+    public virtual void ReadyProjectile(){}
+    public virtual void StartAttacking(){}
 }

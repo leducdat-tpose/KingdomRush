@@ -22,11 +22,8 @@ public class ExplodePrefabs : MonoBehaviour
     {
         if(other.CompareTag("Enemy")) {
             other.GetComponent<Enemy>().TakenDamage(_damage);
-            Debug.Log("Explode" + _damage);
-
         }
     }
-
     void Update()
     {
         

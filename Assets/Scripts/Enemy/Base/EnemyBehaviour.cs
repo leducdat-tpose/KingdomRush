@@ -4,24 +4,16 @@ using UnityEngine;
 
 public class EnemyBehaviour : BaseBehaviour<Enemy>
 {
-    #region ID_Animations
-    private readonly int _idleAnimation = Animator.StringToHash("Idle");
-    private readonly int _walkUpAnimation = Animator.StringToHash("WalkUp");
-    private readonly int _walkDownAnimation = Animator.StringToHash("WalkDown");
-    private readonly int _walkSideAnimation = Animator.StringToHash("WalkSide");
-    private readonly int _deathAnimation = Animator.StringToHash("Death");
-    private readonly int _attackAnimation = Animator.StringToHash("Attack");
-    #endregion
     private float _nextAttackTime;
     private Warrior _currentTargetWarrior;
     public override void Start()
     {
         base.Start();
-        CurrentAnimation = _idleAnimation;
-        IdleState = new EnemyIdleState(Object, StateManager);
-        WalkState = new EnemyWalkState(Object, StateManager);
-        AttackState = new EnemyAttackState(Object, StateManager);
-        DeathState = new EnemyDeathState(Object, StateManager);
+        CurrentAnimation = idleAnimation;
+        IdleState = new EnemyIdleState(Object, StateManager, this);
+        WalkState = new EnemyWalkState(Object, StateManager, this);
+        AttackState = new EnemyAttackState(Object, StateManager, this);
+        DeathState = new EnemyDeathState(Object, StateManager, this);
         StateManager.Initialize(WalkState);
     }
 
@@ -41,18 +33,18 @@ public class EnemyBehaviour : BaseBehaviour<Enemy>
     }
     public override void Render()
     {
-        int nextAnimation = _idleAnimation;
+        int nextAnimation = idleAnimation;
         if(StateManager.CurrentState == AttackState) 
-            nextAnimation = _attackAnimation;
+            nextAnimation = attackAnimation;
         else if(StateManager.CurrentState == DeathState)
-            nextAnimation = _deathAnimation;
+            nextAnimation = deathAnimation;
         else if(Object.Rigidbody.velocity != Vector2.zero)
         {
             Vector2 direction = Object.Rigidbody.velocity / Object.MoveSpeed;
             if (Mathf.Abs(direction.x) < Mathf.Abs(direction.y))
-                nextAnimation = direction.y < 0 ? _walkDownAnimation : _walkUpAnimation;
+                nextAnimation = direction.y < 0 ? walkDownAnimation : walkUpAnimation;
             else{
-                nextAnimation = _walkSideAnimation;
+                nextAnimation = walkSideAnimation;
                 spriteRenderer.flipX = direction.x < 0;
             }
         }

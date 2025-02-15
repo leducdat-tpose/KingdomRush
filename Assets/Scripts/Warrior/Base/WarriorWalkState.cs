@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WarriorWalkState : BaseState<Warrior>
 {
-    public WarriorWalkState(Warrior obj, StateManager<Warrior> objectStateManager) : base(obj, objectStateManager)
+    public WarriorWalkState(Warrior obj, StateManager<Warrior> objectStateManager, BaseBehaviour<Warrior> behaviour) : base(obj, objectStateManager, behaviour)
     {
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyDeathState : BaseState<Enemy>
 {
-    public EnemyDeathState(Enemy enemy, StateManager<Enemy> enemyStateMachine) : base(enemy, enemyStateMachine)
+    public EnemyDeathState(Enemy enemy, StateManager<Enemy> enemyStateMachine, BaseBehaviour<Enemy> behaviour) : base(enemy, enemyStateMachine, behaviour)
     {
     }
 

@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 912621976014208912}
   - component: {fileID: 912621976060418961}
   - component: {fileID: 912621976060418960}
+  - component: {fileID: 6111396488519282104}
   m_Layer: 0
   m_Name: minion1
   m_TagString: Untagged
@@ -201,12 +202,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefabProjectile: {fileID: 2963063079952062357, guid: 2ba1644794bf5db43a4047c9518bff4b, type: 3}
   _spritesSoliderUpgrade: []
-  _upgradeDamageIndex: 2
   <MaxHealth>k__BackingField: 100
   <CurrentHealth>k__BackingField: 0
   <BaseDamage>k__BackingField: 0
   coolDownAttack: 3
   <Speed>k__BackingField: 0
+--- !u!114 &6111396488519282104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912621976014208917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7b0183a8e756d4f9ed193a4c57570b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &912621976325040237
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,8 +309,6 @@ MonoBehaviour:
   _enemies: []
   _currentTarget: {fileID: 0}
   _spriteRenderer: {fileID: 0}
-  _spritesTowerUpgrade: []
-  _towerLevel: 1
   _animator: {fileID: 0}
 --- !u!1 &912621976414885540
 GameObject:

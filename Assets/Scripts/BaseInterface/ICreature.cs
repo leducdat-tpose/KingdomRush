@@ -7,8 +7,6 @@ public interface ICreature
     float MaxHealth{ get; set; }
     float CurrentHealth{ get; set; }
     float BaseDamage{ get; set; }
-    int Level{ get; set; }
     float MoveSpeed{ get; set; }
-    
 
 }

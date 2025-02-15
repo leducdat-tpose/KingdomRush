@@ -2,7 +2,7 @@ using UnityEngine;
 public class SoldierAttackState: BaseState<Soldier>
 {
     private float _nextAttackTime;
-    public SoldierAttackState(Soldier obj, StateManager<Soldier> objectStateManager) : base(obj, objectStateManager)
+    public SoldierAttackState(Soldier obj, StateManager<Soldier> objectStateManager, BaseBehaviour<Soldier> behaviour) : base(obj, objectStateManager, behaviour)
     {
     }
 

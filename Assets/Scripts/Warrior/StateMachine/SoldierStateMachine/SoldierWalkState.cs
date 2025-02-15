@@ -1,7 +1,7 @@
 using UnityEngine;
 public class SoldierWalkState: BaseState<Soldier>
 {
-    public SoldierWalkState(Soldier obj, StateManager<Soldier> objectStateManager) : base(obj, objectStateManager)
+    public SoldierWalkState(Soldier obj, StateManager<Soldier> objectStateManager, BaseBehaviour<Soldier> behaviour) : base(obj, objectStateManager, behaviour)
     {
     }
 

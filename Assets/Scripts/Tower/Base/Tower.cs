@@ -8,10 +8,9 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Tower : MonoBehaviour, IShootable
 {
-    protected int StartingProgress = Animator.StringToHash("StartProgress Lvl_1");
-    protected int Idle = Animator.StringToHash("Idle Lvl_1");
+    protected int StartingProgress = Animator.StringToHash("StartProgress");
+    protected int Idle = Animator.StringToHash("Idle");
     protected bool HaveAnimation = false;
-    public event Action<int> UpgradeAction;
     public event Action<Vector3> ChangeStandingPosition;
     [field: SerializeField] public float AttackRange { get; set; } = 5f;
     [SerializeField]
@@ -20,11 +19,7 @@ public class Tower : MonoBehaviour, IShootable
     private Enemy _currentTarget = null;
     [SerializeField]
     private SpriteRenderer _spriteRenderer;
-    [SerializeField]
-    private List<Sprite> _spritesTowerUpgrade;
     public Enemy CurrentTarget => _currentTarget;
-    [SerializeField]
-    private int _towerLevel = 1;
     protected bool InProgress;
     protected int _currentAnimation;
     public Collider2D Collider { get; set; }
@@ -85,14 +80,6 @@ public class Tower : MonoBehaviour, IShootable
             minDistance = realDistance;
             _currentTarget = enemy;
         }
-    }
-
-    private void UpgradeTower()
-    {
-        if (_towerLevel == _spritesTowerUpgrade.Count) return;
-        _towerLevel++;
-        _spriteRenderer.sprite = _spritesTowerUpgrade[_towerLevel - 1];
-        UpgradeAction?.Invoke(_towerLevel);
     }
     public void StartProgress()
     {

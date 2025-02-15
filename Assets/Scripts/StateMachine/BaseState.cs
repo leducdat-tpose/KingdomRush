@@ -2,13 +2,15 @@ using UnityEngine;
 
 public abstract class BaseState<T>
 {
+    protected readonly BaseBehaviour<T> Behaviour;
     protected readonly T Object;
     protected StateManager<T> ObjectStateManager;
 
-    protected BaseState(T obj, StateManager<T> objectStateManager)
+    protected BaseState(T obj, StateManager<T> objectStateManager, BaseBehaviour<T> behaviour)
     {
         Object = obj;
         ObjectStateManager = objectStateManager;
+        Behaviour = behaviour;
     }
     
     public abstract void EnterState();

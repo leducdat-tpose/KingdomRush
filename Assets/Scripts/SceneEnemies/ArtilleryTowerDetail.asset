@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62522603a4c367c488657052fefbb369, type: 3}
   m_Name: ArtilleryTowerDetail
   m_EditorClassIdentifier: 
+  Type: 3
   MainIcon: {fileID: 21300000, guid: 4d6985c4facac6f46a7f2fba447c74f9, type: 3}
   UnableIcon: {fileID: 21300000, guid: f187e4f8a73fce24d9d38fbf8213ea73, type: 3}
   TowerInfoList:

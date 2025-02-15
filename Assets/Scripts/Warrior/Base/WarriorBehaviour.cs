@@ -11,10 +11,10 @@ public class WarriorBehaviour : BaseBehaviour<Warrior>
         // _nextAttackTime = 0;
         _currentTargetEnemy = null;
         base.Start();
-        IdleState = new WarriorIdleState(Object, StateManager);
-        WalkState = new WarriorWalkState(Object, StateManager);
-        AttackState = new WarriorAttackState(Object, StateManager);
-        DeathState = new WarriorDeathState(Object, StateManager);
+        IdleState = new WarriorIdleState(Object, StateManager, this);
+        WalkState = new WarriorWalkState(Object, StateManager, this);
+        AttackState = new WarriorAttackState(Object, StateManager, this);
+        DeathState = new WarriorDeathState(Object, StateManager, this);
         StateManager.Initialize(IdleState);
     }
     public override void Render()

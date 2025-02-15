@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62522603a4c367c488657052fefbb369, type: 3}
   m_Name: ArcherTowerDetail
   m_EditorClassIdentifier: 
+  Type: 1
   MainIcon: {fileID: 21300000, guid: 0a0221f0c9e573c49a023fbb5b06822f, type: 3}
   UnableIcon: {fileID: 21300000, guid: 7f46a6e054e1c4c438c3e5f97e0deb43, type: 3}
   TowerInfoList:
