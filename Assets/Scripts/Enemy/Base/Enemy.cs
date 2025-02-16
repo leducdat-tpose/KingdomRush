@@ -28,7 +28,8 @@ public class Enemy : MonoBehaviour, IDamageable, ICreature
     #region Variables
     [field: SerializeField] public float MaxHealth { get; set; }
     [field: SerializeField] public float CurrentHealth { get; set; }
-    public float BaseDamage { get;set;}
+    [field: SerializeField]
+    public float BaseDamage { get;set;} = 5;
     public int Level { get;set;}
     [field: SerializeField] public float MoveSpeed { get; set; } = 5f;
     public Vector3 TargetPosition {  get; set; }
@@ -37,13 +38,11 @@ public class Enemy : MonoBehaviour, IDamageable, ICreature
     private float coolDownAttack;
     public float CoolDownAttack => coolDownAttack;
     [SerializeField]
-    private bool _beingProvoke = false;
-    [SerializeField]
     //After killing an enemy, it will give player money to upgrade tower, champs, etc.
     private int _moneyEarned = 5;
     #endregion
 
-    private EnemyBehaviour _behaviour;
+    public EnemyBehaviour Behaviour{get; private set;}
 
     private void Awake()
     {
@@ -53,7 +52,7 @@ public class Enemy : MonoBehaviour, IDamageable, ICreature
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _behaviour = GetComponent<EnemyBehaviour>();
+        Behaviour = GetComponent<EnemyBehaviour>();
         _rigidbody.isKinematic = true;
         CurrentHealth = MaxHealth;
         TargetPosition = GameController.Instance.LevelManager.GetStartingPoint();
@@ -63,13 +62,13 @@ public class Enemy : MonoBehaviour, IDamageable, ICreature
 
     public void TakenDamage(float damageAmount)
     {
-        if(_behaviour.GetCurrentState() == _behaviour.GetState(StateType.Death)) return;
+        if(Behaviour.GetCurrentState() == Behaviour.GetState(StateType.Death)) return;
         CurrentHealth -= damageAmount;
         _dynamicHpBar?.UpdateHealthBar(CurrentHealth, MaxHealth);
         if (CurrentHealth > 0) return;
         ResourceManagement.CollectResource?.Invoke(_moneyEarned);
         CurrentHealth = 0;
-        _behaviour.ChangeState(StateType.Death);
+        Behaviour.ChangeState(StateType.Death);
         _rigidbody.velocity = Vector2.zero;
     }
     IEnumerator StartRemainDeath(){
@@ -87,14 +86,8 @@ public class Enemy : MonoBehaviour, IDamageable, ICreature
     {
         CurrentHealth = MaxHealth;
         transform.position = Vector3.zero;
-        _beingProvoke = false;
         _currentTargetWarrior = null;
     }
     public bool GetIsDead() 
-    => _behaviour.GetCurrentState() == _behaviour.GetState(StateType.Death);
-
-    public bool GetBeingProvoked()
-    {
-        return _beingProvoke;
-    }
+    => Behaviour.GetCurrentState() == Behaviour.GetState(StateType.Death);
 }

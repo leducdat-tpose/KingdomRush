@@ -6,6 +6,10 @@ public class EnemyBehaviour : BaseBehaviour<Enemy>
 {
     private float _nextAttackTime;
     private Warrior _currentTargetWarrior;
+    public bool BeingProvoke {get; private set;}
+    private void OnEnable() {
+        BeingProvoke = false;
+    }
     public override void Start()
     {
         base.Start();
@@ -19,13 +23,17 @@ public class EnemyBehaviour : BaseBehaviour<Enemy>
 
     public override void Update()
     {
-        if(Time.time > _nextAttackTime && _currentTargetWarrior)
-        {
-            StateManager.ChangeState(AttackState);
-            _nextAttackTime = Time.time + Object.CoolDownAttack;
-        }
+        if(!BeingProvoke) StateManager.ChangeState(WalkState);
+        else ReadyToAttack();
         StateManager.CurrentState.FrameUpdate();
         Render();
+    }
+    public override void ReadyToAttack()
+    {
+        if(Time.time < _nextAttackTime
+        || !_currentTargetWarrior) return;
+        StateManager.ChangeState(AttackState);
+        _nextAttackTime = Time.time + Object.CoolDownAttack;
     }
     public override void FixedUpdate()
     {
@@ -53,10 +61,28 @@ public class EnemyBehaviour : BaseBehaviour<Enemy>
         animator.CrossFade(nextAnimation, 0.1f, 0);
         CurrentAnimation = nextAnimation;
     }
+    public override void StartAttacking()
+    {
+        if(!_currentTargetWarrior) return;
+        _currentTargetWarrior.TakenDamage(Object.BaseDamage);
+    }
+    public override void StopAttacking()
+    {
+        base.StopAttacking();
+        if(_currentTargetWarrior == null) BeingProvoke = false;
+    }
     public override void CauseDamage()
     {
         base.CauseDamage();
-        if(!_currentTargetWarrior) return;
-        _currentTargetWarrior.TakenDamage(Object.BaseDamage);
+    }
+    public void SetBeingProvoke(bool value, Warrior creature)
+    {
+        if(!value){
+            BeingProvoke = false;
+            _currentTargetWarrior = null;
+            return;
+        }
+        BeingProvoke = true;
+        _currentTargetWarrior = creature;
     }
 }

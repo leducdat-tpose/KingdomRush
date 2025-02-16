@@ -7,7 +7,6 @@ public class SoldierAttackState: BaseState<Soldier>
 
     public override void EnterState()
     {
-        Debug.Log("Attack state");
     }
 
     public override void ExitState()

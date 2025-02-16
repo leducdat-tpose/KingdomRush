@@ -8,5 +8,4 @@ public interface ICreature
     float CurrentHealth{ get; set; }
     float BaseDamage{ get; set; }
     float MoveSpeed{ get; set; }
-
 }

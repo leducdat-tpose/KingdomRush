@@ -82,13 +82,15 @@ public class MeleeWarriorBehaviour : BaseBehaviour<Soldier>
         float distance = Vector2.Distance(transform.position, _currentTargetEnemy.transform.position);
         if(distance > Object.AttackRange) return;
         StateManager.ChangeState(AttackState);
+        if(_currentTargetEnemy.Behaviour.BeingProvoke == false)
+            _currentTargetEnemy.Behaviour.SetBeingProvoke(true, Object);
         _nextAttackTime = Time.time + Object.CoolDownAttack;
     }
     public override void StartAttacking()
     {
         _currentTargetEnemy.TakenDamage(Object.BaseDamage);
     }
-    
+
     public void UpdateCurrentTargetEnemy()
     {
         if (_enemiesList.Count == 0)
@@ -96,6 +98,7 @@ public class MeleeWarriorBehaviour : BaseBehaviour<Soldier>
             _currentTargetEnemy = null;
             return;
         }
+        if(_currentTargetEnemy != null) return;
         float minDistance = Mathf.Infinity;
         foreach (Enemy enemy in _enemiesList)
         {

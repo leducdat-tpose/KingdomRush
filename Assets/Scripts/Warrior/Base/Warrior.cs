@@ -27,6 +27,11 @@ public class Warrior : MonoBehaviour, IMoveable, ICreature
         CurrentHealth = MaxHealth;
     }
     public void TakenDamage(float damage)
-    {}
+    {
+        CurrentHealth -= damage;
+        if(CurrentHealth > 0) return;
+        CurrentHealth = 0;
+        Destroy(this.gameObject);
+    }
     public void SetDamageCause(float value) => this.BaseDamage = value;
 }

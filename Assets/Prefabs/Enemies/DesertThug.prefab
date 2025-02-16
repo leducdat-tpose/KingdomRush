@@ -173,11 +173,10 @@ MonoBehaviour:
   spriteRenderer: {fileID: 4823975608452205924}
   _currentTargetWarrior: {fileID: 0}
   _dynamicHpBar: {fileID: 5602185179987412548}
-  <MaxHealth>k__BackingField: 1
+  <MaxHealth>k__BackingField: 100
   <CurrentHealth>k__BackingField: 0
   <MoveSpeed>k__BackingField: 2
   coolDownAttack: 2
-  _beingProvoke: 0
   _moneyEarned: 5
 --- !u!114 &-5373714244870218077
 MonoBehaviour:
