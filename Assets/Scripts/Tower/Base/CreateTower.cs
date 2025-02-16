@@ -13,6 +13,8 @@ public enum TowerType{
     Soldier,
     Artillery,
     Mage,
+    Ranger,
+    Melee,
 }
 public class CreateTower : MonoBehaviour
 {
@@ -75,6 +77,10 @@ public class CreateTower : MonoBehaviour
         yield return new WaitForSeconds(_builtTime);
         TowerInfo selectedTowerInfo = CurrentTowerDetail.GetNextTowerInfo(_towerLevel);
         GameObject newTower = Instantiate(selectedTowerInfo.Prefab, parent: _containTower.transform);
+        yield return new WaitUntil(() => {
+            newTower.GetComponentInChildren<Tower>().Initialise();
+            return true;
+        });
         Warrior warrior = newTower.GetComponentInChildren<Warrior>();
         warrior.SetDamageCause(selectedTowerInfo.DamageCause);
         _towerConstruct.color = _transparent;

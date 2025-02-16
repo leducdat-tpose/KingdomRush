@@ -21,6 +21,5 @@ public class SoldierWalkState: BaseState<Soldier>
 
     public override void EnterState()
     {
-        throw new System.NotImplementedException();
     }
 }

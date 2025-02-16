@@ -47,7 +47,7 @@ public class Enemy : MonoBehaviour, IDamageable, ICreature
 
     private void Awake()
     {
-        this.tag = "Enemy";
+        this.tag = Constant.EnemyTag;
     }
 
     private void Start()

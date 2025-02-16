@@ -5,7 +5,7 @@ using UnityEngine;
 public class StateManager<T>
 {
     public BaseState<T> CurrentState{get; private set;}
-    public void Initialize(BaseState<T> startingState)
+    public void Initialise(BaseState<T> startingState)
     {
         CurrentState = startingState;
         CurrentState.EnterState();

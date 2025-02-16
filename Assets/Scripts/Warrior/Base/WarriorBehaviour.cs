@@ -15,7 +15,7 @@ public class WarriorBehaviour : BaseBehaviour<Warrior>
         WalkState = new WarriorWalkState(Object, StateManager, this);
         AttackState = new WarriorAttackState(Object, StateManager, this);
         DeathState = new WarriorDeathState(Object, StateManager, this);
-        StateManager.Initialize(IdleState);
+        StateManager.Initialise(IdleState);
     }
     public override void Render()
     {

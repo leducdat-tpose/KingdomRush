@@ -5,9 +5,6 @@ using UnityEngine.UIElements;
 
 public class RangerWarriorBehaviour : BaseBehaviour<Warrior>
 {
-    #region ID_Animations
-    
-    #endregion
     private float _nextAttackTime;
     private Enemy _currentTargetEnemy;
     [SerializeField]
@@ -26,7 +23,7 @@ public class RangerWarriorBehaviour : BaseBehaviour<Warrior>
         WalkState = new WarriorWalkState(Object, StateManager, this);
         AttackState = new WarriorAttackState(Object, StateManager, this);
         DeathState = new WarriorDeathState(Object, StateManager, this);
-        StateManager.Initialize(IdleState);
+        StateManager.Initialise(IdleState);
     }
 
     public override void Render()
@@ -69,7 +66,7 @@ public class RangerWarriorBehaviour : BaseBehaviour<Warrior>
         StateManager.CurrentState.PhysicsUpdate();
     }
 
-    private void ReadyToAttack()
+    public override void ReadyToAttack()
     {
         if (!MainTower.CurrentTarget 
         || MainTower.CurrentTarget.GetIsDead() 
@@ -88,10 +85,6 @@ public class RangerWarriorBehaviour : BaseBehaviour<Warrior>
 
     public void ShootProjectTile(){
         _currentProjectTile.gameObject.SetActive(true);
-    }
-    public void StopAttacking()
-    {
-        StateManager.ChangeState(IdleState);
     }
 
     public override void ReadyProjectile()

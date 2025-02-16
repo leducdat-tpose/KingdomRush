@@ -11,7 +11,6 @@ public class Tower : MonoBehaviour, IShootable
     protected int StartingProgress = Animator.StringToHash("StartProgress");
     protected int Idle = Animator.StringToHash("Idle");
     protected bool HaveAnimation = false;
-    public event Action<Vector3> ChangeStandingPosition;
     [field: SerializeField] public float AttackRange { get; set; } = 5f;
     [SerializeField]
     private List<Enemy> _enemies;
@@ -30,6 +29,8 @@ public class Tower : MonoBehaviour, IShootable
         Collider.GetComponent<CircleCollider2D>().radius = AttackRange;
     }
 
+    public virtual void Initialise(){}
+
     protected virtual void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -47,7 +48,7 @@ public class Tower : MonoBehaviour, IShootable
     }
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Enemy")) return;
+        if (!other.CompareTag(Constant.EnemyTag)) return;
         Enemy newEnemy = other.GetComponent<Enemy>();
         if(newEnemy.GetIsDead()) return;
         _enemies.Add(newEnemy);
@@ -55,7 +56,7 @@ public class Tower : MonoBehaviour, IShootable
 
     protected virtual void OnTriggerExit2D(Collider2D other)
     {
-        if (!other.CompareTag("Enemy")) return;
+        if (!other.CompareTag(Constant.EnemyTag)) return;
         Enemy existEnemy = other.GetComponent<Enemy>();
         if(!_enemies.Contains(existEnemy)) return;
         _enemies.Remove(existEnemy);
@@ -89,10 +90,5 @@ public class Tower : MonoBehaviour, IShootable
     public void StopProgress()
     {
         InProgress = false;
-    }
-    
-    public void ChangeStandPosition(Vector3 position)
-    {
-        ChangeStandingPosition?.Invoke(position);
     }
 }

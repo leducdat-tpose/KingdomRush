@@ -89,6 +89,11 @@ public abstract class BaseBehaviour<T> : MonoBehaviour
         if(StateManager.CurrentState != AttackState) return;
     }
 
+    public virtual void ReadyToAttack(){}
     public virtual void ReadyProjectile(){}
     public virtual void StartAttacking(){}
+    public virtual void StopAttacking()
+    {
+        StateManager.ChangeState(IdleState);
+    }
 }

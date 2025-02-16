@@ -14,7 +14,7 @@ public class EnemyBehaviour : BaseBehaviour<Enemy>
         WalkState = new EnemyWalkState(Object, StateManager, this);
         AttackState = new EnemyAttackState(Object, StateManager, this);
         DeathState = new EnemyDeathState(Object, StateManager, this);
-        StateManager.Initialize(WalkState);
+        StateManager.Initialise(WalkState);
     }
 
     public override void Update()

@@ -13,32 +13,32 @@ public class SoldierTower : Tower
     private List<Soldier> soldiers;
     [Header("Attributes")]
     [SerializeField]
-    private int _soldiersCapacity = 4;
+    private int _soldiersCapacity = 1;
 
-    [SerializeField] private Vector2 _markPosition;
+    [SerializeField] 
+    private Vector2 _gatherPosition = new Vector3(-4,0,0);
     [SerializeField]
     private int _soldiersCount;
-    protected override void Start()
+    public override void Initialise()
     {
-        base.Start();
         for (int i = 0; i < _soldiersCapacity; i++)
         {
             Soldier newSoldier = PoolingObject.Instance.GetObject(soldierPrefab).GetComponent<Soldier>();
-            newSoldier.transform.position = transform.position;
+            newSoldier.transform.position = _gatherPosition;
             newSoldier.transform.SetParent(transform);
             soldiers.Add(newSoldier);
             newSoldier.gameObject.SetActive(true);
         }
         _soldiersCount = soldiers.Count;
     }
+    protected override void Start()
+    {
+        base.Start();
+    }
 
 
     protected override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            ChangeStandPosition(_markPosition);
-        }
     }
 
     protected override void UpdateCurrentTarget()
