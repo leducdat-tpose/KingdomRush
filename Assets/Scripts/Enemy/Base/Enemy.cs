@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour, IDamageable, ICreature
     [FormerlySerializedAs("_currentTargetSolider")] [SerializeField]
     private Warrior _currentTargetWarrior;
     public Warrior CurrentTargetWarrior => _currentTargetWarrior;
-    [SerializeField] private DynamicHPBar _dynamicHpBar;
+    
     #endregion
     
     #region Variables
@@ -43,6 +43,8 @@ public class Enemy : MonoBehaviour, IDamageable, ICreature
     #endregion
 
     public EnemyBehaviour Behaviour{get; private set;}
+    [field: SerializeField]
+    public DynamicHPBar DynamicHpBar { get; set; }
 
     private void Awake()
     {
@@ -51,6 +53,7 @@ public class Enemy : MonoBehaviour, IDamageable, ICreature
 
     private void Start()
     {
+        DynamicHpBar = GetComponentInChildren<DynamicHPBar>();
         _rigidbody = GetComponent<Rigidbody2D>();
         Behaviour = GetComponent<EnemyBehaviour>();
         _rigidbody.isKinematic = true;
@@ -64,7 +67,7 @@ public class Enemy : MonoBehaviour, IDamageable, ICreature
     {
         if(Behaviour.GetCurrentState() == Behaviour.GetState(StateType.Death)) return;
         CurrentHealth -= damageAmount;
-        _dynamicHpBar?.UpdateHealthBar(CurrentHealth, MaxHealth);
+        DynamicHpBar?.UpdateHealthBar(CurrentHealth, MaxHealth);
         if (CurrentHealth > 0) return;
         ResourceManagement.CollectResource?.Invoke(_moneyEarned);
         CurrentHealth = 0;

@@ -5,6 +5,7 @@ public class MeleeWarriorBehaviour : BaseBehaviour<Soldier>
 {
     private float _nextAttackTime;
     private Enemy _currentTargetEnemy;
+    public Enemy CurrentTargetEnemy => _currentTargetEnemy;
     [SerializeField]
     private List<Enemy> _enemiesList;
     [SerializeField]
@@ -90,22 +91,26 @@ public class MeleeWarriorBehaviour : BaseBehaviour<Soldier>
     {
         _currentTargetEnemy.TakenDamage(Object.BaseDamage);
     }
+    public override void StopAttacking()
+    {
+        base.StopAttacking();
+        if(_currentTargetEnemy.CurrentHealth <= 0) _currentTargetEnemy = null;
+    }
 
     public void UpdateCurrentTargetEnemy()
     {
-        if (_enemiesList.Count == 0)
+        if(_currentTargetEnemy != null)
         {
-            _currentTargetEnemy = null;
+            float distance = Vector2.Distance(transform.position, _currentTargetEnemy.transform.position);
+            if(distance > Object.AttackRange) _currentTargetEnemy = null;
             return;
         }
-        if(_currentTargetEnemy != null) return;
-        float minDistance = Mathf.Infinity;
-        foreach (Enemy enemy in _enemiesList)
+        if(_enemiesList.Count == 0) {_currentTargetEnemy = null; return;}
+        foreach(var enemy in _enemiesList)
         {
-            float realDistance = Vector2.Distance(transform.position, enemy.transform.position);
-            if(minDistance <= realDistance) continue;
-            if(enemy.GetIsDead()) continue;
-            minDistance = realDistance;
+            if(enemy.Behaviour.BeingProvoke) continue;
+            float distance = Vector2.Distance(transform.position, enemy.transform.position);
+            if(distance > Object.AttackRange) return;
             _currentTargetEnemy = enemy;
         }
     }

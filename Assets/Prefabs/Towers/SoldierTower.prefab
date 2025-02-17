@@ -144,15 +144,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 610bf3660aad95a4186f007934d65411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Type>k__BackingField: 6
   <AttackRange>k__BackingField: 5
   _enemies: []
   _currentTarget: {fileID: 0}
   _spriteRenderer: {fileID: 3626801995460378859}
   soldierPrefab: {fileID: 2438626205993660223, guid: 299d2c155b161af47a671a17ffd5d3ee, type: 3}
   soldiers: []
-  _soldiersCapacity: 1
-  _markPosition: {x: 0, y: 0}
+  _soldiersCapacity: 4
+  _gatherPosition: {x: -4, y: 0}
+  _gatherPosRadius: 0.5
   _soldiersCount: 0
 --- !u!1 &3626801995826853278
 GameObject:

@@ -26,7 +26,7 @@ public class Warrior : MonoBehaviour, IMoveable, ICreature
     {
         CurrentHealth = MaxHealth;
     }
-    public void TakenDamage(float damage)
+    public virtual void TakenDamage(float damage)
     {
         CurrentHealth -= damage;
         if(CurrentHealth > 0) return;

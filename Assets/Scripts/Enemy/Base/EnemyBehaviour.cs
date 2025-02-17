@@ -69,7 +69,8 @@ public class EnemyBehaviour : BaseBehaviour<Enemy>
     public override void StopAttacking()
     {
         base.StopAttacking();
-        if(_currentTargetWarrior == null) BeingProvoke = false;
+        if(_currentTargetWarrior == null
+        || _currentTargetWarrior.CurrentHealth <= 0) BeingProvoke = false;
     }
     public override void CauseDamage()
     {

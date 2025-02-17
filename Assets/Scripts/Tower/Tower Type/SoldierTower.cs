@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
@@ -18,13 +17,16 @@ public class SoldierTower : Tower
     [SerializeField] 
     private Vector2 _gatherPosition = new Vector3(-4,0,0);
     [SerializeField]
+    private float _gatherPosRadius = 1.5f;
+    [SerializeField]
     private int _soldiersCount;
     public override void Initialise()
     {
         for (int i = 0; i < _soldiersCapacity; i++)
         {
             Soldier newSoldier = PoolingObject.Instance.GetObject(soldierPrefab).GetComponent<Soldier>();
-            newSoldier.transform.position = _gatherPosition;
+            newSoldier.transform.position = _gatherPosition
+            + new Vector2(Random.Range(-_gatherPosRadius, _gatherPosRadius),Random.Range(-_gatherPosRadius, _gatherPosRadius));
             newSoldier.transform.SetParent(transform);
             soldiers.Add(newSoldier);
             newSoldier.gameObject.SetActive(true);

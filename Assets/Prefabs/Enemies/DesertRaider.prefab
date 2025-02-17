@@ -172,9 +172,9 @@ MonoBehaviour:
   animator: {fileID: 5111393800753556022}
   spriteRenderer: {fileID: 5111393800753556425}
   _currentTargetWarrior: {fileID: 0}
-  _dynamicHpBar: {fileID: 6115664053762845026}
   <MaxHealth>k__BackingField: 100
   <CurrentHealth>k__BackingField: 0
+  <BaseDamage>k__BackingField: 5
   <MoveSpeed>k__BackingField: 2
   coolDownAttack: 1
   _moneyEarned: 5
@@ -289,6 +289,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8786408728894458413, guid: bd54f8d9e36468c4ebe57a96ce813bf7, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd54f8d9e36468c4ebe57a96ce813bf7, type: 3}
 --- !u!224 &3184263176517621110 stripped
@@ -296,14 +300,3 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3188001646161040956, guid: bd54f8d9e36468c4ebe57a96ce813bf7, type: 3}
   m_PrefabInstance: {fileID: 4161547584308042}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6115664053762845026 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6111944250454338088, guid: bd54f8d9e36468c4ebe57a96ce813bf7, type: 3}
-  m_PrefabInstance: {fileID: 4161547584308042}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e360ad5501087e4dadff67736868404, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
