@@ -23,8 +23,12 @@ public class EnemyBehaviour : BaseBehaviour<Enemy>
 
     public override void Update()
     {
-        if(!BeingProvoke) StateManager.ChangeState(WalkState);
-        else ReadyToAttack();
+
+        if(!(StateManager.CurrentState == DeathState))
+        {
+            if(!BeingProvoke) StateManager.ChangeState(WalkState);
+            else ReadyToAttack();
+        }
         StateManager.CurrentState.FrameUpdate();
         Render();
     }

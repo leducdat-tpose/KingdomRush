@@ -18,6 +18,11 @@ public class RangerWarriorBehaviour : BaseBehaviour<Warrior>
         _currentTargetEnemy = null;
         MainTower = transform.root.GetComponentInChildren<Tower>();
         PositionReleaseProjectTile = transform.position;
+        for(int i = 0; i < animator.layerCount; i++)
+        {
+            if(i == (Object.Level - 1)) animator.SetLayerWeight(i, 1);
+            else animator.SetLayerWeight(i, 0);
+        }
         CurrentAnimation = idleAnimation;
         IdleState = new WarriorIdleState(Object, StateManager, this);
         WalkState = new WarriorWalkState(Object, StateManager, this);
@@ -49,7 +54,7 @@ public class RangerWarriorBehaviour : BaseBehaviour<Warrior>
             }
         }
         if(CurrentAnimation == newAnimation) return;
-        animator.CrossFade(newAnimation, 0.1f, 0);
+        animator.CrossFade(newAnimation, 0.1f, Object.Level - 1);
         CurrentAnimation = newAnimation;
     }
 

@@ -89,6 +89,7 @@ public class MeleeWarriorBehaviour : BaseBehaviour<Soldier>
     }
     public override void StartAttacking()
     {
+        if(!_currentTargetEnemy) return;
         _currentTargetEnemy.TakenDamage(Object.BaseDamage);
     }
     public override void StopAttacking()

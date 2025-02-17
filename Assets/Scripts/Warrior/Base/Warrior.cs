@@ -10,6 +10,7 @@ public class Warrior : MonoBehaviour, IMoveable, ICreature
     [Header("References")]
     [SerializeField] private GameObject _prefabProjectile;
     public GameObject PrefabProjectTile => _prefabProjectile;
+    [field: SerializeField, Range(1,3)]public int Level{get;private set;} = 1;
 
     [field:SerializeField]public float MaxHealth { get; set; }
     [field:SerializeField]public float CurrentHealth { get; set; }
