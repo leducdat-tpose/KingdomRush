@@ -148,12 +148,8 @@ MonoBehaviour:
   _enemies: []
   _currentTarget: {fileID: 0}
   _spriteRenderer: {fileID: 0}
-  _spritesTowerUpgrade:
-  - {fileID: 21300000, guid: 8fb5e3455f5593d449a9114267d58c03, type: 3}
-  - {fileID: 21300000, guid: 935efc68d8986f54ab86f1d6d4e321d4, type: 3}
-  - {fileID: 21300000, guid: 9f28ea5237ab24541a1bc32bac6ac926, type: 3}
-  _towerLevel: 1
   _animator: {fileID: 7866993830572060997}
+  _level: 1
 --- !u!95 &7866993830572060997
 Animator:
   serializedVersion: 5
@@ -185,7 +181,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7866993831662674453}
   m_Layer: 0
-  m_Name: MageTower
+  m_Name: MageTower Lvl1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

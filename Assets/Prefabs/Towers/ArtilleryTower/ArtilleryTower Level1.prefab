@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 8028675987367884924}
   - component: {fileID: 4856562884175974783}
   m_Layer: 0
-  m_Name: ArtilleryTower
+  m_Name: ArtilleryTower Level1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
