@@ -48,6 +48,8 @@ public class Tower : MonoBehaviour, IShootable
     }
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
+        //CompareTag is way better than  other.gameObject.tag == tag
+        //Instead of comparing strings, Unity converts the tag into an integer ID and compares the IDs associated with those tags
         if (!other.CompareTag(Constant.EnemyTag)) return;
         Enemy newEnemy = other.GetComponent<Enemy>();
         if(newEnemy.GetIsDead()) return;

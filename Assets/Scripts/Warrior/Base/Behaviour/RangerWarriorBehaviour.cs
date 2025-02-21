@@ -95,10 +95,14 @@ public class RangerWarriorBehaviour : BaseBehaviour<Warrior>
     public override void ReadyProjectile()
     {
         var newObject = PoolingObject.Instance.GetObject(Object.PrefabProjectTile);
-        _currentProjectTile = newObject.GetComponent<ProjectTiles>();
-        _currentProjectTile.transform.position = PositionReleaseProjectTile;
-        _currentProjectTile.gameObject.SetActive(false);
-        _currentProjectTile.SetCurrentEnemy(_currentTargetEnemy);
+        if(newObject.TryGetComponent<ProjectTiles>(out ProjectTiles projectTiles))
+        {
+            _currentProjectTile = projectTiles;
+            _currentProjectTile.transform.position = PositionReleaseProjectTile;
+            _currentProjectTile.gameObject.SetActive(false);
+            _currentProjectTile.SetCurrentEnemy(_currentTargetEnemy);
+        }
+        else Debug.Log("Can't get ProjectTiles");
     }
     public void UpdateCurrentTargetEnemy()
     {

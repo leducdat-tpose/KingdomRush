@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct PlayerEvent: IEvent{
+    public int PlayerHeart;
+    public int PlayerMana;
+}
+
 public class GameController : MonoBehaviour
 {
     public static GameController Instance;
@@ -19,12 +24,22 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private EnemySpawner _enemySpawner;
     public EnemySpawner EnemySpawner => _enemySpawner;
+
+    EventBinding<PlayerEvent> playerEventBinding;
     private void Awake() {
         Instance = this;
         _levelManager = GetComponentInChildren<LevelManager>();
         _resourceManagement = GetComponentInChildren<ResourceManagement>();
         _enemySpawner = GetComponentInChildren<EnemySpawner>();
         PlayerHeartRemain = EnemiesSceneInfo.InitialPlayerHeart;
+    }
+
+    private void OnEnable() {
+        playerEventBinding = new EventBinding<PlayerEvent>(LostPlayerHeart);
+        EventBus<PlayerEvent>.Register(playerEventBinding);
+    }
+    private void OnDisable() {
+        EventBus<PlayerEvent>.Deregister(playerEventBinding);
     }
 
     private void Start() {
@@ -41,5 +56,14 @@ public class GameController : MonoBehaviour
             PlayerHeartRemain = 0;
         }
         UIController.Instance.UpdateHeartRemain();
+    }
+    private void Update() {
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            EventBus<PlayerEvent>.Raise(new PlayerEvent(){
+                PlayerHeart = 0,
+                PlayerMana = 0
+            });
+        }
     }
 }

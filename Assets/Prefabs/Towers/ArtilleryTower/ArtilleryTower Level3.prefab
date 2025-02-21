@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 27d80775fd94623469a58939dc7e1065, type: 3}
+    - target: {fileID: 912621976060418960, guid: 9504e80457a91634d82c6c835f18117f, type: 3}
+      propertyPath: _prefabProjectile
+      value: 
+      objectReference: {fileID: 2907428421634552973, guid: 945255052bff7ef4cb0669eddf47c652, type: 3}
     - target: {fileID: 912621976325040235, guid: 9504e80457a91634d82c6c835f18117f, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -75,6 +79,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 77c42f0a3bbc0d347941777b4af17ed3, type: 3}
+    - target: {fileID: 912621976577661244, guid: 9504e80457a91634d82c6c835f18117f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 912621976577661244, guid: 9504e80457a91634d82c6c835f18117f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 912621976851233539, guid: 9504e80457a91634d82c6c835f18117f, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -83,5 +95,9 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: a20ec3011f068fd4e91a8e7a7732eadf, type: 3}
+    - target: {fileID: 4856562884175974783, guid: 9504e80457a91634d82c6c835f18117f, type: 3}
+      propertyPath: _level
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9504e80457a91634d82c6c835f18117f, type: 3}
