@@ -8,6 +8,8 @@ public class ModifyTowerUI : InteractUI
     [SerializeField]
     private CreateTower _createTower;
     [SerializeField]
+    private GameObject _rangeUI;
+    [SerializeField]
     private OptionTowerBtn[] _optionBtns = new OptionTowerBtn[4];
     [SerializeField]
     private OptionTowerBtn _upgradeBtn;
@@ -33,8 +35,17 @@ public class ModifyTowerUI : InteractUI
     private void OnEnable() {
         var value = _createTower.TowerLevel == 0;
         foreach( OptionTowerBtn btn in _optionBtns) btn.gameObject.SetActive(value);
+        _rangeUI.SetActive(!value);
+        if(_rangeUI.activeSelf)
+        {
+            var range = _createTower.CurrentTowerDetail.TowerInfoList[_createTower.TowerLevel - 1].AttackRange;
+            _rangeUI.transform.localScale = new Vector3(range/2, range/2, 0);
+        }
         _upgradeBtn.gameObject.SetActive(!value);
         _sellBtn.gameObject.SetActive(!value);
+    }
+    private void OnDisable() {
+        _rangeUI.SetActive(false);
     }
     private void Start() {
         

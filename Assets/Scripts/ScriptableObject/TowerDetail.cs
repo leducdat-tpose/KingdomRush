@@ -8,6 +8,7 @@ public class TowerInfo{
     public int Cost;
     public float DamageCause;
     public int SellMoney;
+    public float AttackRange;
 }
 
 

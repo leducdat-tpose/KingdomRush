@@ -62,7 +62,6 @@ public class CreateTower : MonoBehaviour
 
     public void UpgradeTower()
     {
-        Debug.Log("Upgrade");
         Destroy(_containTower.transform.GetChild(0).gameObject);
         var cost = -CurrentTowerDetail.GetNextTowerInfo(_towerLevel).Cost;
         ResourceManagement.CollectResource?.Invoke(cost);
@@ -90,7 +89,6 @@ public class CreateTower : MonoBehaviour
 
     public void SellTower()
     {   
-        Debug.Log("Sell");
         Destroy(_containTower.transform.GetChild(0).gameObject);
         var sellMoney = CurrentTowerDetail.GetTowerInfo(TowerLevel).SellMoney;
         ResourceManagement.CollectResource?.Invoke(sellMoney);

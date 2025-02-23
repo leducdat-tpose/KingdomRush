@@ -38,7 +38,7 @@ public class EnemyWalkState : BaseState<Enemy>
         Object.PathIndex++;
         if(Object.PathIndex == GameController.Instance.LevelManager.GetWaypointsLength())
         {
-            GameController.Instance.LostPlayerHeart();
+            EventBus<GameController>.Raise(GameController.Instance);
             Object.ReturnPoolObject();
             return;
         }

@@ -1,13 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public struct PlayerEvent: IEvent{
-    public int PlayerHeart;
-    public int PlayerMana;
-}
-
-public class GameController : MonoBehaviour
+public class GameController : MonoBehaviour, IEvent
 {
     public static GameController Instance;
     public bool isGameOver{get;private set;} = false;
@@ -24,26 +20,29 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private EnemySpawner _enemySpawner;
     public EnemySpawner EnemySpawner => _enemySpawner;
-
-    EventBinding<PlayerEvent> playerEventBinding;
+    private EventBinding<GameController> _event;
     private void Awake() {
-        Instance = this;
+        if(Instance != null || Instance != this)
+        {
+            Destroy(Instance);
+            Instance = this;
+        }
         _levelManager = GetComponentInChildren<LevelManager>();
         _resourceManagement = GetComponentInChildren<ResourceManagement>();
         _enemySpawner = GetComponentInChildren<EnemySpawner>();
         PlayerHeartRemain = EnemiesSceneInfo.InitialPlayerHeart;
     }
-
-    private void OnEnable() {
-        playerEventBinding = new EventBinding<PlayerEvent>(LostPlayerHeart);
-        EventBus<PlayerEvent>.Register(playerEventBinding);
-    }
-    private void OnDisable() {
-        EventBus<PlayerEvent>.Deregister(playerEventBinding);
-    }
-
     private void Start() {
         UIController.Instance.Initialise();
+    }
+
+    private void OnEnable() {
+        _event = new EventBinding<GameController>(() => {});
+        _event.Add(LostPlayerHeart);
+        EventBus<GameController>.Register(_event);
+    }
+    private void OnDisable() {
+        EventBus<GameController>.Deregister(_event);
     }
 
     public void LostPlayerHeart()
@@ -58,12 +57,5 @@ public class GameController : MonoBehaviour
         UIController.Instance.UpdateHeartRemain();
     }
     private void Update() {
-        if(Input.GetKeyDown(KeyCode.Tab))
-        {
-            EventBus<PlayerEvent>.Raise(new PlayerEvent(){
-                PlayerHeart = 0,
-                PlayerMana = 0
-            });
-        }
     }
 }

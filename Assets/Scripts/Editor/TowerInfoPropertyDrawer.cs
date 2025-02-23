@@ -22,11 +22,15 @@ namespace Editor{
             SerializedProperty damageCauseProp = property.FindPropertyRelative("DamageCause");
             Rect sellMoneyRect = new Rect(damageCauseRect.xMax, levelRect.yMax + 3, position.width/10 + labelWidth, EditorGUIUtility.singleLineHeight);
             SerializedProperty sellMoneyProp = property.FindPropertyRelative("SellMoney");
+            Rect attackRangeRect = new Rect(sellMoneyRect.xMax, levelRect.yMax + 3, position.width/10 + labelWidth, EditorGUIUtility.singleLineHeight);
+            SerializedProperty attackRangeProp = property.FindPropertyRelative("AttackRange");
+            
             EditorGUI.PropertyField(levelRect, levelProp);
             EditorGUI.PropertyField(prefabRect, prefabProp);
             EditorGUI.PropertyField(costRect, costProp);
             EditorGUI.PropertyField(damageCauseRect, damageCauseProp);
             EditorGUI.PropertyField(sellMoneyRect, sellMoneyProp);
+            EditorGUI.PropertyField(attackRangeRect, attackRangeProp);
             EditorGUI.EndProperty();
         }
 

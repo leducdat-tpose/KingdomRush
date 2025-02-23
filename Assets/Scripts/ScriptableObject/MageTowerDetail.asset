@@ -21,13 +21,16 @@ MonoBehaviour:
     Cost: 100
     DamageCause: 10
     SellMoney: 70
+    AttackRange: 5
   - Level: 2
     Prefab: {fileID: 7670020567014296232, guid: 13d6e690fc69eff41bcb6e7098d44fa5, type: 3}
     Cost: 200
     DamageCause: 15
     SellMoney: 135
+    AttackRange: 5
   - Level: 3
     Prefab: {fileID: 3412560111313801116, guid: bb2ff3cbbf98d654cbcc382afae3e719, type: 3}
     Cost: 350
     DamageCause: 21
     SellMoney: 170
+    AttackRange: 5
