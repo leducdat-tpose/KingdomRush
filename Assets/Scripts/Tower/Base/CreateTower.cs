@@ -96,5 +96,29 @@ public class CreateTower : MonoBehaviour
         _towerConstruct.color = Color.white;
         _towerLevel = 0;
     }
+
+    public void GiveOrder()
+    {
+        var selectedTower = TowerCanHaveOrder();
+        _optionUI.transform.gameObject.SetActive(false);
+        if(selectedTower == null) return;
+        StartCoroutine(WaitALittleBit(selectedTower));
+    }
+
+    private IEnumerator WaitALittleBit(IOrderable selectedTower){
+        yield return new WaitForEndOfFrame();
+        selectedTower.SetOrder(true);
+        StartCoroutine(_optionUI.gameObject.GetComponent<ModifyTowerUI>().WaitingTurnOffRangeUI());
+    }
+
+    public IOrderable TowerCanHaveOrder()
+    {
+        if(_containTower.transform.childCount == 0) return null;
+        if(_containTower.transform.GetChild(0).GetChild(1).TryGetComponent<IOrderable>(out IOrderable selectedTower)) 
+            return selectedTower;
+        return null;
+    }
+
+
     public TowerDetail GetTowerDetail(int ind) => _towerDetails[ind];
 }

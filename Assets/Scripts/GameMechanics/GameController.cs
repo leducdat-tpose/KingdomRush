@@ -35,7 +35,7 @@ public class GameController : MonoBehaviour, IEvent
     private void Start() {
         UIController.Instance.Initialise();
     }
-
+    
     private void OnEnable() {
         _event = new EventBinding<GameController>(() => {});
         _event.Add(LostPlayerHeart);
@@ -57,5 +57,11 @@ public class GameController : MonoBehaviour, IEvent
         UIController.Instance.UpdateHeartRemain();
     }
     private void Update() {
+    }
+    public Vector3 GetMousePosition()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = 0;
+        return mousePos;
     }
 }

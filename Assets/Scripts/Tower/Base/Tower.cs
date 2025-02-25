@@ -6,34 +6,32 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
-public class Tower : MonoBehaviour, IShootable
+public class Tower : MonoBehaviour
 {
     protected int StartingProgress = Animator.StringToHash("StartProgress");
     protected int Idle = Animator.StringToHash("Idle");
     protected bool HaveAnimation = false;
-    [field: SerializeField] public float AttackRange { get; set; } = 5f;
     [SerializeField]
     private List<Enemy> _enemies;
     [SerializeField]
     private Enemy _currentTarget = null;
-    [SerializeField]
-    private SpriteRenderer _spriteRenderer;
     public Enemy CurrentTarget => _currentTarget;
     protected bool InProgress;
     protected int _currentAnimation;
-    public Collider2D Collider { get; set; }
+    private Collider2D _collider;
+    [SerializeField]
+    private float _colliderRange = 5f;
     private void Reset()
     {
-        Collider = GetComponent<Collider2D>();
-        Collider.isTrigger = true;
-        Collider.GetComponent<CircleCollider2D>().radius = AttackRange;
+        _collider = GetComponent<Collider2D>();
+        _collider.isTrigger = true;
+        _collider.GetComponent<CircleCollider2D>().radius = _colliderRange;
     }
 
     public virtual void Initialise(){}
 
     protected virtual void Start()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
         _currentAnimation = Idle;
         InProgress = false;
     }
@@ -83,7 +81,14 @@ public class Tower : MonoBehaviour, IShootable
             minDistance = realDistance;
             _currentTarget = enemy;
         }
+        StartCoroutine(nameof(WaitUpdateCurrentTarget));
     }
+
+    private IEnumerator WaitUpdateCurrentTarget()
+    {
+        yield return new WaitForSecondsRealtime(1.5f);
+    }
+
     public void StartProgress()
     {
         if (HaveAnimation == false) return;
@@ -93,4 +98,7 @@ public class Tower : MonoBehaviour, IShootable
     {
         InProgress = false;
     }
+
+    public float GetColliderRange() => _colliderRange;
+
 }

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class MeleeWarriorBehaviour : BaseBehaviour<Soldier>
+public class MeleeWarriorBehaviour : BaseBehaviour<Soldier>, IMoveable
 {
     private float _nextAttackTime;
     private Enemy _currentTargetEnemy;
@@ -11,8 +11,11 @@ public class MeleeWarriorBehaviour : BaseBehaviour<Soldier>
     [SerializeField]
     private bool _haveTower = true;
     public Tower MainTower{get; private set;}
+
     [SerializeField] 
     private CircleCollider2D _collider;
+    private Vector3 _orderMovingPos = Vector3.zero;
+    public Vector3 OrderMovingPos => _orderMovingPos;
     public override void Start()
     {
         base.Start();
@@ -31,6 +34,7 @@ public class MeleeWarriorBehaviour : BaseBehaviour<Soldier>
     }
     public override void FixedUpdate()
     {
+        StateManager.CurrentState.PhysicsUpdate();
     }
 
     public override void Render()
@@ -114,5 +118,12 @@ public class MeleeWarriorBehaviour : BaseBehaviour<Soldier>
             if(distance > Object.AttackRange) return;
             _currentTargetEnemy = enemy;
         }
+    }
+
+    public void MovingTo(Vector3 position)
+    {
+        position.z = 0;
+        StateManager.ChangeState(WalkState);
+        Object.SetRallyPosition(position);
     }
 }

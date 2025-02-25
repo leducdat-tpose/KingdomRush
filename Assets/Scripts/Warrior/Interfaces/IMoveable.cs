@@ -4,6 +4,5 @@ using UnityEngine;
 
 public interface IMoveable
 {
-    float Speed { get; set; }
-    Vector3 StandingPosition { get; set; }
+    public void MovingTo(Vector3 position);
 }

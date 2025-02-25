@@ -159,11 +159,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefabProjectile: {fileID: 0}
+  <Level>k__BackingField: 1
   <MaxHealth>k__BackingField: 20
   <CurrentHealth>k__BackingField: 0
   <BaseDamage>k__BackingField: 0
+  <MoveSpeed>k__BackingField: 10
   coolDownAttack: 1
-  <Speed>k__BackingField: 2
   <DynamicHpBar>k__BackingField: {fileID: 7779710036029185971}
 --- !u!114 &-1664089771700854231
 MonoBehaviour:

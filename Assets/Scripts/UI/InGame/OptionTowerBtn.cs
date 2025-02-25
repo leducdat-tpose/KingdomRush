@@ -10,7 +10,8 @@ internal enum OptionTowerType
 {
     PurchaseTower,
     Upgrade,
-    Sell
+    Sell,
+    OrderMoving,
 }
 
 public class OptionTowerBtn : MonoBehaviour
@@ -67,10 +68,11 @@ public class OptionTowerBtn : MonoBehaviour
         OnEnablePurchaseTowerBtn();
         OnEnableSellBtn();
         OnEnableUpgradeBtn();
+        OnEnableOrderMovingBtn();
     }
     public void OnClick()
     {
-        if(!_isSelected)
+        if(!_isSelected && _typeBtn != OptionTowerType.OrderMoving)
         {
             _isSelected = true;
             _imgSlot.sprite = _selectedSprite;
@@ -84,6 +86,9 @@ public class OptionTowerBtn : MonoBehaviour
                 break;
             case OptionTowerType.Sell:
                 _createTower.SellTower();
+                break;
+            case OptionTowerType.OrderMoving:
+                _createTower.GiveOrder();
                 break;
             default:
                 _createTower.ChooseTower(_type);
@@ -121,6 +126,13 @@ public class OptionTowerBtn : MonoBehaviour
     {
         if(_typeBtn != OptionTowerType.PurchaseTower) return;
         InteractableBtn();
+    }
+
+    private void OnEnableOrderMovingBtn()
+    {
+        if(_typeBtn != OptionTowerType.OrderMoving) return;
+        _towerDetail = _createTower.CurrentTowerDetail;
+        _imgSlot.sprite = _mainSprite;
     }
 
     private void InteractableBtn()

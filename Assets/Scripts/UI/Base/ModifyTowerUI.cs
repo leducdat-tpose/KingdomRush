@@ -12,6 +12,8 @@ public class ModifyTowerUI : InteractUI
     [SerializeField]
     private OptionTowerBtn[] _optionBtns = new OptionTowerBtn[4];
     [SerializeField]
+    private OptionTowerBtn _orderMovingBtn;
+    [SerializeField]
     private OptionTowerBtn _upgradeBtn;
     [SerializeField]
     private OptionTowerBtn _sellBtn;
@@ -31,11 +33,12 @@ public class ModifyTowerUI : InteractUI
         }
         _upgradeBtn.Initialise();
         _sellBtn.Initialise();
+        _orderMovingBtn.Initialise();
     }
     private void OnEnable() {
         var value = _createTower.TowerLevel == 0;
         foreach( OptionTowerBtn btn in _optionBtns) btn.gameObject.SetActive(value);
-        _rangeUI.SetActive(!value);
+        SetActiveRangeUI(!value);
         if(_rangeUI.activeSelf)
         {
             var range = _createTower.CurrentTowerDetail.TowerInfoList[_createTower.TowerLevel - 1].AttackRange;
@@ -43,9 +46,10 @@ public class ModifyTowerUI : InteractUI
         }
         _upgradeBtn.gameObject.SetActive(!value);
         _sellBtn.gameObject.SetActive(!value);
+        _orderMovingBtn.gameObject.SetActive(_createTower.TowerCanHaveOrder() != null);
     }
     private void OnDisable() {
-        _rangeUI.SetActive(false);
+        SetActiveRangeUI(false);
     }
     private void Start() {
         
@@ -54,5 +58,17 @@ public class ModifyTowerUI : InteractUI
     {
         if(_createTower.IsBusy) return;
         this.gameObject.SetActive(true);
+    }
+
+    public void SetActiveRangeUI(bool option)
+    {
+        _rangeUI.SetActive(option);
+    }
+
+    public IEnumerator WaitingTurnOffRangeUI()
+    {
+        SetActiveRangeUI(true);
+        yield return new WaitUntil(() => Input.GetMouseButtonUp(0));
+        SetActiveRangeUI(false);
     }
 }

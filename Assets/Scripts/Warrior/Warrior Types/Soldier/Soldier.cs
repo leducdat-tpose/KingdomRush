@@ -14,6 +14,9 @@ public class Soldier : Warrior, IDamageable
     public MeleeWarriorBehaviour Behaviour {get; private set;}
     [field: SerializeField]
     public DynamicHPBar DynamicHpBar { get; set; }
+
+    public Vector3 RallyPosition {get; private set;} = Vector3.zero;
+
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected() {
         Gizmos.color = Color.green;
@@ -41,4 +44,5 @@ public class Soldier : Warrior, IDamageable
     {
         PoolingObject.Instance.ReturnObject(this.gameObject);
     }
+    public void SetRallyPosition(Vector3 position) => RallyPosition = position;
 }

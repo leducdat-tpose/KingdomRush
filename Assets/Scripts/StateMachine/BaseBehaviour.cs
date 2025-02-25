@@ -96,4 +96,6 @@ public abstract class BaseBehaviour<T> : MonoBehaviour
     {
         StateManager.ChangeState(IdleState);
     }
+
+    public virtual bool GetIsDead() => StateManager.CurrentState == DeathState;
 }

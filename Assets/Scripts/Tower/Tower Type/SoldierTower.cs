@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 
-public class SoldierTower : Tower
+public class SoldierTower : Tower, IOrderable
 {
     [Header("References")]
     [SerializeField]
-    private GameObject soldierPrefab;
+    private GameObject _soldierPrefab;
     [SerializeField]
-    private List<Soldier> soldiers;
+    private List<Soldier> _soldierList;
     [Header("Attributes")]
     [SerializeField]
     private int _soldiersCapacity = 1;
@@ -20,18 +20,20 @@ public class SoldierTower : Tower
     private float _gatherPosRadius = 1.5f;
     [SerializeField]
     private int _soldiersCount;
+    public bool HaveOrder { get; private set; } = false;
+
     public override void Initialise()
     {
         for (int i = 0; i < _soldiersCapacity; i++)
         {
-            Soldier newSoldier = PoolingObject.Instance.GetObject(soldierPrefab).GetComponent<Soldier>();
+            Soldier newSoldier = PoolingObject.Instance.GetObject(_soldierPrefab).GetComponent<Soldier>();
             newSoldier.transform.position = _gatherPosition
             + new Vector2(Random.Range(-_gatherPosRadius, _gatherPosRadius),Random.Range(-_gatherPosRadius, _gatherPosRadius));
             newSoldier.transform.SetParent(transform);
-            soldiers.Add(newSoldier);
+            _soldierList.Add(newSoldier);
             newSoldier.gameObject.SetActive(true);
         }
-        _soldiersCount = soldiers.Count;
+        _soldiersCount = _soldierList.Count;
     }
     protected override void Start()
     {
@@ -41,6 +43,7 @@ public class SoldierTower : Tower
 
     protected override void Update()
     {
+        OrderAction();
     }
 
     protected override void UpdateCurrentTarget()
@@ -53,5 +56,26 @@ public class SoldierTower : Tower
 
     protected override void OnTriggerExit2D(Collider2D other)
     {
+    }
+
+    public void OrderAction()
+    {
+        if(!HaveOrder) return;
+        if(!Input.GetMouseButtonUp(0)) return;
+        var newPos = GameController.Instance.GetMousePosition();
+        if(Vector2.Distance(newPos, transform.position) <= GetColliderRange()*transform.localScale.x)
+        {
+            foreach(var soldier in _soldierList)
+            {
+                if(soldier.Behaviour.GetIsDead()) continue;
+                soldier.Behaviour.MovingTo(newPos);
+            }
+        }
+        SetOrder(false);
+    }
+
+    public void SetOrder(bool order)
+    {
+        HaveOrder = order;
     }
 }
