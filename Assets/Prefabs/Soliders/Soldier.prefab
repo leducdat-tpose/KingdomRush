@@ -163,7 +163,7 @@ MonoBehaviour:
   <MaxHealth>k__BackingField: 20
   <CurrentHealth>k__BackingField: 0
   <BaseDamage>k__BackingField: 0
-  <MoveSpeed>k__BackingField: 10
+  <MoveSpeed>k__BackingField: 5
   coolDownAttack: 1
   <DynamicHpBar>k__BackingField: {fileID: 7779710036029185971}
 --- !u!114 &-1664089771700854231
@@ -277,8 +277,12 @@ PrefabInstance:
       value: Canvas
       objectReference: {fileID: 0}
     - target: {fileID: 6111944250454338088, guid: bd54f8d9e36468c4ebe57a96ce813bf7, type: 3}
-      propertyPath: _offset.y
+      propertyPath: _offset.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6111944250454338088, guid: bd54f8d9e36468c4ebe57a96ce813bf7, type: 3}
+      propertyPath: _offset.y
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8421359787849193257, guid: bd54f8d9e36468c4ebe57a96ce813bf7, type: 3}
       propertyPath: m_AnchorMax.x

@@ -149,10 +149,9 @@ MonoBehaviour:
   _colliderRange: 5
   _soldierPrefab: {fileID: 2438626205993660223, guid: 299d2c155b161af47a671a17ffd5d3ee, type: 3}
   _soldierList: []
-  _soldiersCapacity: 4
-  _gatherPosition: {x: 4, y: 0}
-  _gatherPosRadius: 0.5
-  _soldiersCount: 0
+  _soldiersCapacity: 5
+  _rallyPosition: {x: 0, y: -2}
+  _rallyRadius: 0.5
 --- !u!1 &3626801995826853278
 GameObject:
   m_ObjectHideFlags: 0

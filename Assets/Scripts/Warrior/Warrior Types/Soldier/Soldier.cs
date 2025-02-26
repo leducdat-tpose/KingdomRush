@@ -22,7 +22,7 @@ public class Soldier : Warrior, IDamageable
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, AttackRange);
     }
-    #endif
+#endif
     protected override void Start()
     {
         base.Start();
