@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyIdleState : BaseState<Enemy>
+public class EnemyIdleState<T> : BaseState<T> where T: Enemy
 {
-    public EnemyIdleState(Enemy enemy, StateManager<Enemy> enemyStateMachine, BaseBehaviour<Enemy> behaviour) : base(enemy, enemyStateMachine, behaviour)
+    public EnemyIdleState(T obj, StateManager<T> stateManager) : base(obj, stateManager)
     {
     }
     public override void EnterState()
@@ -15,11 +15,11 @@ public class EnemyIdleState : BaseState<Enemy>
     {
     }
 
-    public override void FrameUpdate()
+    public override void Update()
     {
     }
 
-    public override void PhysicsUpdate()
+    public override void FixedUpdate()
     {
     }
 

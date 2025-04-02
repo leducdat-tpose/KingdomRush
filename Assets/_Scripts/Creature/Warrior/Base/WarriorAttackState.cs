@@ -2,27 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WarriorAttackState : BaseState<Warrior>
+public class WarriorAttackState<T> : BaseState<T> where T: Warrior
 {
-    public WarriorAttackState(Warrior obj, StateManager<Warrior> objectStateManager, BaseBehaviour<Warrior> behaviour) : base(obj, objectStateManager, behaviour)
+    public WarriorAttackState(T obj, StateManager<T> objectStateManager) : base(obj, objectStateManager)
     {
     }
 
     public override void EnterState()
     {
-        Behaviour.ReadyProjectile();
-        Behaviour.StartAttacking();
+        // behaviour.ReadyProjectile();
+        // behaviour.StartAttacking();
     }
 
     public override void ExitState()
     {
     }
 
-    public override void FrameUpdate()
+    public override void Update()
     {
     }
 
-    public override void PhysicsUpdate()
+    public override void FixedUpdate()
     {
     }
 }

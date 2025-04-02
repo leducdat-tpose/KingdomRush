@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArtillerymanBehaviour : RangerWarriorBehaviour
+public class ArtillerymanBehaviour : RangerWarrior
 {
     public override void Render()
     {
         int newAnimation = idleAnimation;
-        if (StateManager.CurrentState != IdleState)
+        if (stateManager.CurrentState != idleState)
         {
-            if (StateManager.CurrentState == AttackState)
+            if (stateManager.CurrentState == attackState)
                 newAnimation = attackAnimation;
         }
         if(CurrentAnimation == newAnimation) return;

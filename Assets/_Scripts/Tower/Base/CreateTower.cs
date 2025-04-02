@@ -1,10 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Unity.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public enum TowerType{
@@ -78,8 +74,8 @@ public class CreateTower : MonoBehaviour
             newTower.GetComponentInChildren<Tower>().Initialise();
             return true;
         });
-        Warrior warrior = newTower.GetComponentInChildren<Warrior>();
-        warrior.SetDamageCause(selectedTowerInfo.DamageCause);
+        // Warrior warrior = newTower.GetComponentInChildren<Warrior>();
+        // warrior.SetDamageCause(selectedTowerInfo.DamageCause);
         _towerConstruct.color = _transparent;
         _towerLevel += 1;
         IsBusy = false;

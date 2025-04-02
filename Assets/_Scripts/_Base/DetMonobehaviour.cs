@@ -4,7 +4,8 @@ using UnityEngine;
 
 public abstract class DetMonobehaviour : MonoBehaviour
 {
-    protected abstract void LoadComponents();
+    public virtual void Initialise(){}
+    protected virtual void LoadComponents(){}
 
     protected virtual void Awake()
     {

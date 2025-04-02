@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class RangerWarriorBehaviour : BaseBehaviour<Warrior>
+public class RangerWarrior : Warrior
 {
     private float _nextAttackTime;
     private Enemy _currentTargetEnemy;
@@ -11,38 +11,28 @@ public class RangerWarriorBehaviour : BaseBehaviour<Warrior>
     public Tower MainTower{get; private set;}
     private Vector2 PositionReleaseProjectTile;
     private ProjectTiles _currentProjectTile;
-    public override void Start()
+    public override void Initialise()
     {
-        base.Start();
+        base.Initialise();
         _nextAttackTime = 0;
         _currentTargetEnemy = null;
         MainTower = transform.root.GetComponentInChildren<Tower>();
         PositionReleaseProjectTile = transform.position;
-        for(int i = 0; i < animator.layerCount; i++)
-        {
-            if(i == (Object.Level - 1)) animator.SetLayerWeight(i, 1);
-            else animator.SetLayerWeight(i, 0);
-        }
         CurrentAnimation = idleAnimation;
-        IdleState = new WarriorIdleState(Object, StateManager, this);
-        WalkState = new WarriorWalkState(Object, StateManager, this);
-        AttackState = new WarriorAttackState(Object, StateManager, this);
-        DeathState = new WarriorDeathState(Object, StateManager, this);
-        StateManager.Initialise(IdleState);
     }
 
     public override void Render()
     {
         int newAnimation = idleAnimation;
-        if (StateManager.CurrentState != IdleState)
+        if (stateManager.CurrentState != idleState)
         {
-            if (StateManager.CurrentState == AttackState)
+            if (stateManager.CurrentState == attackState)
                 newAnimation = attackAnimation;
-            else if (StateManager.CurrentState == DeathState)
+            else if (stateManager.CurrentState == deathState)
             {
                 newAnimation = deathAnimation;
             }
-            else if (StateManager.CurrentState == WalkState)
+            else if (stateManager.CurrentState == walkState)
             {
                 newAnimation = walkSideAnimation;
             }
@@ -50,11 +40,11 @@ public class RangerWarriorBehaviour : BaseBehaviour<Warrior>
             {
                 Vector2 direction = MainTower.CurrentTarget.transform.position - MainTower.transform.position;
                 spriteRenderer.flipX = direction.x < -0.8f;
-                if(direction.y > 1.0f && StateManager.CurrentState == AttackState) newAnimation = attackUpAnimation;
+                if(direction.y > 1.0f && stateManager.CurrentState == attackState) newAnimation = attackUpAnimation;
             }
         }
         if(CurrentAnimation == newAnimation) return;
-        animator.CrossFade(newAnimation, 0.1f, Object.Level - 1);
+        animator.CrossFade(newAnimation, 0.1f);
         CurrentAnimation = newAnimation;
     }
 
@@ -62,13 +52,13 @@ public class RangerWarriorBehaviour : BaseBehaviour<Warrior>
     {
         UpdateCurrentTargetEnemy();
         ReadyToAttack();
-        StateManager.CurrentState.FrameUpdate();
+        stateManager.Update();
         Render();
     }
 
     public override void FixedUpdate()
     {
-        StateManager.CurrentState.PhysicsUpdate();
+        stateManager.FixedUpdate();
     }
 
     public override void ReadyToAttack()
@@ -76,16 +66,16 @@ public class RangerWarriorBehaviour : BaseBehaviour<Warrior>
         if (!MainTower.CurrentTarget 
         || MainTower.CurrentTarget.GetIsDead() 
         || Time.time < _nextAttackTime
-        || StateManager.CurrentState == AttackState) return;
-        StateManager.ChangeState(AttackState);
-        _nextAttackTime = Time.time + Object.CoolDownAttack;
+        || stateManager.CurrentState == attackState) return;
+        stateManager.ChangeState(attackState);
+        _nextAttackTime = Time.time + data.CoolDownAttack;
     }
 
     public override void StartAttacking()
     {
         //Execute the tower's animate
         MainTower.StartProgress();
-        _currentProjectTile.SetCauseDamage(Object.BaseDamage);
+        _currentProjectTile.SetCauseDamage(data.Damage);
     }
 
     public void ShootProjectTile(){
@@ -94,7 +84,8 @@ public class RangerWarriorBehaviour : BaseBehaviour<Warrior>
 
     public override void ReadyProjectile()
     {
-        var newObject = PoolingObject.Instance.GetObject(Object.PrefabProjectTile);
+        // var newObject = PoolingObject.Instance.GetObject(Object.PrefabProjectTile);
+        var newObject = PoolingObject.Instance.GetObject(data.ProjectilePrefab);
         if(newObject.TryGetComponent<ProjectTiles>(out ProjectTiles projectTiles))
         {
             _currentProjectTile = projectTiles;

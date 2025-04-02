@@ -1,17 +1,17 @@
 using UnityEngine;
-public class SoldierWalkState: BaseState<Soldier>
+public class SoldierWalkState<T> : WarriorIdleState<Soldier>
 {
     private Vector3 _targetPosition = Vector3.zero;
-    public SoldierWalkState(Soldier obj, StateManager<Soldier> objectStateManager, BaseBehaviour<Soldier> behaviour) : base(obj, objectStateManager, behaviour)
+    public SoldierWalkState(Soldier obj, StateManager<Soldier> objectStateManager) : base(obj, objectStateManager)
     {
     }
 
-    public override void FrameUpdate()
+    public override void Update()
     {
         UpdateTargetPosition();
     }
 
-    public override void PhysicsUpdate()
+    public override void FixedUpdate()
     {
         Moving();
     }
@@ -23,18 +23,22 @@ public class SoldierWalkState: BaseState<Soldier>
 
     public override void EnterState()
     {
+        // if(!owner.Data.CanMove) stateManager.ChangeState(behaviour.IdleState);
     }
     private void UpdateTargetPosition()
     {
-        _targetPosition = Object.RallyPosition;
-        if(Vector2.Distance(Object.RallyPosition, Object.transform.position) > 0.1f || !Object.gameObject.activeSelf) return;
-        ObjectStateManager.ChangeState(Behaviour.IdleState);
+        // _targetPosition = owner.RallyPosition;
+        // if(Vector2.Distance(owner.RallyPosition, owner.transform.position) > 0.1f || !owner.gameObject.activeSelf) return;
+        // stateManager.ChangeState(behaviour.IdleState);
     }
     private void Moving()
     {
-        if(ObjectStateManager.CurrentState != this) return;
-        Vector2 direction = (_targetPosition - Object.transform.position).normalized;
-        Object.Rigidbody.velocity = direction * Object.MoveSpeed;
+        if(stateManager.CurrentState != this) return;
+        // Vector2 direction = (_targetPosition - owner.transform.position).normalized;
+        // owner.Rigidbody.velocity = direction * owner.Data.MoveSpeed;
     }
-    private void StopMoving() => Object.Rigidbody.velocity = Vector2.zero;
+    private void StopMoving() 
+    {
+        // owner.Rigidbody.velocity = Vector2.zero;
+    }
 }

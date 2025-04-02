@@ -1,7 +1,7 @@
 using UnityEngine;
-public class SoldierAttackState: BaseState<Soldier>
+public class SoldierAttackState: WarriorIdleState<Soldier>
 {
-    public SoldierAttackState(Soldier obj, StateManager<Soldier> objectStateManager, BaseBehaviour<Soldier> behaviour) : base(obj, objectStateManager, behaviour)
+    public SoldierAttackState(Soldier obj, StateManager<Soldier> objectStateManager) : base(obj, objectStateManager)
     {
     }
 
@@ -13,11 +13,11 @@ public class SoldierAttackState: BaseState<Soldier>
     {
     }
 
-    public override void FrameUpdate()
+    public override void Update()
     {
     }
 
-    public override void PhysicsUpdate()
+    public override void FixedUpdate()
     {
     }
 }

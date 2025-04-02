@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyWalkState : BaseState<Enemy>
+public class EnemyWalkState<T> : BaseState<T> where T: Enemy
 {
-    public EnemyWalkState(Enemy enemy, StateManager<Enemy> enemyStateMachine, BaseBehaviour<Enemy> behaviour) : base(enemy, enemyStateMachine, behaviour)
+    public EnemyWalkState(T obj, StateManager<T> stateManager) : base(obj, stateManager)
     {
     }
     public override void EnterState()
@@ -16,37 +16,37 @@ public class EnemyWalkState : BaseState<Enemy>
         StopMoving();
     }
 
-    public override void FrameUpdate()
+    public override void Update()
     {
         UpdateTargetPosition();
     }
 
-    public override void PhysicsUpdate()
+    public override void FixedUpdate()
     {
         Moving();
     }
     private void Moving()
     {
-        if(ObjectStateManager.CurrentState != this) return;
-        Vector2 direction = (Object.TargetPosition - Object.transform.position).normalized;
-        Object.Rigidbody.velocity = direction * Object.MoveSpeed;
+        if(stateManager.CurrentState != this) return;
+        Vector2 direction = (owner.TargetPosition - owner.transform.position).normalized;
+        owner.Rigid.velocity = direction * owner.MoveSpeed;
     }
 
     private void UpdateTargetPosition()
     {
-        if(Vector2.Distance(Object.TargetPosition, Object.transform.position) > 0.1f || !Object.gameObject.activeSelf) return;
-        Object.PathIndex++;
-        if(Object.PathIndex == GameController.Instance.LevelManager.GetWaypointsLength())
+        if(Vector2.Distance(owner.TargetPosition, owner.transform.position) > 0.1f || !owner.gameObject.activeSelf) return;
+        owner.PathIndex++;
+        if(owner.PathIndex == GameController.Instance.LevelManager.GetWaypointsLength())
         {
             EventBus<GameController>.Raise(GameController.Instance);
-            Object.ReturnPoolObject();
+            owner.ReturnPoolObject();
             return;
         }
-        Object.TargetPosition = GameController.Instance.LevelManager.GetPoint(Object.PathIndex);
+        owner.TargetPosition = GameController.Instance.LevelManager.GetPoint(owner.PathIndex);
     }
 
     private void StopMoving()
     {
-        Object.Rigidbody.velocity = Vector2.zero;
+        owner.Rigid.velocity = Vector2.zero;
     }
 }

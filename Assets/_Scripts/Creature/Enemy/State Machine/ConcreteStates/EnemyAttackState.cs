@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAttackState : BaseState<Enemy>
+public class EnemyAttackState<T> : BaseState<T> where T: Enemy
 {
-    public EnemyAttackState(Enemy enemy, StateManager<Enemy> enemyStateMachine, BaseBehaviour<Enemy> behaviour) : base(enemy, enemyStateMachine, behaviour)
+    public EnemyAttackState(T enemy, StateManager<T> stateManager) : base(enemy, stateManager)
     {
     }
 
@@ -16,11 +16,11 @@ public class EnemyAttackState : BaseState<Enemy>
     {
     }
 
-    public override void FrameUpdate()
+    public override void Update()
     {
     }
 
-    public override void PhysicsUpdate()
+    public override void FixedUpdate()
     {
     }
 

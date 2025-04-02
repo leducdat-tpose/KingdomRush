@@ -81,8 +81,8 @@ public class SoldierTower : Tower, IOrderable
                 _rallyPosition = newPos;
                 for(int i = 0; i < _soldiersCapacity; i++)
                 {
-                    if(_soldierList[i].Behaviour.GetIsDead())  continue;
-                    _soldierList[i].Behaviour.MovingTo(_soldierPosArr[i] + _rallyPosition);
+                    if(_soldierList[i].GetIsDead())  continue;
+                    _soldierList[i].MovingTo(_soldierPosArr[i] + _rallyPosition);
                 }
             }
             SetOrder(false);
@@ -92,8 +92,8 @@ public class SoldierTower : Tower, IOrderable
         {
             for(int i = 0; i < _soldiersCapacity; i++)
                 {
-                    if(_soldierList[i].Behaviour.GetIsDead())  continue;
-                    _soldierList[i].Behaviour.MovingTo(_soldierPosArr[i] + _rallyPosition);
+                    if(_soldierList[i].GetIsDead())  continue;
+                    _soldierList[i].MovingTo(_soldierPosArr[i] + _rallyPosition);
                 }
             SetOrder(false);
             _spawnOrder = false;

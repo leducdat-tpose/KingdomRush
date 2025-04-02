@@ -1,38 +1,61 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
-using UnityEngine.Serialization;
-
-[RequireComponent(typeof(Animator),typeof(SpriteRenderer),
-    typeof(Animator))]
-public class Warrior : MonoBehaviour, ICreature
+public abstract class Warrior : BaseBehaviour
 {
-    [Header("References")]
-    [SerializeField] private GameObject _prefabProjectile;
-    public GameObject PrefabProjectTile => _prefabProjectile;
-    [field: SerializeField, Range(1,3)]public int Level{get;private set;} = 1;
-
-    [field:SerializeField]public float MaxHealth { get; set; }
-    [field:SerializeField]public float CurrentHealth { get; set; }
-    [field:SerializeField]public float BaseDamage { get; set; }
-    [field:SerializeField]public float MoveSpeed { get; set;}
-    private BaseBehaviour<Warrior> _behaviour;
-    [SerializeField] protected float coolDownAttack;
-    
-    public float CoolDownAttack => coolDownAttack;
-
-    protected virtual void Start()
+    [SerializeField]
+    protected WarriorData data;
+    protected float currentHealth;
+    public float CurrentHealth => currentHealth;
+    protected Enemy currentTargetEnemy;
+    protected StateManager<Warrior> stateManager;
+    protected WarriorIdleState<Warrior> idleState;
+    protected WarriorAttackState<Warrior> attackState;
+    protected WarriorDeathState<Warrior> deathState;
+    protected WarriorWalkState<Warrior> walkState;
+    protected override void LoadComponents()
     {
-        CurrentHealth = MaxHealth;
+        base.LoadComponents();
+        currentTargetEnemy = null;
+        LoadStateManager();
     }
-    public virtual void TakenDamage(float damage)
+    public override void Initialise()
     {
-        CurrentHealth -= damage;
-        if(CurrentHealth > 0) return;
-        CurrentHealth = 0;
-        Destroy(this.gameObject);
+        base.Initialise();
+        currentHealth = data.MaxHealth;
     }
-    public void SetDamageCause(float value) => this.BaseDamage = value;
+    protected virtual void LoadStateManager(){
+        stateManager = new StateManager<Warrior>();
+        idleState = new WarriorIdleState<Warrior>(this, stateManager);
+        walkState = new WarriorWalkState<Warrior>(this, stateManager);
+        attackState = new WarriorAttackState<Warrior>(this, stateManager);
+        deathState = new WarriorDeathState<Warrior>(this, stateManager);
+        stateManager.AddState(idleState);
+        stateManager.AddState(walkState);
+        stateManager.AddState(attackState);
+        stateManager.AddState(deathState);
+        stateManager.Initialise(idleState);
+    }
+
+    public override void Render()
+    {
+    }
+
+    public override void Update()
+    {
+        stateManager.Update();
+        Render();
+    }
+    public override void FixedUpdate()
+    {
+        stateManager.FixedUpdate();
+    }
+
+    public override void CauseDamage()
+    {
+        base.CauseDamage();
+        if(!currentTargetEnemy) return;
+        currentTargetEnemy.TakenDamage(data.Damage);
+    }
 
 }

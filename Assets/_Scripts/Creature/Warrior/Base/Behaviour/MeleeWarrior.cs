@@ -1,52 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class MeleeWarriorBehaviour : BaseBehaviour<Soldier>, IMoveable
+public abstract class MeleeWarrior : Warrior, IControllable
 {
+    protected float domainRange = 3f;
+    protected float attackRange = 0.5f;
     private float _nextAttackTime;
     private Enemy _currentTargetEnemy;
+    public Vector3 RallyPosition {get; private set;} = Vector3.zero;
     public Enemy CurrentTargetEnemy => _currentTargetEnemy;
     [SerializeField]
     private List<Enemy> _enemiesList;
     [SerializeField]
-    private bool _haveTower = true;
-    public Tower MainTower{get; private set;}
+    private Tower _initTower;
+    public Tower InitTower => _initTower;
+
+    public Rigidbody2D Rigid{get; private set;}
 
     [SerializeField] 
     private CircleCollider2D _collider;
     private Vector3 _orderMovingPos = Vector3.zero;
     public Vector3 OrderMovingPos => _orderMovingPos;
-    public override void Start()
+    protected override void LoadComponents()
     {
-        base.Start();
+        base.LoadComponents();
+        _collider = GetComponent<CircleCollider2D>();
+        _collider.radius = domainRange;
+    }
+    public override void Initialise()
+    {
+        base.Initialise();
         _nextAttackTime = 0;
         _currentTargetEnemy = null;
-        _collider = GetComponent<CircleCollider2D>();
-        _collider.radius = Object.DomainRange;
-        if(_haveTower)
-            MainTower = transform.root.GetComponentInChildren<Tower>();
         CurrentAnimation = idleAnimation;
-        IdleState = new SoldierIdleState(Object, StateManager, this);
-        WalkState = new SoldierWalkState(Object, StateManager, this);
-        AttackState = new SoldierAttackState(Object, StateManager, this);
-        DeathState = new SoldierDeathState(Object, StateManager, this);
-        StateManager.Initialise(IdleState);
     }
     public override void FixedUpdate()
     {
-        StateManager.CurrentState.PhysicsUpdate();
+        stateManager.FixedUpdate();
     }
 
     public override void Render()
     {
         int nextAnimation = idleAnimation;
-        if(StateManager.CurrentState == AttackState) 
+        if(stateManager.CurrentState == attackState) 
             nextAnimation = attackAnimation;
-        else if(StateManager.CurrentState == DeathState)
+        else if(stateManager.CurrentState == deathState)
             nextAnimation = deathAnimation;
-        else if(Object.Rigidbody.velocity != Vector2.zero)
+        else if(Rigid.velocity != Vector2.zero)
         {
-            Vector2 direction = Object.Rigidbody.velocity / Object.MoveSpeed;
+            Vector2 direction = Rigid.velocity / data.MoveSpeed;
             if (Mathf.Abs(direction.x) < Mathf.Abs(direction.y))
                 nextAnimation = direction.y < 0 ? walkDownAnimation : walkUpAnimation;
             else{
@@ -55,7 +57,7 @@ public class MeleeWarriorBehaviour : BaseBehaviour<Soldier>, IMoveable
             }
         }
         if(nextAnimation == CurrentAnimation
-        || Object.gameObject.activeSelf == false) return;
+        || this.gameObject.activeSelf == false) return;
         animator.CrossFade(nextAnimation, 0.1f, 0);
         CurrentAnimation = nextAnimation;
     }
@@ -75,7 +77,7 @@ public class MeleeWarriorBehaviour : BaseBehaviour<Soldier>, IMoveable
     {
         UpdateCurrentTargetEnemy();
         ReadyToAttack();
-        StateManager.CurrentState.FrameUpdate();
+        stateManager.Update();
         Render();
     }
     public override void ReadyToAttack()
@@ -83,18 +85,18 @@ public class MeleeWarriorBehaviour : BaseBehaviour<Soldier>, IMoveable
         if (!_currentTargetEnemy 
         || _currentTargetEnemy.GetIsDead() 
         || Time.time < _nextAttackTime
-        || StateManager.CurrentState == AttackState) return;
+        || stateManager.CurrentState == attackState) return;
         float distance = Vector2.Distance(transform.position, _currentTargetEnemy.transform.position);
-        if(distance > Object.AttackRange) return;
-        StateManager.ChangeState(AttackState);
-        if(_currentTargetEnemy.Behaviour.BeingProvoke == false)
-            _currentTargetEnemy.Behaviour.SetBeingProvoke(true, Object);
-        _nextAttackTime = Time.time + Object.CoolDownAttack;
+        if(distance > attackRange) return;
+        stateManager.ChangeState(attackState);
+        if(_currentTargetEnemy.BeingProvoke == false)
+            _currentTargetEnemy.SetBeingProvoke(true, this);
+        _nextAttackTime = Time.time + data.CoolDownAttack;
     }
     public override void StartAttacking()
     {
         if(!_currentTargetEnemy) return;
-        _currentTargetEnemy.TakenDamage(Object.BaseDamage);
+        _currentTargetEnemy.TakenDamage(data.Damage);
     }
     public override void StopAttacking()
     {
@@ -107,15 +109,15 @@ public class MeleeWarriorBehaviour : BaseBehaviour<Soldier>, IMoveable
         if(_currentTargetEnemy != null)
         {
             float distance = Vector2.Distance(transform.position, _currentTargetEnemy.transform.position);
-            if(distance > Object.AttackRange) _currentTargetEnemy = null;
+            if(distance > attackRange) _currentTargetEnemy = null;
             return;
         }
         if(_enemiesList.Count == 0) {_currentTargetEnemy = null; return;}
         foreach(var enemy in _enemiesList)
         {
-            if(enemy.Behaviour.BeingProvoke) continue;
+            if(enemy.BeingProvoke) continue;
             float distance = Vector2.Distance(transform.position, enemy.transform.position);
-            if(distance > Object.AttackRange) return;
+            if(distance > attackRange) return;
             _currentTargetEnemy = enemy;
         }
     }
@@ -123,7 +125,9 @@ public class MeleeWarriorBehaviour : BaseBehaviour<Soldier>, IMoveable
     public void MovingTo(Vector3 position)
     {
         position.z = 0;
-        StateManager.ChangeState(WalkState);
-        Object.SetRallyPosition(position);
+        stateManager.ChangeState(walkState);
+        SetRallyPosition(position);
     }
+    
+    public void SetRallyPosition(Vector3 position) => RallyPosition = position;
 }

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoldierIdleState: BaseState<Soldier>
+public class SoldierIdleState: WarriorIdleState<Soldier>
 {
-    public SoldierIdleState(Soldier obj, StateManager<Soldier> objectStateManager, BaseBehaviour<Soldier> behaviour) : base(obj, objectStateManager, behaviour)
+    public SoldierIdleState(Soldier obj, StateManager<Soldier> objectStateManager) : base(obj, objectStateManager)
     {
     }
 
@@ -16,11 +16,11 @@ public class SoldierIdleState: BaseState<Soldier>
     {
     }
 
-    public override void FrameUpdate()
+    public override void Update()
     {
     }
 
-    public override void PhysicsUpdate()
+    public override void FixedUpdate()
     {
     }
 }
