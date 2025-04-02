@@ -37,8 +37,7 @@ public class GameController : MonoBehaviour, IEvent
     }
     
     private void OnEnable() {
-        _event = new EventBinding<GameController>(() => {});
-        _event.Add(LostPlayerHeart);
+        _event = new EventBinding<GameController>(LostPlayerHeart);
         EventBus<GameController>.Register(_event);
     }
     private void OnDisable() {

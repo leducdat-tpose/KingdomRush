@@ -13,8 +13,6 @@ public enum TowerType{
     Soldier,
     Artillery,
     Mage,
-    Ranger,
-    Melee,
 }
 public class CreateTower : MonoBehaviour
 {

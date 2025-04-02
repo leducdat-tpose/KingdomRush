@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(CircleCollider2D), typeof(Rigidbody2D))]
 public class Soldier : Warrior, IDamageable

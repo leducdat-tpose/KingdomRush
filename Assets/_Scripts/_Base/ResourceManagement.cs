@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ResourceManagement : MonoBehaviour
+public class ResourceManagement : MonoBehaviour, IEvent
 {
     [HideInInspector]
     public static UnityEvent<int> CollectResource;
@@ -26,6 +26,6 @@ public class ResourceManagement : MonoBehaviour
     {
         if (_totalMoney < amount) return;
         _totalMoney += amount;
-        UIController.Instance.UpdateMoneyAmount();
+        EventBus<ResourceManagement>.Raise(this);
     }
 }

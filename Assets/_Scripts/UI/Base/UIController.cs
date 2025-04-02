@@ -13,6 +13,7 @@ public class UIController : MonoBehaviour
     private Text _heartRemainAmount;
     [SerializeField]
     private Text _waveAmount;
+    private EventBinding<ResourceManagement> _resourceEventBinding;
     private void Awake() {
         Instance = this;
     }
@@ -21,6 +22,15 @@ public class UIController : MonoBehaviour
         UpdateMoneyAmount();
         UpdateHeartRemain();
         UpdateWave();
+    }
+
+    private void OnEnable() {
+        _resourceEventBinding = new EventBinding<ResourceManagement>(UpdateMoneyAmount);
+        EventBus<ResourceManagement>.Register(_resourceEventBinding);
+    }
+
+    private void OnDisable() {
+        EventBus<ResourceManagement>.Deregister(_resourceEventBinding);
     }
 
     public void UpdateMoneyAmount() 
