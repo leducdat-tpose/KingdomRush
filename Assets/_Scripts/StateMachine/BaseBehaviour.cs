@@ -23,7 +23,7 @@ public abstract class BaseBehaviour : DetMonobehaviour
     protected readonly int deathAnimation = Animator.StringToHash("Death");
     protected readonly int attackAnimation = Animator.StringToHash("Attack");
     protected readonly int attackUpAnimation = Animator.StringToHash("AttackUp");
-    public int CurrentAnimation{get; protected set;}
+    protected int currentAnimation;
     #endregion
     protected SpriteRenderer spriteRenderer;
     protected override void LoadComponents()
@@ -35,6 +35,7 @@ public abstract class BaseBehaviour : DetMonobehaviour
     public override void Initialise()
     {
         base.Initialise();
+        currentAnimation = idleAnimation;
     }
     public abstract void Update();
 

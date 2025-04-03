@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1466923b7634f0b408722d63132a4933, type: 3}
-  m_Name: WarriorData
+  m_Name: RangerData
   m_EditorClassIdentifier: 
   MaxHealth: 100
-  CanMove: 1
-  MoveSpeed: 5
-  AttackType: 1
+  CanMove: 0
+  MoveSpeed: 0
+  AttackType: 2
   Damage: 10
   CoolDownAttack: 1
-  ProjectilePrefab: {fileID: 0}
+  ProjectilePrefab: {fileID: 5661872374317603713, guid: 5af432891b42340468f5fc191b888254, type: 3}

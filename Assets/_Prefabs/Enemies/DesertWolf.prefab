@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 2788922623559565167}
   - component: {fileID: 2788922623559565166}
   - component: {fileID: 2788922623559565165}
-  - component: {fileID: 5563979201399257504}
   m_Layer: 0
   m_Name: DesertWolf
   m_TagString: Enemy
@@ -168,28 +167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19dc87f8c3f1fd54eb7bba6982a43466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rigidbody: {fileID: 0}
-  animator: {fileID: 2788922623559565166}
-  spriteRenderer: {fileID: 2788922623559565160}
-  _currentTargetWarrior: {fileID: 0}
-  _dynamicHpBar: {fileID: 1208374391286698647}
-  <MaxHealth>k__BackingField: 100
-  <CurrentHealth>k__BackingField: 0
-  <MoveSpeed>k__BackingField: 3
-  coolDownAttack: 1
-  _moneyEarned: 5
---- !u!114 &5563979201399257504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2788922623559565164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a4266c37e2899e449c3e1474f32f295, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 04169785f452d374f908b6f10bc91baa, type: 2}
+  _rigid: {fileID: 2788922623559565167}
 --- !u!1001 &4905826211646732479
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -293,6 +272,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8786408728894458413, guid: bd54f8d9e36468c4ebe57a96ce813bf7, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd54f8d9e36468c4ebe57a96ce813bf7, type: 3}
 --- !u!224 &7506076065912778371 stripped
@@ -300,14 +283,3 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3188001646161040956, guid: bd54f8d9e36468c4ebe57a96ce813bf7, type: 3}
   m_PrefabInstance: {fileID: 4905826211646732479}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1208374391286698647 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6111944250454338088, guid: bd54f8d9e36468c4ebe57a96ce813bf7, type: 3}
-  m_PrefabInstance: {fileID: 4905826211646732479}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e360ad5501087e4dadff67736868404, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

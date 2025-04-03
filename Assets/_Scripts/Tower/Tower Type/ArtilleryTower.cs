@@ -8,9 +8,9 @@ public class ArtilleryTower : Tower
     private Animator _animator;
     [SerializeField, Range(1,3)]
     private int _level = 1;
-    protected override void Start()
+    protected override void LoadComponents()
     {
-        base.Start();
+        base.LoadComponents();
         HaveAnimation = true;
         _animator = GetComponent<Animator>();
         for(int i = 0; i < _animator.layerCount; i++)

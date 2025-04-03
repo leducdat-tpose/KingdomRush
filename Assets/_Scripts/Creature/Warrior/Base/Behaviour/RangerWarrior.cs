@@ -11,14 +11,22 @@ public class RangerWarrior : Warrior
     public Tower MainTower{get; private set;}
     private Vector2 PositionReleaseProjectTile;
     private ProjectTiles _currentProjectTile;
+
+    protected override void LoadComponents()
+    {
+        base.LoadComponents();
+        MainTower = transform.root.GetComponentInChildren<Tower>();
+    }
+    private void Start() {
+        Initialise();
+    }
     public override void Initialise()
     {
         base.Initialise();
         _nextAttackTime = 0;
         _currentTargetEnemy = null;
-        MainTower = transform.root.GetComponentInChildren<Tower>();
         PositionReleaseProjectTile = transform.position;
-        CurrentAnimation = idleAnimation;
+        currentAnimation = idleAnimation;
     }
 
     public override void Render()
@@ -43,9 +51,9 @@ public class RangerWarrior : Warrior
                 if(direction.y > 1.0f && stateManager.CurrentState == attackState) newAnimation = attackUpAnimation;
             }
         }
-        if(CurrentAnimation == newAnimation) return;
-        animator.CrossFade(newAnimation, 0.1f);
-        CurrentAnimation = newAnimation;
+        if(currentAnimation == newAnimation) return;
+        animator.CrossFade(newAnimation, 0.1f, 0);
+        currentAnimation = newAnimation;
     }
 
     public override void Update()
@@ -75,7 +83,11 @@ public class RangerWarrior : Warrior
     {
         //Execute the tower's animate
         MainTower.StartProgress();
-        _currentProjectTile.SetCauseDamage(data.Damage);
+        ReadyProjectile();
+    }
+    public override void StopAttacking()
+    {
+        stateManager.ChangeState(idleState);
     }
 
     public void ShootProjectTile(){
@@ -86,12 +98,13 @@ public class RangerWarrior : Warrior
     {
         // var newObject = PoolingObject.Instance.GetObject(Object.PrefabProjectTile);
         var newObject = PoolingObject.Instance.GetObject(data.ProjectilePrefab);
-        if(newObject.TryGetComponent<ProjectTiles>(out ProjectTiles projectTiles))
+        if(newObject.TryGetComponent(out ProjectTiles projectTiles))
         {
             _currentProjectTile = projectTiles;
             _currentProjectTile.transform.position = PositionReleaseProjectTile;
             _currentProjectTile.gameObject.SetActive(false);
             _currentProjectTile.SetCurrentEnemy(_currentTargetEnemy);
+            _currentProjectTile.SetCauseDamage(data.Damage);
         }
         else Debug.Log("Can't get ProjectTiles");
     }

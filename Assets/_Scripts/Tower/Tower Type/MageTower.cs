@@ -10,9 +10,9 @@ public class MageTower : Tower
     [SerializeField, Range(1,3)]
     private int _level = 1;
 
-    protected override void Start()
+    protected override void LoadComponents()
     {
-        base.Start();
+        base.LoadComponents();
         _animator = GetComponent<Animator>();
         HaveAnimation = true;
         for(int i = 0; i < _animator.layerCount; i++)

@@ -12,8 +12,8 @@ public class ArtillerymanBehaviour : RangerWarrior
             if (stateManager.CurrentState == attackState)
                 newAnimation = attackAnimation;
         }
-        if(CurrentAnimation == newAnimation) return;
+        if(currentAnimation == newAnimation) return;
         animator.CrossFade(newAnimation, 0.1f, 0);
-        CurrentAnimation = newAnimation;
+        currentAnimation = newAnimation;
     }
 }

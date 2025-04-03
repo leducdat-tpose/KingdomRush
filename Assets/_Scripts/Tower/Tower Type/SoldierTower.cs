@@ -41,16 +41,13 @@ public class SoldierTower : Tower, IOrderable
                 newSoldier.transform.position = transform.position;
                 newSoldier.transform.SetParent(transform);
                 _soldierList[i] = newSoldier;
+                newSoldier.Initialise();
                 newSoldier.gameObject.SetActive(true);
             }
         }
         _soldiersCount = _soldiersCapacity;
         HaveOrder = true;
         _spawnOrder = true;
-    }
-    protected override void Start()
-    {
-        base.Start();
     }
 
     protected override void Update()

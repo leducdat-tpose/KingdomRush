@@ -1,64 +1,56 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.iOS;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(BoxCollider2D))]
-public class Enemy : BaseBehaviour, IDamageable
+public abstract class Enemy : BaseBehaviour, IDamageable
 {
-    
     #region References
     [Header("References")]
     protected IDamageable currentTarget;
     public IDamageable CurrentTarget => currentTarget;
+    [SerializeField]
+    protected EnemyData data;
     [SerializeField]
     private Rigidbody2D _rigid;
     public Rigidbody2D Rigid => _rigid;
     #endregion
     
     #region Variables
-    [field: SerializeField] public float MaxHealth { get; set; }
-    [field: SerializeField] public float CurrentHealth { get; set; }
-    [field: SerializeField]
-    public float BaseDamage { get;set;} = 5;
-    public int Level { get;set;}
-    [field: SerializeField] public float MoveSpeed { get; set; } = 5f;
+    protected float currentHealth;
+    public float CurrentHealth => currentHealth;
+    public float MoveSpeed => data.MoveSpeed;
     public Vector3 TargetPosition {  get; set; }
     public int PathIndex { get; set; } = 0;
-    [SerializeField]
-    private float coolDownAttack;
-    public float CoolDownAttack => coolDownAttack;
-    [SerializeField]
-    //After killing an enemy, it will give player money to upgrade tower, champs, etc.
-    private int _moneyEarned = 5;
     #endregion
     public Action<float, float> HealthChanged { get; set; }
 
     protected StateManager<Enemy> stateManager;
-    protected EnemyIdleState<Enemy> idleState;
-    protected EnemyAttackState<Enemy> attackState;
-    protected EnemyDeathState<Enemy> deathState;
-    protected EnemyWalkState<Enemy> walkState;
+    protected EnemyIdleState idleState;
+    protected EnemyAttackState attackState;
+    protected EnemyDeathState deathState;
+    protected EnemyWalkState walkState;
 
     protected override void LoadComponents()
     {
         base.LoadComponents();
         _rigid = GetComponent<Rigidbody2D>();
         _rigid.isKinematic = true;
+        LoadStateManager();
     }
     public override void Initialise()
     {
         base.Initialise();
-        CurrentAnimation = idleAnimation;
+        currentAnimation = idleAnimation;
+    }
+
+    protected void LoadStateManager()
+    {
         stateManager = new StateManager<Enemy>();
-        idleState = new EnemyIdleState<Enemy>(this, stateManager);
-        walkState = new EnemyWalkState<Enemy>(this, stateManager);
-        attackState = new EnemyAttackState<Enemy>(this, stateManager);
-        deathState = new EnemyDeathState<Enemy>(this, stateManager);
+        idleState = new EnemyIdleState(this, stateManager);
+        walkState = new EnemyWalkState(this, stateManager);
+        attackState = new EnemyAttackState(this, stateManager);
+        deathState = new EnemyDeathState(this, stateManager);
         stateManager.AddState(idleState);
         stateManager.AddState(walkState);
         stateManager.AddState(attackState);
@@ -68,8 +60,7 @@ public class Enemy : BaseBehaviour, IDamageable
 
     private void Start()
     {
-        
-        CurrentHealth = MaxHealth;
+        currentHealth = data.MaxHealth;
         TargetPosition = GameController.Instance.LevelManager.GetStartingPoint();
         currentTarget = null;
         transform.position = TargetPosition;
@@ -78,11 +69,11 @@ public class Enemy : BaseBehaviour, IDamageable
     public void TakenDamage(float damageAmount)
     {
         if(stateManager.CurrentState == deathState) return;
-        CurrentHealth -= damageAmount;
-        HealthChanged?.Invoke(CurrentHealth, MaxHealth);
-        if (CurrentHealth > 0) return;
-        ResourceManagement.CollectResource?.Invoke(_moneyEarned);
-        CurrentHealth = 0;
+        currentHealth -= damageAmount;
+        HealthChanged?.Invoke(currentHealth, data.MaxHealth);
+        if (currentHealth > 0) return;
+        ResourceManagement.CollectResource?.Invoke(data.MoneyEarned);
+        currentHealth = 0;
         stateManager.ChangeState(deathState);
         _rigid.velocity = Vector2.zero;
     }
@@ -99,7 +90,7 @@ public class Enemy : BaseBehaviour, IDamageable
     }
     protected virtual void ResetValue()
     {
-        CurrentHealth = MaxHealth;
+        currentHealth = data.MaxHealth;
         transform.position = Vector3.zero;
         currentTarget = null;
     }
@@ -115,7 +106,6 @@ public class Enemy : BaseBehaviour, IDamageable
     }
     public override void Update()
     {
-
         if(!(stateManager.CurrentState == deathState))
         {
             if(!BeingProvoke) stateManager.ChangeState(walkState);
@@ -129,7 +119,7 @@ public class Enemy : BaseBehaviour, IDamageable
         if(Time.time < _nextAttackTime
         || currentTarget == null) return;
         stateManager.ChangeState(attackState);
-        _nextAttackTime = Time.time + CoolDownAttack;
+        _nextAttackTime = Time.time + data.CoolDownAttack;
     }
     public override void FixedUpdate()
     {
@@ -144,7 +134,7 @@ public class Enemy : BaseBehaviour, IDamageable
             nextAnimation = deathAnimation;
         else if(Rigid.velocity != Vector2.zero)
         {
-            Vector2 direction = Rigid.velocity / MoveSpeed;
+            Vector2 direction = Rigid.velocity / data.MoveSpeed;
             if (Mathf.Abs(direction.x) < Mathf.Abs(direction.y))
                 nextAnimation = direction.y < 0 ? walkDownAnimation : walkUpAnimation;
             else{
@@ -152,15 +142,15 @@ public class Enemy : BaseBehaviour, IDamageable
                 spriteRenderer.flipX = direction.x < 0;
             }
         }
-        if(nextAnimation == CurrentAnimation
+        if(nextAnimation == currentAnimation
         || this.gameObject.activeSelf == false) return;
         animator.CrossFade(nextAnimation, 0.1f, 0);
-        CurrentAnimation = nextAnimation;
+        currentAnimation = nextAnimation;
     }
     public override void StartAttacking()
     {
         if(currentTarget == null) return;
-        currentTarget.TakenDamage(BaseDamage);
+        currentTarget.TakenDamage(data.Damage);
     }
     public override void StopAttacking()
     {

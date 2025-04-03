@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDeathState<T>: BaseState<T> where T: Enemy
+public class EnemyDeathState: BaseState<Enemy>
 {
-    public EnemyDeathState(T enemy, StateManager<T> enemyStateMachine) : base(enemy, enemyStateMachine)
+    public EnemyDeathState(Enemy enemy, StateManager<Enemy> enemyStateMachine) : base(enemy, enemyStateMachine)
     {
     }
 

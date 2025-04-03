@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public abstract class MeleeWarrior : Warrior, IControllable
+public abstract class MeleeWarrior : Warrior, IControllable, IMoveable
 {
     protected float domainRange = 3f;
     protected float attackRange = 0.5f;
@@ -15,7 +15,8 @@ public abstract class MeleeWarrior : Warrior, IControllable
     private Tower _initTower;
     public Tower InitTower => _initTower;
 
-    public Rigidbody2D Rigid{get; private set;}
+    protected Rigidbody2D rigid;
+    public Rigidbody2D Rigid => rigid;
 
     [SerializeField] 
     private CircleCollider2D _collider;
@@ -25,6 +26,7 @@ public abstract class MeleeWarrior : Warrior, IControllable
     {
         base.LoadComponents();
         _collider = GetComponent<CircleCollider2D>();
+        rigid = GetComponent<Rigidbody2D>();
         _collider.radius = domainRange;
     }
     public override void Initialise()
@@ -32,7 +34,7 @@ public abstract class MeleeWarrior : Warrior, IControllable
         base.Initialise();
         _nextAttackTime = 0;
         _currentTargetEnemy = null;
-        CurrentAnimation = idleAnimation;
+        currentAnimation = idleAnimation;
     }
     public override void FixedUpdate()
     {
@@ -56,10 +58,10 @@ public abstract class MeleeWarrior : Warrior, IControllable
                 spriteRenderer.flipX = direction.x < 0;
             }
         }
-        if(nextAnimation == CurrentAnimation
+        if(nextAnimation == currentAnimation
         || this.gameObject.activeSelf == false) return;
         animator.CrossFade(nextAnimation, 0.1f, 0);
-        CurrentAnimation = nextAnimation;
+        currentAnimation = nextAnimation;
     }
     private void OnTriggerEnter2D(Collider2D other) {
         if (!other.CompareTag(Constant.EnemyTag)) return;
@@ -101,7 +103,21 @@ public abstract class MeleeWarrior : Warrior, IControllable
     public override void StopAttacking()
     {
         base.StopAttacking();
+        if(_currentTargetEnemy == null) return;
         if(_currentTargetEnemy.CurrentHealth <= 0) _currentTargetEnemy = null;
+    }
+
+    public virtual void Moving()
+    {
+        if(stateManager.CurrentState != walkState) return;
+        Vector2 direction = RallyPosition - transform.position;
+        float distance = direction.magnitude;
+        direction = direction.normalized;
+        rigid.velocity = direction * data.MoveSpeed;
+        if(distance < 0.1f)
+        {
+            StopMoving();
+        }
     }
 
     public void UpdateCurrentTargetEnemy()
@@ -130,4 +146,10 @@ public abstract class MeleeWarrior : Warrior, IControllable
     }
     
     public void SetRallyPosition(Vector3 position) => RallyPosition = position;
+
+    public virtual void StopMoving()
+    {
+        rigid.velocity = Vector3.zero;
+        stateManager.ChangeState(idleState);
+    }
 }

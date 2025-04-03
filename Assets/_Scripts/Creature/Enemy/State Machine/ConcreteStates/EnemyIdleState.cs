@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyIdleState<T> : BaseState<T> where T: Enemy
+public class EnemyIdleState : BaseState<Enemy>
 {
-    public EnemyIdleState(T obj, StateManager<T> stateManager) : base(obj, stateManager)
+    public EnemyIdleState(Enemy obj, StateManager<Enemy> stateManager) : base(obj, stateManager)
     {
     }
     public override void EnterState()

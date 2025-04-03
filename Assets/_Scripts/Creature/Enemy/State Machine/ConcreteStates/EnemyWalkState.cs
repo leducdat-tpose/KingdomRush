@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyWalkState<T> : BaseState<T> where T: Enemy
+public class EnemyWalkState : BaseState<Enemy>
 {
-    public EnemyWalkState(T obj, StateManager<T> stateManager) : base(obj, stateManager)
+    public EnemyWalkState(Enemy obj, StateManager<Enemy> stateManager) : base(obj, stateManager)
     {
     }
     public override void EnterState()

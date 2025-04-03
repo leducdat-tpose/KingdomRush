@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Archer : RangerWarrior
+public interface IMoveable 
 {
+    public void Moving();
+    public void StopMoving();
 }

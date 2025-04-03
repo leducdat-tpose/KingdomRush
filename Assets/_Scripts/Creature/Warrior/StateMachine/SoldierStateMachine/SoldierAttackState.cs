@@ -1,5 +1,5 @@
 using UnityEngine;
-public class SoldierAttackState: WarriorIdleState<Soldier>
+public class SoldierAttackState: BaseState<Soldier>
 {
     public SoldierAttackState(Soldier obj, StateManager<Soldier> objectStateManager) : base(obj, objectStateManager)
     {

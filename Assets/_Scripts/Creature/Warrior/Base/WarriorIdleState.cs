@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WarriorIdleState<T> : BaseState<T> where T: Warrior
+public class WarriorIdleState : BaseState<Warrior>
 {
-    public WarriorIdleState(T obj, StateManager<T> objectStateManager) : base(obj, objectStateManager)
+    public WarriorIdleState(Warrior obj, StateManager<Warrior> objectStateManager) : base(obj, objectStateManager)
     {
     }
 

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2532736430844326072}
   - component: {fileID: 2532736430844326073}
   - component: {fileID: 7621392926040704922}
-  - component: {fileID: 6062998293375620049}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Untagged
@@ -118,22 +117,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31581eb35292009488c25de76961f225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefabProjectile: {fileID: 5661872374317603713, guid: 5af432891b42340468f5fc191b888254, type: 3}
-  <Level>k__BackingField: 1
-  <MaxHealth>k__BackingField: 0
-  <CurrentHealth>k__BackingField: 0
-  <BaseDamage>k__BackingField: 0
-  coolDownAttack: 1.2
-  <Speed>k__BackingField: 0
---- !u!114 &6062998293375620049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2532736430844326068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2abcc526b4412d14aba6dbae7607fa4e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: e46261940322fdd4387715b454635d85, type: 2}

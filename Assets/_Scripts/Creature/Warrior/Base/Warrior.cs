@@ -9,10 +9,10 @@ public abstract class Warrior : BaseBehaviour
     public float CurrentHealth => currentHealth;
     protected Enemy currentTargetEnemy;
     protected StateManager<Warrior> stateManager;
-    protected WarriorIdleState<Warrior> idleState;
-    protected WarriorAttackState<Warrior> attackState;
-    protected WarriorDeathState<Warrior> deathState;
-    protected WarriorWalkState<Warrior> walkState;
+    protected WarriorIdleState idleState;
+    protected WarriorAttackState attackState;
+    protected WarriorDeathState deathState;
+    protected WarriorWalkState walkState;
     protected override void LoadComponents()
     {
         base.LoadComponents();
@@ -26,10 +26,10 @@ public abstract class Warrior : BaseBehaviour
     }
     protected virtual void LoadStateManager(){
         stateManager = new StateManager<Warrior>();
-        idleState = new WarriorIdleState<Warrior>(this, stateManager);
-        walkState = new WarriorWalkState<Warrior>(this, stateManager);
-        attackState = new WarriorAttackState<Warrior>(this, stateManager);
-        deathState = new WarriorDeathState<Warrior>(this, stateManager);
+        idleState = new WarriorIdleState(this, stateManager);
+        walkState = new WarriorWalkState(this, stateManager);
+        attackState = new WarriorAttackState(this, stateManager);
+        deathState = new WarriorDeathState(this, stateManager);
         stateManager.AddState(idleState);
         stateManager.AddState(walkState);
         stateManager.AddState(attackState);
@@ -57,5 +57,4 @@ public abstract class Warrior : BaseBehaviour
         if(!currentTargetEnemy) return;
         currentTargetEnemy.TakenDamage(data.Damage);
     }
-
 }

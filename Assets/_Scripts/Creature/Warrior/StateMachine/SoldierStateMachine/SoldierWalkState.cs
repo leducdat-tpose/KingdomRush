@@ -1,5 +1,5 @@
 using UnityEngine;
-public class SoldierWalkState<T> : WarriorIdleState<Soldier>
+public class SoldierWalkState<T> : BaseState<Soldier>
 {
     private Vector3 _targetPosition = Vector3.zero;
     public SoldierWalkState(Soldier obj, StateManager<Soldier> objectStateManager) : base(obj, objectStateManager)

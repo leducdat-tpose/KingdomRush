@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
-public class Tower : MonoBehaviour
+public class Tower : DetMonobehaviour
 {
     protected int StartingProgress = Animator.StringToHash("StartProgress");
     protected int Idle = Animator.StringToHash("Idle");
@@ -21,17 +21,18 @@ public class Tower : MonoBehaviour
     private Collider2D _collider;
     [SerializeField]
     private float _colliderRange = 5f;
-    private void Reset()
+
+    protected override void LoadComponents()
     {
+        base.LoadComponents();
         _collider = GetComponent<Collider2D>();
         _collider.isTrigger = true;
         _collider.GetComponent<CircleCollider2D>().radius = _colliderRange;
     }
 
-    public virtual void Initialise(){}
-
-    protected virtual void Start()
+    public override void Initialise()
     {
+        base.Initialise();
         _currentAnimation = Idle;
         InProgress = false;
     }
