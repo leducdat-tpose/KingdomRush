@@ -16,30 +16,39 @@ public class Tower : DetMonobehaviour
     [SerializeField]
     private Enemy _currentTarget = null;
     public Enemy CurrentTarget => _currentTarget;
-    protected bool InProgress;
-    protected int _currentAnimation;
+    protected bool inProgress;
+    protected int currentAnimation;
+    public Action<Enemy> TargetChanged;
     private Collider2D _collider;
     [SerializeField]
-    private float _colliderRange = 5f;
+    protected float towerRange = 5f;
+    [SerializeField]
+    protected float timeUpdateTarget = 0.5f;
+    [SerializeField]
+    protected float rateUpdateTarget = 1f;
 
     protected override void LoadComponents()
     {
         base.LoadComponents();
         _collider = GetComponent<Collider2D>();
         _collider.isTrigger = true;
-        _collider.GetComponent<CircleCollider2D>().radius = _colliderRange;
+        _collider.GetComponent<CircleCollider2D>().radius = towerRange;
+    }
+
+    private void Start() {
+        Initialise();
+        InvokeRepeating(nameof(UpdateCurrentTarget),timeUpdateTarget, rateUpdateTarget);
     }
 
     public override void Initialise()
     {
         base.Initialise();
-        _currentAnimation = Idle;
-        InProgress = false;
+        currentAnimation = Idle;
+        inProgress = false;
     }
 
     protected virtual void Update()
     {
-        UpdateCurrentTarget();
     }
 
     protected virtual void Render()
@@ -47,8 +56,6 @@ public class Tower : DetMonobehaviour
     }
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        //CompareTag is way better than  other.gameObject.tag == tag
-        //Instead of comparing strings, Unity converts the tag into an integer ID and compares the IDs associated with those tags
         if (!other.CompareTag(Constant.EnemyTag)) return;
         Enemy newEnemy = other.GetComponent<Enemy>();
         if(newEnemy.GetIsDead()) return;
@@ -61,9 +68,6 @@ public class Tower : DetMonobehaviour
         Enemy existEnemy = other.GetComponent<Enemy>();
         if(!_enemies.Contains(existEnemy)) return;
         _enemies.Remove(existEnemy);
-    }
-    protected virtual void Shoot()
-    {
     }
 
     protected virtual void UpdateCurrentTarget()
@@ -79,27 +83,19 @@ public class Tower : DetMonobehaviour
             float realDistance = Vector2.Distance(transform.position, enemy.transform.position);
             if(minDistance <= realDistance) continue;
             if(enemy.GetIsDead()) continue;
+            Debug.DrawRay(transform.position, enemy.transform.position);
+            TargetChanged?.Invoke(enemy);
             minDistance = realDistance;
             _currentTarget = enemy;
         }
-        StartCoroutine(nameof(WaitUpdateCurrentTarget));
     }
-
-    private IEnumerator WaitUpdateCurrentTarget()
-    {
-        yield return new WaitForSecondsRealtime(1.5f);
-    }
-
     public void StartProgress()
     {
         if (HaveAnimation == false) return;
-        InProgress = true;
+        inProgress = true;
     }
     public void StopProgress()
     {
-        InProgress = false;
+        inProgress = false;
     }
-
-    public float GetColliderRange() => _colliderRange;
-
 }

@@ -28,9 +28,9 @@ public class ArtilleryTower : Tower
     protected override void Render()
     {
         var newAnimation = Idle;
-        if(InProgress) newAnimation = StartingProgress;
-        if (newAnimation == _currentAnimation) return;
+        if(inProgress) newAnimation = StartingProgress;
+        if (newAnimation == currentAnimation) return;
         _animator.CrossFade(newAnimation, 0.2f, _level - 1);
-        _currentAnimation = newAnimation;
+        currentAnimation = newAnimation;
     }
 }

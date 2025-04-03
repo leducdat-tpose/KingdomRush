@@ -7,16 +7,22 @@ public class RangerWarrior : Warrior
 {
     private float _nextAttackTime;
     private Enemy _currentTargetEnemy;
-    [SerializeField]
-    public Tower MainTower{get; private set;}
+    public Tower OwnerTower{get; private set;}
     private Vector2 PositionReleaseProjectTile;
     private ProjectTiles _currentProjectTile;
 
     protected override void LoadComponents()
     {
         base.LoadComponents();
-        MainTower = transform.root.GetComponentInChildren<Tower>();
+        OwnerTower = transform.root.GetComponentInChildren<Tower>();
     }
+    private void OnEnable() {
+        OwnerTower.TargetChanged += UpdateCurrentTargetEnemy;
+    }
+    private void OnDisable() {
+        OwnerTower.TargetChanged -= UpdateCurrentTargetEnemy;
+    }
+    
     private void Start() {
         Initialise();
     }
@@ -44,9 +50,9 @@ public class RangerWarrior : Warrior
             {
                 newAnimation = walkSideAnimation;
             }
-            if(MainTower.CurrentTarget)
+            if(OwnerTower.CurrentTarget)
             {
-                Vector2 direction = MainTower.CurrentTarget.transform.position - MainTower.transform.position;
+                Vector2 direction = OwnerTower.CurrentTarget.transform.position - OwnerTower.transform.position;
                 spriteRenderer.flipX = direction.x < -0.8f;
                 if(direction.y > 1.0f && stateManager.CurrentState == attackState) newAnimation = attackUpAnimation;
             }
@@ -58,7 +64,6 @@ public class RangerWarrior : Warrior
 
     public override void Update()
     {
-        UpdateCurrentTargetEnemy();
         ReadyToAttack();
         stateManager.Update();
         Render();
@@ -71,8 +76,8 @@ public class RangerWarrior : Warrior
 
     public override void ReadyToAttack()
     {
-        if (!MainTower.CurrentTarget 
-        || MainTower.CurrentTarget.GetIsDead() 
+        if (!OwnerTower.CurrentTarget 
+        || OwnerTower.CurrentTarget.GetIsDead() 
         || Time.time < _nextAttackTime
         || stateManager.CurrentState == attackState) return;
         stateManager.ChangeState(attackState);
@@ -82,7 +87,7 @@ public class RangerWarrior : Warrior
     public override void StartAttacking()
     {
         //Execute the tower's animate
-        MainTower.StartProgress();
+        OwnerTower.StartProgress();
         ReadyProjectile();
     }
     public override void StopAttacking()
@@ -108,9 +113,9 @@ public class RangerWarrior : Warrior
         }
         else Debug.Log("Can't get ProjectTiles");
     }
-    public void UpdateCurrentTargetEnemy()
+    protected void UpdateCurrentTargetEnemy(Enemy enemy)
     {
-        if(_currentTargetEnemy == MainTower.CurrentTarget) return;
-        _currentTargetEnemy = MainTower.CurrentTarget;
+        if(enemy == null) return;
+        _currentTargetEnemy = enemy;
     }
 }

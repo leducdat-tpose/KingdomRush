@@ -73,7 +73,7 @@ public class SoldierTower : Tower, IOrderable
         if(Input.GetMouseButtonUp(0))
         {
             Vector2 newPos = GameController.Instance.GetMousePosition();
-            if(Vector2.Distance(newPos, transform.position) <= GetColliderRange()*transform.localScale.x)
+            if(Vector2.Distance(newPos, transform.position) <= towerRange*transform.localScale.x)
             {
                 _rallyPosition = newPos;
                 for(int i = 0; i < _soldiersCapacity; i++)
